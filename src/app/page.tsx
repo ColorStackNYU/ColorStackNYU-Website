@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Navigation from "../components/navigation";
 import getConnected from "../components/getConnected";
+import Link from "next/link";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +19,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-    
+
       <Navigation />
 
       {/* Hero Section */}
@@ -26,13 +27,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className={`text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 leading-tight">
-              Empowering
-              <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent"> Black & Latino </span>
-              Technologists
+              ColorStack
+              <span className="m-2 p-3 rounded-xl bg-[#43048a] shadow-2xl shadow-white/10">NYU</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Building the largest community of Black and Latino students in tech at NYU. 
-              Connect, learn, and thrive in the world of technology.
+              The largest community of Black and Latino students in tech at NYU
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <button className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-full text-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105 hover:shadow-2xl">
@@ -54,9 +53,7 @@ export default function Home() {
             <div>
               <h2 className="text-5xl font-bold text-white mb-8">Our Mission</h2>
               <p className="text-xl text-white/80 mb-8 leading-relaxed">
-                ColorStack NYU is dedicated to increasing the representation of Black and Latino students 
-                in technology fields. We provide mentorship, resources, and a supportive community to help 
-                our members succeed in their academic and professional journeys.
+                Dedicated to increasing the number of Black and Latinx Computer Science graduates who go on to launch rewarding technical careers
               </p>
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
@@ -107,10 +104,10 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-12">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-2xl">CS</span>
+                <div className="w-12 h-12 bg-gradient-to-r flex items-center justify-center">
+                  <img src="/Colorstack_Logo.png" alt="Logo" className="w-10 h-10 rounded-md" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">ColorStack NYU</h3>
+                <h3 className="text-2xl font-bold text-white">ColorStackNYU</h3>
               </div>
               <p className="text-white/70 text-lg leading-relaxed">
                 Empowering the next generation of Black and Latino technologists at NYU and beyond.
@@ -129,14 +126,11 @@ export default function Home() {
               <h4 className="text-white font-semibold text-lg mb-4">Connect</h4>
               <div className="space-y-3">
                 <a href="#" className="block text-white/70 hover:text-white transition-colors">Instagram</a>
-                <a href="#" className="block text-white/70 hover:text-white transition-colors">LinkedIn</a>
+                <a href="https://www.instagram.com/colorstacknyu/" className="block text-white/70 hover:text-white transition-colors">LinkedIn</a>
                 <a href="#" className="block text-white/70 hover:text-white transition-colors">Discord</a>
                 <a href="#" className="block text-white/70 hover:text-white transition-colors">Email</a>
               </div>
             </div>
-          </div>
-          <div className="border-t border-white/10 mt-12 pt-8 text-center">
-            <p className="text-white/60">© 2025 ColorStack NYU. All rights reserved.</p>
           </div>
         </div>
       </footer>

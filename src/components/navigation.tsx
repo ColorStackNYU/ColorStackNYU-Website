@@ -37,7 +37,6 @@ export default function Navigation({ className = "" }: NavigationProps) {
             </button>
           </div>
 
-          {/* Mobile menu button */}
           <div className="md:hidden">
             <button className="text-white p-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
