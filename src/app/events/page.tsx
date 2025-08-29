@@ -6,49 +6,22 @@ import Navigation from "../../components/navigation";
 type EventItem = {
     title: string;
     description?: string;
-    start: string; // ISO string e.g. "2025-09-15T18:00:00-04:00"
-    end?: string;  // ISO optional
+    start: string; 
+    end?: string;  
     location?: string;
-    link?: string; // RSVP or external page
-    tags?: string[]; // e.g. ["Workshop", "Career"]
+    link?: string; 
+    tags?: string[]; 
 };
 
 const events: EventItem[] = [
     {
-        title: "Welcome Social + Info Night",
-        description: "Meet the team, learn about fall plans, and grab some snacks.",
-        start: "2025-09-04T18:30:00-04:00",
-        end: "2025-09-04T20:00:00-04:00",
-        location: "NYU CSCI Lounge",
+        title: "Example event",
+        description: "example desc",
+        start: "example start time",
+        end: "example end time",
+        location: "example location",
         link: "/events/welcome",
-        tags: ["Social", "General"],
-    },
-    {
-        title: "Tech Interview Prep: DS&A Live",
-        description: "45-minute problem walkthroughs and mock interview drills.",
-        start: "2025-09-10T19:00:00-04:00",
-        end: "2025-09-10T20:15:00-04:00",
-        location: "Room 202, CIWW",
-        link: "/events/interview-prep",
-        tags: ["Workshop", "Career"],
-    },
-    {
-        title: "Figma for Devs",
-        description: "Design handoff best practices and quick Figma tips.",
-        start: "2025-08-20T18:00:00-04:00",
-        end: "2025-08-20T19:00:00-04:00",
-        location: "Online",
-        link: "https://example.com/figma",
-        tags: ["Design", "Workshop"],
-    },
-    {
-        title: "Resume & LinkedIn Clinic",
-        description: "Rapid-fire edits with mentors—bring your resume.",
-        start: "2025-09-18T18:00:00-04:00",
-        end: "2025-09-18T19:30:00-04:00",
-        location: "Kimmel 802",
-        link: "/events/resume-clinic",
-        tags: ["Career", "Mentorship"],
+        tags: ["example1", "example2"],
     },
 ];
 
@@ -73,7 +46,6 @@ function formatRange(startISO: string, endISO?: string) {
 }
 
 function toGoogleCalendarUrl(e: EventItem) {
-    // Google Calendar expects UTC-ish format without separators: YYYYMMDDTHHMMSSZ
     const fmt = (iso: string) => {
         const d = new Date(iso);
         const pad = (n: number) => String(n).padStart(2, "0");
@@ -87,7 +59,7 @@ function toGoogleCalendarUrl(e: EventItem) {
     };
 
     const start = fmt(e.start);
-    const end = fmt(e.end ?? e.start); // zero-duration if no end
+    const end = fmt(e.end ?? e.start); 
 
     const params = new URLSearchParams({
         action: "TEMPLATE",
@@ -189,10 +161,8 @@ export default function EventsPage() {
         <>
             <Navigation />
             <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
-                {/* top fade */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/10 to-transparent" />
 
-                {/* hero */}
                 <section className="mx-auto mb-8 max-w-3xl text-center">
                     <h1 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
                         Events
@@ -202,7 +172,6 @@ export default function EventsPage() {
                     </p>
                 </section>
 
-                {/* filters */}
                 {allTags.length > 0 && (
                     <section className="mb-8 flex flex-wrap items-center gap-2">
                         <Tag active={!activeTag} onClick={() => setActiveTag(null)}>
@@ -216,7 +185,6 @@ export default function EventsPage() {
                     </section>
                 )}
 
-                {/* upcoming */}
                 <section className="mb-12">
                     <h2 className="mb-4 text-xl font-semibold text-white/90">Upcoming</h2>
                     {filteredUpcoming.length === 0 ? (
@@ -232,7 +200,6 @@ export default function EventsPage() {
                     )}
                 </section>
 
-                {/* past */}
                 <section>
                     <h2 className="mb-4 text-xl font-semibold text-white/90">Past</h2>
                     {filteredPast.length === 0 ? (

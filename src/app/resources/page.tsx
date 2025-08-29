@@ -10,25 +10,10 @@ type Resource = {
 
 const resources: Resource[] = [
   {
-    title: "Getting Started Guide",
-    description: "Learn how to get involved with ColorStackNYU and find your community.",
-    link: "/docs/getting-started", // can be internal or external
-  },
-  {
-    title: "Tech Interview Prep",
-    description: "Practice problems, study plans, and curated resources to ace interviews.",
-    link: "https://interviewprep.example.com",
-  },
-  {
-    title: "Scholarships & Opportunities",
-    description: "A list of scholarships, internships, and fellowships for CS students.",
-    link: "/opportunities",
-  },
-  {
-    title: "Event Recordings",
-    description: "Catch up on past workshops, speaker panels, and community events.",
-    link: "/events/recordings",
-  },
+    title: "example resource",
+    description: "example desc",
+    link: "/docs/getting-started",
+  }
 ];
 
 function ResourceCard({ r }: { r: Resource }) {
@@ -50,10 +35,8 @@ export default function ResourcesPage() {
     <>
       <Navigation />
       <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
-        {/* top fade */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/10 to-transparent" />
 
-        {/* hero */}
         <section className="mx-auto mb-10 max-w-3xl text-center">
           <h1 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
             Resources
@@ -63,7 +46,6 @@ export default function ResourcesPage() {
           </p>
         </section>
 
-        {/* resource grid */}
         <section>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {resources.map((r) => (
