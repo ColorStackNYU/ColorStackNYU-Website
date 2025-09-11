@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 
@@ -16,7 +18,7 @@ type EventItem = {
   link?: string;
   tags?: string[];
   status?: string;
-  url: string; // Notion page URL
+  url: string;
 };
 
 function getPlainRichText(rich: any[]): string | undefined {
@@ -33,11 +35,10 @@ function toEventItem(p: any): EventItem {
   const props = p.properties || {};
   const title = (props["Name"]?.title?.[0]?.plain_text || "").trim();
   const dateProperty = props["Date"]?.date;
-  
-  // Handle date range or single date
+
   const start = dateProperty?.start || "";
   const end = dateProperty?.end || undefined;
-  
+
   const description = getPlainRichText(props["Description"]?.rich_text ?? []);
   const location = getPlainRichText(props["Location"]?.rich_text ?? []);
   const link = props["Link"]?.url || undefined;
@@ -60,11 +61,10 @@ function toEventItem(p: any): EventItem {
 
 export async function GET() {
   try {
-    // Check if environment variables are set
     if (!NOTION_EVENTS_TOKEN || !EVENTS_DATABASE_ID) {
-      console.error("Missing environment variables:", { 
-        hasToken: !!NOTION_EVENTS_TOKEN, 
-        hasDatabase: !!EVENTS_DATABASE_ID 
+      console.error("Missing environment variables:", {
+        hasToken: !!NOTION_EVENTS_TOKEN,
+        hasDatabase: !!EVENTS_DATABASE_ID,
       });
       return NextResponse.json(
         { error: "Missing NOTION_EVENTS_API_TOKEN or NOTION_EVENTS_DATABASE_ID" },
@@ -72,72 +72,84 @@ export async function GET() {
       );
     }
 
-    // Debug: Log token format (first few characters only for security)
     console.log("Events API token format check:", {
       tokenPrefix: NOTION_EVENTS_TOKEN.substring(0, 10) + "...",
       tokenLength: NOTION_EVENTS_TOKEN.length,
-      databaseId: EVENTS_DATABASE_ID
+      databaseId: EVENTS_DATABASE_ID,
     });
 
     console.log("Attempting to query Notion events database:", EVENTS_DATABASE_ID);
 
-    // Query the database
-    const pages = await notion.databases.query({
+    // Runtime guard + type escape so TS is happy
+    const hasQueryMethod = typeof (notion.databases as any).query === "function";
+    if (!hasQueryMethod) {
+      console.error(
+        "notion.databases.query is not a function. Check your @notionhq/client version."
+      );
+      return NextResponse.json(
+        {
+          error: "Notion SDK error: databases.query method not available",
+          details: "Please check your @notionhq/client version and installation",
+        },
+        { status: 500 }
+      );
+    }
+
+    const response = await (notion.databases as any).query({
       database_id: EVENTS_DATABASE_ID,
       sorts: [{ property: "Date", direction: "ascending" }],
-      // Optionally filter by status if you want only active events
-      // filter: {
-      //   property: "Status",
-      //   select: {
-      //     equals: "Active"
-      //   }
-      // }
+      // filter: { property: "Status", select: { equals: "Active" } },
     });
 
-    console.log(`Found ${pages.results.length} events in database`);
+    console.log(`Found ${response.results.length} events in database`);
 
-    const events = (pages.results as any[]).map(toEventItem);
-
-    // Filter out events without a title or date
-    const validEvents = events.filter(event => event.title && event.start);
+    const events = response.results.map(toEventItem);
+    const validEvents = events.filter((event: EventItem) => event.title && event.start);
 
     console.log(`Returning ${validEvents.length} valid events`);
 
     return NextResponse.json({ events: validEvents }, { status: 200 });
-
   } catch (error: any) {
     console.error("Notion Events API Error:", error);
-    
-    // Log specific error details
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      status: error.status,
+      stack: error.stack,
+    });
+
     if (error.code === "unauthorized") {
-      console.error("Authorization failed. Check your NOTION_EVENTS_API_TOKEN and ensure the integration has access to the database.");
       return NextResponse.json(
-        { 
+        {
           error: "Unauthorized: Check your API token and database permissions",
-          details: "Make sure your integration is shared with the events database"
+          details: "Make sure your integration is shared with the events database",
         },
         { status: 401 }
       );
     }
 
     if (error.code === "object_not_found") {
-      console.error("Database not found. Check your NOTION_EVENTS_DATABASE_ID.");
       return NextResponse.json(
-        { 
+        {
           error: "Database not found: Check your NOTION_EVENTS_DATABASE_ID",
-          databaseId: EVENTS_DATABASE_ID
+          databaseId: EVENTS_DATABASE_ID,
         },
         { status: 404 }
       );
     }
 
+    // IMPORTANT: avoid `typeof notion.databases.query` here; use the same guard
+    const hasQueryMethod =
+      typeof (notion.databases as any).query === "function";
+
     return NextResponse.json(
-      { 
+      {
         error: "Failed to fetch events data from Notion",
-        details: error.message || "Unknown error"
+        details: error.message || "Unknown error",
+        errorType: typeof error,
+        hasQuery: hasQueryMethod, // boolean, no TS error
       },
       { status: 500 }
     );
   }
 }
-
