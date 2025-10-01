@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "../context/ThemeContext";
 
 interface NavigationProps {
   className?: string;
@@ -11,6 +12,7 @@ interface NavigationProps {
 export default function Navigation({ className = "" }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -62,6 +64,25 @@ export default function Navigation({ className = "" }: NavigationProps) {
             <Link href="/meet-the-team" className="text-white/80 hover:text-white transition-colors">
               Meet the Team
             </Link>
+            <Link href="/sponsorship" className="text-white/80 hover:text-white transition-colors">
+              Sponsorship
+            </Link>
+            {/* Need to make more overall changes for this light to dark mode to actually work well */}
+            {/* <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button> */}
             <button
               onClick={handleGetConnected}
               className="bg-gradient-to-r from-[#43048a] to-purple-600 text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105"
@@ -125,6 +146,19 @@ export default function Navigation({ className = "" }: NavigationProps) {
             >
               Meet the Team
             </Link>
+            <Link
+              href="/sponsorship"
+              className="block text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              onClick={closeMenu}
+            >
+              Sponsorship
+            </Link>
+            <button
+              onClick={toggleTheme}
+              className="block w-full text-left text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+            >
+              {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            </button>
             <div className="pt-2">
               <button
                 onClick={handleGetConnected}

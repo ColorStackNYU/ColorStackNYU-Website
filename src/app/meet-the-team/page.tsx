@@ -57,15 +57,15 @@ export default function MeetTheTeamPage() {
     return (
         <>
             <Navigation />
-            <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/10 to-transparent" />
+            <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8 min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+                <div/>
 
                 <section className="mx-auto mb-10 max-w-3xl text-center">
                     <h1 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
                         Meet the Team
                     </h1>
                     <p className="mt-4 text-base text-white/80 md:text-lg">
-                        The students powering ColorStackNYU
+                        The students powering ColorStack @ NYU
                     </p>
                 </section>
 

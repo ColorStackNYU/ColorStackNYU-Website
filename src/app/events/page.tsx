@@ -40,7 +40,7 @@ export default function EventsPage() {
   return (
     <>
       <Navigation />
-      <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
+      <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8 min-h-screen bg-[var(--background)] text-[var(--foreground)]">
         <section className="mx-auto mb-10 max-w-3xl text-center">
           <h1 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
             Events
@@ -73,6 +73,43 @@ export default function EventsPage() {
             {events.length === 0 && <p className="text-white/60">No events yet.</p>}
           </ul>
         )}
+
+        {/* Points Section */}
+        <section className="mt-20 mx-auto max-w-4xl">
+          <div className="text-center mb-10">
+            <h2 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
+              What are Points?
+            </h2>
+          </div>
+          
+          <div className="relative rounded-2xl border border-white/10 bg-white/5 p-8 shadow-lg backdrop-blur">
+            <div className="mx-auto max-w-2xl">
+              <p className="text-white/80 text-lg leading-relaxed">
+                Points are earned by attending events (1 point per event). Points help determine priority for limited-capacity opportunities like office visits. Leaderboard shows consenting members only.
+              </p>
+              
+              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">How to Earn?</h3>
+                  <ul className="text-white/80 space-y-2">
+                    <li>• Attend events (1 point each)</li>
+                    <li>• Participate in workshops</li>
+                    <li>• Engage in community activities</li>
+                  </ul>
+                </div>
+                
+                <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+                  <h3 className="text-lg font-semibold text-white mb-2">Benefits</h3>
+                  <ul className="text-white/80 space-y-2">
+                    <li>• Priority for office visits</li>
+                    <li>• Access to exclusive events</li>
+                    <li>• Recognition in the community</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
