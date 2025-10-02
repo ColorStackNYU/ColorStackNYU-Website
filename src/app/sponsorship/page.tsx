@@ -3,7 +3,7 @@
 import Navigation from "../../components/navigation";
 
 // replace this with your actual form URL
-const SponsorshipFormURL = "#"; 
+const SponsorshipFormURL = "#";
 
 export default function SponsorshipPage() {
   return (
@@ -32,7 +32,7 @@ export default function SponsorshipPage() {
             <div className="relative rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur">
               <h3 className="text-lg font-semibold text-white">Direct Impact</h3>
               <p className="text-white/80 text-sm mt-3">
-                Support initiatives that make real difference in students' professional development
+                Support initiatives that make real difference in students&apos; professional development
               </p>
             </div>
             <div className="relative rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur">
@@ -82,7 +82,7 @@ export default function SponsorshipPage() {
         </section>
 
         {/* Sponsorship Package PDF Section - Hidden by default */}
-        {false && ( // change when we have actual pdf to show
+        {false && (
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-white mb-6">Sponsorship Packages</h2>
             <div className="relative rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur">
@@ -90,7 +90,7 @@ export default function SponsorshipPage() {
                 Download our sponsorship package to learn more about available opportunities.
               </p>
               <a
-                href="#" // change to actual pdf link
+                href="#"
                 className="inline-block rounded-lg bg-white/10 px-6 py-2 text-white hover:bg-white/20 transition-colors"
                 target="_blank"
                 rel="noreferrer"
