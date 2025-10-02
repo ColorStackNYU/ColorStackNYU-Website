@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from '../context/ThemeContext';
+import { ThemeProvider } from "../context/ThemeContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,23 +17,19 @@ export const metadata: Metadata = {
   title: "ColorStackNYU",
   description: "Website for everything ColorStackNYU",
   icons: {
-    icon: "/logo_round.png", // FAVICON
-  }
+    icon: "/logo_round.png",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
