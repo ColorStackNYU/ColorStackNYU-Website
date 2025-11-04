@@ -21,7 +21,7 @@ export default function GetConnected() {
                             href="http://eepurl.com/jnc-JE"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block mt-4 cta-primary"
+                            className="inline-block mt-4 btn btn-primary"
                         >
                             Subscribe
                         </a>
@@ -37,7 +37,7 @@ export default function GetConnected() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Join ColorStackNYU WhatsApp group chat"
-                            className="inline-block mt-4 cta-primary"
+                            className="inline-block mt-4 btn btn-primary"
                         >
                             Join Group Chat
                         </a>
