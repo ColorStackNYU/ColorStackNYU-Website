@@ -8,7 +8,7 @@ export default function GetConnected() {
         <section className="section">
             <ContentContainer>
                 <header className="text-center" style={{ marginBottom: "var(--spacing-3xl)" }}>
-                    <h2 className="font-bold tracking-tight" style={{ fontSize: "28px", color: "var(--text-high)" }}>Get Connected</h2>
+                    <h2 className="font-bold tracking-tight" style={{ fontSize: "var(--fs-h2)", color: "var(--text-high)" }}>Get Connected</h2>
                 </header>
 
                 <div className="connect-grid">

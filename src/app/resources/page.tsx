@@ -21,7 +21,7 @@ function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onT
     >
       {/* Title + Link Icon (dominant) */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "var(--spacing-md)", marginBottom: "var(--spacing-md)" }}>
-        <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
+        <h3 style={{ margin: "0", fontSize: "var(--fs-h3)", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
           {r.title}
         </h3>
         <div className="external-link-icon" title="Opens in new tab">
@@ -30,7 +30,7 @@ function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onT
       </div>
 
       {/* Description (secondary) */}
-      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "14px", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>
+      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "var(--fs-small)", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>
         {r.description}
       </p>
 
@@ -254,7 +254,7 @@ export default function ResourcesPage() {
                       background: "rgba(171, 130, 197, 0.1)",
                       borderRadius: "8px",
                     }}>
-                      <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Active filters:</span>
+                      <span style={{ color: "var(--text-mid)", fontSize: "var(--fs-small)" }}>Active filters:</span>
                       {selectedCategory && (
                         <span className="filter-tag">
                           Category: {selectedCategory}
@@ -284,18 +284,18 @@ export default function ResourcesPage() {
 
               {/* Results */}
               {filteredResources.length === 0 ? (
-                <div style={{ textAlign: "center", padding: "64px 32px" }}>
-                  <p style={{ color: "var(--text-mid)", fontSize: "16px", marginBottom: "12px" }}>
+                <div style={{ textAlign: "center", padding: "var(--spacing-5xl) var(--spacing-2xl)" }}>
+                  <p style={{ color: "var(--text-mid)", fontSize: "var(--fs-body)", marginBottom: "var(--spacing-md)" }}>
                     No resources yet in this category.
                   </p>
-                  <p style={{ color: "var(--text-mid)", fontSize: "14px", marginBottom: "24px" }}>
+                  <p style={{ color: "var(--text-mid)", fontSize: "var(--fs-small)", marginBottom: "var(--spacing-xl)" }}>
                     Want to add one?{" "}
                     <a
                       href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-link"
-                      style={{ fontSize: "14px" }}
+                      style={{ fontSize: "var(--fs-small)" }}
                     >
                       Learn how to contribute
                     </a>

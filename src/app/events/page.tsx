@@ -133,7 +133,7 @@ export default function EventsPage() {
                 ) : (
                   Object.entries(groupedUpcoming).map(([monthYear, events]) => (
                     <div key={monthYear} style={{ marginBottom: "var(--spacing-5xl)" }}>
-                      <h3 className="font-semibold" style={{ fontSize: "18px", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
+                      <h3 className="font-semibold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
                         {monthYear}
                       </h3>
                       <div className="card-grid">

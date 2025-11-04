@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="site-container">
         <div className="footer-grid">
           <div className="col-span-2">
-            <div className="flex items-center mb-6" style={{ gap: "var(--spacing-md)" }}>
+            <div className="flex items-center" style={{ gap: "var(--spacing-md)", marginBottom: "var(--spacing-6xl)" }}>
               <div className="w-12 h-12 bg-gradient-to-r flex items-center justify-center">
                 <Image
                   src="/Colorstack_Logo.png"
@@ -24,10 +24,10 @@ export default function Footer() {
             </p>
           </div>
           <nav aria-label="Quick Links">
-            <h4 className="font-semibold" style={{ fontSize: "18px", marginBottom: "var(--spacing-lg)", color: "var(--text-high)" }}>
+            <h4 className="font-semibold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-lg)", color: "var(--text-high)" }}>
               Quick Links
             </h4>
-            <ul className="space-y-3" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
               <li>
                 <a href="#about" className="block">
                   About Us
@@ -51,8 +51,8 @@ export default function Footer() {
             </ul>
           </nav>
           <nav aria-label="Social Media">
-            <h4 className="font-semibold" style={{ fontSize: "18px", marginBottom: "var(--spacing-lg)", color: "var(--text-high)" }}>Connect</h4>
-            <ul className="space-y-3" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <h4 className="font-semibold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-lg)", color: "var(--text-high)" }}>Connect</h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
               <li>
                 <a
                   href="https://www.instagram.com/colorstacknyu/"

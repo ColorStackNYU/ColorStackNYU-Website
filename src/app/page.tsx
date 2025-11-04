@@ -230,11 +230,11 @@ export default function Home() {
               <h2
                 id="mission-heading"
                 className="font-bold"
-                style={{ fontSize: "36px", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}
+                style={{ fontSize: "var(--fs-h1)", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}
               >
                 Our Mission
               </h2>
-              <p style={{ fontSize: "18px", marginBottom: "var(--spacing-6xl)", color: "var(--text-mid)" }}>
+              <p style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-6xl)", color: "var(--text-mid)" }}>
                 Dedicated to increasing the number of Black and Latinx Computer
                 Science graduates who go on to launch rewarding technical
                 careers
