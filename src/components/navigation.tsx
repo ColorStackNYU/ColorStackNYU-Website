@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "../context/ThemeContext";
-import ContentContainer from "./ContentContainer";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavigationProps {
@@ -53,7 +52,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
   return (
     <nav className={`site-header ${className}`}>
-      <ContentContainer>
+      <div className="site-container">
         <div className="flex items-center justify-between">
           <div className="nav-left">
             <Link href="/" onClick={closeMenu} aria-label="Home">
@@ -80,7 +79,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="mobile-menu-toggle"
               aria-label="Toggle menu"
             >
               <svg
@@ -105,50 +104,48 @@ export default function Navigation({ className = "" }: NavigationProps) {
           <div className="py-4 space-y-2" style={{borderTop:'1px solid var(--border)', marginTop:'1rem'}}>
             <Link
               href="/"
-              className="block px-4 py-3 rounded-lg transition-all"
+              className="mobile-nav-link"
               onClick={closeMenu}
-              style={{color:'var(--text-mid)'}}
             >
               Home
             </Link>
             <Link
               href="/events"
-              className="block text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              className="mobile-nav-link"
               onClick={closeMenu}
             >
               Events
             </Link>
             <Link
               href="/resources"
-              className="block text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              className="mobile-nav-link"
               onClick={closeMenu}
             >
               Resources
             </Link>
             <Link
               href="/meet-the-team"
-              className="block text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              className="mobile-nav-link"
               onClick={closeMenu}
             >
               Meet the Team
             </Link>
             <Link
               href="/sponsorship"
-              className="block text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              className="mobile-nav-link"
               onClick={closeMenu}
             >
               Sponsorship
             </Link>
             <button
               onClick={toggleTheme}
-              className="block w-full text-left px-4 py-3 rounded-lg transition-all"
-              style={{color:'var(--text-mid)'}}
+              className="mobile-nav-link w-full text-left"
             >
               {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             </button>
           </div>
         </div>
-      </ContentContainer>
+      </div>
     </nav>
   );
 }

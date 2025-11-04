@@ -30,7 +30,7 @@ export default function GetConnected() {
                         <h3 className="connect-title">Join National ColorStack</h3>
                         <p className="connect-desc">Access opportunities, mentorship, and join 10,000+ members</p>
                         <a
-                            href="https://colorstack.org/apply"
+                            href="https://www.colorstack.org/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block mt-6 btn btn-primary"
