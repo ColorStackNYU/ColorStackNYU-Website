@@ -276,7 +276,7 @@ export default function ResourcesPage() {
           ) : (
             <>
               {/* Filter Controls */}
-              <div style={{ marginBottom: "32px" }}>
+              <div style={{ marginBottom: "16px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
                   <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)" }}>
                     Filter
