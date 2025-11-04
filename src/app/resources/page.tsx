@@ -69,6 +69,12 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
                 e.preventDefault();
                 onTagClick(tag);
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onTagClick(tag);
+                }
+              }}
               className="resource-tag"
               style={{
                 display: "inline-block",
@@ -87,6 +93,13 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = "transparent";
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #d4b5ff";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
               }}
             >
               {tag}
@@ -225,6 +238,13 @@ export default function ResourcesPage() {
                 padding: 0,
                 font: "inherit",
               }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #d4b5ff";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
+              }}
             >
               How to contribute →
             </button>
@@ -266,6 +286,13 @@ export default function ResourcesPage() {
                         padding: 0,
                         fontWeight: 500,
                       }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.outline = "2px solid #d4b5ff";
+                        e.currentTarget.style.outlineOffset = "2px";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.outline = "none";
+                      }}
                     >
                       Clear filters
                     </button>
@@ -276,6 +303,12 @@ export default function ResourcesPage() {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
                   <button
                     onClick={() => setSelectedCategories(new Set())}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelectedCategories(new Set());
+                      }
+                    }}
                     style={{
                       padding: "8px 16px",
                       borderRadius: "8px",
@@ -297,6 +330,13 @@ export default function ResourcesPage() {
                       e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
                       e.currentTarget.style.backgroundColor = "transparent";
                     }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.outline = "2px solid #d4b5ff";
+                      e.currentTarget.style.outlineOffset = "2px";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.outline = "none";
+                    }}
                   >
                     All
                   </button>
@@ -313,6 +353,18 @@ export default function ResourcesPage() {
                             newCategories.add(category);
                           }
                           setSelectedCategories(newCategories);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            const newCategories = new Set(selectedCategories);
+                            if (isSelected) {
+                              newCategories.delete(category);
+                            } else {
+                              newCategories.add(category);
+                            }
+                            setSelectedCategories(newCategories);
+                          }
                         }}
                         style={{
                           padding: "8px 16px",
@@ -334,6 +386,13 @@ export default function ResourcesPage() {
                           if (isSelected) return;
                           e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
                           e.currentTarget.style.backgroundColor = "transparent";
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.outline = "2px solid #d4b5ff";
+                          e.currentTarget.style.outlineOffset = "2px";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.outline = "none";
                         }}
                       >
                         {category}
@@ -360,6 +419,13 @@ export default function ResourcesPage() {
                         fontSize: "13px",
                         padding: 0,
                         fontWeight: 500,
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.outline = "2px solid #d4b5ff";
+                        e.currentTarget.style.outlineOffset = "2px";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.outline = "none";
                       }}
                     >
                       Clear tag
@@ -388,6 +454,13 @@ export default function ResourcesPage() {
                         padding: 0,
                         font: "inherit",
                         fontSize: "14px",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.outline = "2px solid #d4b5ff";
+                        e.currentTarget.style.outlineOffset = "2px";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.outline = "none";
                       }}
                     >
                       Learn how to contribute
@@ -431,6 +504,13 @@ export default function ResourcesPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "rgba(212, 181, 255, 0.4)";
                 e.currentTarget.style.backgroundColor = "transparent";
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #d4b5ff";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
               }}
             >
               Add a resource
