@@ -370,9 +370,30 @@ export default function ResourcesPage() {
 
               {/* Results */}
               {filteredResources.length === 0 ? (
-                <p style={{ color: "var(--text-mid)", textAlign: "center", padding: "48px 0" }}>
-                  No resources found with the selected filters.
-                </p>
+                <div style={{ textAlign: "center", padding: "64px 32px" }}>
+                  <p style={{ color: "var(--text-mid)", fontSize: "16px", marginBottom: "12px" }}>
+                    No resources yet in this category.
+                  </p>
+                  <p style={{ color: "var(--text-mid)", fontSize: "14px", marginBottom: "24px" }}>
+                    Want to add one?{" "}
+                    <button
+                      onClick={scrollToContribute}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#d4b5ff",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        fontWeight: 500,
+                        padding: 0,
+                        font: "inherit",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Learn how to contribute
+                    </button>
+                  </p>
+                </div>
               ) : (
                 <div className="card-grid">
                   {filteredResources.map((r) => (
