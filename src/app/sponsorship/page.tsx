@@ -50,7 +50,7 @@ export default function SponsorshipPage() {
             Ready to make an impact? Join us in building a more diverse and inclusive tech industry.
           </p>
           <a
-            href="mailto:sponsorship@colorstacknyu.org"
+            href="mailto:colorstacknyu@gmail.com"
             className="btn btn-primary"
           >
             Contact Us by Email
