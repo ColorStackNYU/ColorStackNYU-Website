@@ -11,6 +11,9 @@ type Member = {
   name: string;
   role: string;
   bio?: string;
+  year?: string;
+  major?: string;
+  minor?: string;
   icon?: { type: "emoji" | "url"; value: string };
   linkedinUrl?: string;
   hallOfFame?: boolean;
@@ -32,6 +35,9 @@ export default function MeetTheTeamPage() {
       id: m.id,
       name: m.name,
       role: m.role,
+      year: m.year,
+      major: m.major,
+      minor: m.minor,
       bio: [m.year, m.major, m.minor].filter(Boolean).join(" · "),
       icon: m.icon,
       linkedinUrl: m.linkedinUrl,
@@ -162,6 +168,23 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
         </div>
       </div>
       {m.bio && <p className="leading-relaxed" style={{ marginTop: "var(--spacing-md)", fontSize: "var(--fs-small)", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>{m.bio}</p>}
+      
+      {/* Tags/Labels Section - Like Resources Page */}
+      {(m.major || m.year) && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-xs)", marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
+          {m.year && (
+            <span className="resource-tag" style={{ display: "inline-block" }}>
+              {m.year}
+            </span>
+          )}
+          {m.major && (
+            <span className="resource-tag" style={{ display: "inline-block" }}>
+              {m.major}
+            </span>
+          )}
+        </div>
+      )}
+      
       {isAlumni && m.quote && (
         <div className="border-t" style={{ marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderColor: "rgba(171, 130, 197, 0.2)" }}>
           <p className="leading-relaxed italic" style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)", opacity: 0.9 }}>
