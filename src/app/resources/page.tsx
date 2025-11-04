@@ -164,21 +164,32 @@ function StatStrip({ resources }: { resources: Resource[] }) {
   const contributorLabel = contributorsCount === 1 ? "contributor" : "contributors";
 
   return (
-    <div style={{ marginTop: "12px", color: "var(--text-mid)", fontSize: "14px", display: "flex", gap: "12px", alignItems: "center" }}>
-      <span>
-        {resourcesCount} {resourceLabel}
-      </span>
-      <span>•</span>
-      <span>
-        {contributorsCount} {contributorLabel}
-      </span>
+    <div style={{
+      marginTop: "16px",
+      display: "inline-flex",
+      gap: "20px",
+      alignItems: "center",
+      padding: "12px 16px",
+      backgroundColor: "rgba(171, 130, 197, 0.08)",
+      borderRadius: "8px",
+      border: "1px solid rgba(171, 130, 197, 0.15)",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+          {resourcesCount} {resourceLabel}
+        </span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+          {contributorsCount} {contributorLabel}
+        </span>
+      </div>
       {lastAddedDays !== null && (
-        <>
-          <span>•</span>
-          <span>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
             Last added: {lastAddedDays === 0 ? "today" : lastAddedDays === 1 ? "1 day ago" : `${lastAddedDays} days ago`}
           </span>
-        </>
+        </div>
       )}
     </div>
   );
