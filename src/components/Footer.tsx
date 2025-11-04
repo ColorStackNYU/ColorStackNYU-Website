@@ -12,7 +12,7 @@ export default function Footer() {
                   className="w-10 h-10 rounded-md"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white">ColorStackNYU</h3>
+              <h3 className="text-2xl font-bold text-high">ColorStackNYU</h3>
             </div>
             <p className="footer-tagline">
               Empowering the next generation of Black and Latino technologists
@@ -20,7 +20,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h4 className="text-white font-semibold text-lg mb-4">
+            <h4 className="text-high font-semibold text-lg mb-4">
               Quick Links
             </h4>
             <div className="space-y-3">
@@ -51,7 +51,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="text-white font-semibold text-lg mb-4">Connect</h4>
+            <h4 className="text-high font-semibold text-lg mb-4">Connect</h4>
             <div className="space-y-3">
               <a
                 href="https://www.instagram.com/colorstacknyu/"

@@ -52,6 +52,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="section hero">
+        <div className="hero-background"></div>
         <ContentContainer>
           <div
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
@@ -89,17 +90,19 @@ export default function Home() {
 
       {/* Where We've Landed - Marquee Section */}
       <section className="section logos-section">
-          <ContentContainer className="text-center">
-          <h3
-            className="text-2xl font-semibold"
-            style={{ color: "var(--text-high)" }}
-          >
-            Where We&apos;ve Landed
-          </h3>
-          <p className="text-sm mt-2" style={{ color: "var(--text-mid)" }}>
-            ColorStack members have interned and gone full time at top tech companies
-          </p>
-        </ContentContainer>
+          <ContentContainer className="text-center relative">
+            <div className="relative z-10">
+              <h3
+                className="text-2xl font-semibold"
+                style={{ color: "var(--text-high)" }}
+              >
+                Where We&apos;ve Landed
+              </h3>
+              <p className="text-sm mt-2" style={{ color: "var(--text-mid)" }}>
+                ColorStack members have interned and gone full time at top tech companies
+              </p>
+            </div>
+          </ContentContainer>
 
         <div className="logos-marquee-wrap" aria-hidden="false">
           <div className="logos-marquee">

@@ -21,7 +21,7 @@ export default function SponsorshipPage() {
           <section style={{
             marginBottom: "var(--spacing-xl)",
             paddingBottom: "var(--spacing-xl)",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+            borderBottom: "1px solid var(--border)",
             animation: "fadeUp 420ms ease both 100ms backwards"
           }}>
           <h2 style={{
@@ -63,37 +63,16 @@ export default function SponsorshipPage() {
             color: "var(--text-high)",
             marginBottom: "var(--spacing-xl)"
           }}>Get in Touch</h2>
-          <p className="text-white/80 mb-8 max-w-2xl mx-auto">
+          <p style={{ color: "var(--text-mid)" }} className="mb-8 max-w-2xl mx-auto">
             Ready to make an impact? Join us in building a more diverse and inclusive tech industry.
           </p>
           <a
             href="mailto:colorstacknyu@gmail.com"
+            className="btn btn-primary"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "14px 32px",
               height: "56px",
-              background: "var(--brand-1)",
-              color: "var(--text-high)",
-              border: "1px solid transparent",
-              borderRadius: "var(--radius)",
-              fontWeight: 600,
-              fontSize: "16px",
-              cursor: "pointer",
-              transition: "all 150ms ease",
-              textDecoration: "none",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--brand-1-hover)";
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "var(--brand-1)";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)";
+              padding: "0 32px",
+              fontSize: "16px"
             }}
           >
             Contact Us by Email

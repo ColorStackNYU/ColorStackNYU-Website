@@ -5,7 +5,7 @@ import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
 import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
 
-function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string) => void }) {
+function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onTagClick: (tag: string) => void; setSelectedCategory: (category: string | null) => void }) {
   return (
     <a
       href={r.link}
@@ -29,46 +29,56 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       </div>
 
       {/* Description (secondary) */}
-      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "14px", fontWeight: 400, color: "#e8e6ff", lineHeight: "1.6" }}>
+      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "14px", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>
         {r.description}
       </p>
 
-      {/* Tags (tertiary) */}
-      {r.tags && r.tags.length > 0 && (
+      {/* Category as tag-like element */}
+      {r.category && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)", marginBottom: "var(--spacing-md)" }}>
-          {r.tags.map((tag) => (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setSelectedCategory(r.category);
+            }}
+            className="resource-tag"
+          >
+            {r.category}
+          </button>
+        </div>
+      )}
+
+      {/* Metadata footer: Tags + Contributor */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "var(--spacing-md)", paddingTop: "var(--spacing-sm)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
+        <div style={{ display: "flex", gap: "var(--spacing-xs)", flexWrap: "wrap" }}>
+          {r.tags && r.tags.map((tag) => (
             <button
               key={tag}
               onClick={(e) => {
                 e.preventDefault();
                 onTagClick(tag);
               }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onTagClick(tag);
-                }
+              style={{ 
+                margin: "0", 
+                padding: "0", 
+                background: "none", 
+                border: "none", 
+                fontSize: "11px", 
+                color: "var(--brand-1)", 
+                cursor: "pointer",
+                opacity: 0.9,
+                transition: "color 0.2s ease",
               }}
-              className="resource-tag"
+              onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-high)"}
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--brand-1)"}
             >
-              {tag}
+              #{tag}
             </button>
           ))}
         </div>
-      )}
-
-      {/* Metadata footer: Category + Contributor (de-emphasized) */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "var(--spacing-md)", paddingTop: "var(--spacing-sm)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
-        <div>
-          {r.category && (
-            <p style={{ margin: "0", fontSize: "11px", color: "#d4b5ff", opacity: 1 }}>
-              {r.category}
-            </p>
-          )}
-        </div>
         <div>
           {r.contributedBy && (
-            <p style={{ margin: "0", fontSize: "10px", color: "#d4b5ff", opacity: 0.9, textAlign: "right" }}>
+            <p style={{ margin: "0", fontSize: "10px", color: "var(--text-mid)", opacity: 0.7, textAlign: "right" }}>
               Contributed by {r.contributedBy}
             </p>
           )}
@@ -170,7 +180,7 @@ export default function ResourcesPage() {
             <h1 className="wordmark">Resources</h1>
           </div>
           <p>
-            Helpful links, guides, and tools—curated by our community.
+            Helpful links, guides, and tools for the community, by the community.
           </p>
           <p>
             <a
@@ -199,59 +209,77 @@ export default function ResourcesPage() {
             <>
               {/* Filter Controls */}
               <div style={{ marginBottom: "var(--spacing-lg)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--spacing-md)" }}>
-                  <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)" }}>
-                    Filter
-                  </h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+                  {/* Category filter */}
+                  <div>
+                    <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)", marginBottom: "var(--spacing-sm)" }}>
+                      Browse by Category
+                    </h3>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)" }}>
+                      <button
+                        onClick={() => {
+                          setSelectedCategory(null);
+                          setSelectedTag(null);
+                        }}
+                        className={`filter-btn ${!selectedCategory ? 'filter-btn-active' : ''}`}
+                      >
+                        All Categories
+                      </button>
+                      {RESOURCE_CATEGORIES.map((category) => {
+                        const isSelected = selectedCategory === category;
+                        return (
+                          <button
+                            key={category}
+                            onClick={() => {
+                              setSelectedCategory(isSelected ? null : category);
+                              setSelectedTag(null);
+                            }}
+                            className={`filter-btn ${isSelected ? 'filter-btn-active' : ''}`}
+                          >
+                            {category}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Active filters */}
                   {(selectedCategory || selectedTag) && (
-                    <button
-                      onClick={() => {
-                        setSelectedCategory(null);
-                        setSelectedTag(null);
-                      }}
-                      className="text-link"
-                      style={{ fontSize: "13px" }}
-                    >
-                      Clear filters
-                    </button>
+                    <div style={{ 
+                      display: "flex", 
+                      alignItems: "center", 
+                      gap: "var(--spacing-md)",
+                      padding: "var(--spacing-md)",
+                      background: "rgba(171, 130, 197, 0.1)",
+                      borderRadius: "8px",
+                    }}>
+                      <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Active filters:</span>
+                      {selectedCategory && (
+                        <span className="filter-tag">
+                          Category: {selectedCategory}
+                          <button 
+                            onClick={() => setSelectedCategory(null)}
+                            style={{ marginLeft: "6px", opacity: 0.7 }}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      )}
+                      {selectedTag && (
+                        <span className="filter-tag">
+                          #{selectedTag}
+                          <button 
+                            onClick={() => setSelectedTag(null)}
+                            style={{ marginLeft: "6px", opacity: 0.7 }}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
-
-                {/* Category chips */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)", marginBottom: "var(--spacing-lg)" }}>
-                  <button
-                    onClick={() => setSelectedCategory(null)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setSelectedCategory(null);
-                      }
-                    }}
-                    className={`filter-btn ${!selectedCategory ? 'filter-btn-all' : ''}`}
-                  >
-                    All
-                  </button>
-                  {RESOURCE_CATEGORIES.map((category) => {
-                    const isSelected = selectedCategory === category;
-                    return (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          setSelectedCategory(isSelected ? null : category);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            setSelectedCategory(isSelected ? null : category);
-                          }
-                        }}
-                        className={`filter-btn ${isSelected ? 'filter-btn-active' : ''}`}
-                      >
-                        {category}
-                      </button>
-                    );
-                  })}
-                </div>
+              </div>
 
                 {/* Tag filter indicator */}
                 {selectedTag && (
@@ -269,7 +297,6 @@ export default function ResourcesPage() {
                     </button>
                   </div>
                 )}
-              </div>
 
               {/* Results */}
               {filteredResources.length === 0 ? (
@@ -293,7 +320,12 @@ export default function ResourcesPage() {
               ) : (
                 <div className="card-grid">
                   {filteredResources.map((r) => (
-                    <ResourceCard key={r.id} r={r} onTagClick={handleTagClick} />
+                    <ResourceCard 
+                      key={r.id} 
+                      r={r} 
+                      onTagClick={handleTagClick}
+                      setSelectedCategory={setSelectedCategory}
+                    />
                   ))}
                 </div>
               )}
