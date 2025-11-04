@@ -420,9 +420,9 @@ export default function ResourcesPage() {
             </ol>
           </div>
 
-          <div style={{ marginTop: "24px", padding: "16px", backgroundColor: "rgba(124, 58, 237, 0.1)", borderRadius: "8px", borderLeft: "4px solid var(--brand-1)" }}>
-            <p style={{ color: "var(--text-mid)", fontSize: "14px" }}>
-              <strong>First time on GitHub?</strong> No problem! GitHub's web editor makes it easy to contribute without leaving your browser. Just follow the steps above.
+          <div style={{ marginTop: "24px", padding: "12px", backgroundColor: "rgba(124, 58, 237, 0.08)", borderRadius: "6px", borderLeft: "3px solid #d4b5ff" }}>
+            <p style={{ color: "var(--text-mid)", fontSize: "12px", margin: 0 }}>
+              <strong>New to GitHub?</strong> Use the web editor—no installation needed.
             </p>
           </div>
         </section>
