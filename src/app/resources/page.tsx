@@ -28,7 +28,7 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       </div>
 
       {/* Description (secondary) */}
-      <p style={{ flex: 1, margin: "0 0 16px 0", fontSize: "14px", fontWeight: 400, color: "var(--text-high)", lineHeight: "1.6" }}>
+      <p style={{ flex: 1, margin: "0 0 16px 0", fontSize: "14px", fontWeight: 400, color: "#e8e6ff", lineHeight: "1.6" }}>
         {r.description}
       </p>
 
@@ -46,20 +46,20 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
               style={{
                 display: "inline-block",
                 padding: "3px 8px",
-                backgroundColor: "rgba(171, 130, 197, 0.12)",
-                color: "var(--brand-1)",
+                backgroundColor: "transparent",
+                color: "#d4b5ff",
                 borderRadius: "5px",
                 fontSize: "11px",
-                fontWeight: 500,
-                border: "1px solid rgba(171, 130, 197, 0.25)",
+                fontWeight: 600,
+                border: "1px solid #d4b5ff",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.25)";
+                e.currentTarget.style.backgroundColor = "rgba(212, 181, 255, 0.15)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.12)";
+                e.currentTarget.style.backgroundColor = "transparent";
               }}
             >
               {tag}
@@ -72,14 +72,14 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "12px", paddingTop: "8px", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
         <div>
           {r.category && (
-            <p style={{ margin: "0", fontSize: "11px", color: "var(--text-mid)", opacity: 0.8 }}>
+            <p style={{ margin: "0", fontSize: "11px", color: "#d4b5ff", opacity: 1 }}>
               {r.category}
             </p>
           )}
         </div>
         <div>
           {r.contributedBy && (
-            <p style={{ margin: "0", fontSize: "10px", color: "var(--text-mid)", opacity: 0.7, textAlign: "right" }}>
+            <p style={{ margin: "0", fontSize: "10px", color: "#d4b5ff", opacity: 0.9, textAlign: "right" }}>
               Contributed by {r.contributedBy}
             </p>
           )}
@@ -202,7 +202,7 @@ export default function ResourcesPage() {
               style={{
                 background: "none",
                 border: "none",
-                color: "var(--brand-1)",
+                color: "#d4b5ff",
                 cursor: "pointer",
                 textDecoration: "underline",
                 fontWeight: 500,
@@ -243,7 +243,7 @@ export default function ResourcesPage() {
                       style={{
                         background: "none",
                         border: "none",
-                        color: "var(--brand-1)",
+                        color: "#d4b5ff",
                         cursor: "pointer",
                         textDecoration: "underline",
                         fontSize: "13px",
@@ -338,7 +338,7 @@ export default function ResourcesPage() {
                       style={{
                         background: "none",
                         border: "none",
-                        color: "var(--brand-1)",
+                        color: "#d4b5ff",
                         cursor: "pointer",
                         textDecoration: "underline",
                         fontSize: "13px",
@@ -387,7 +387,7 @@ export default function ResourcesPage() {
                   href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/feat/css-changes/public/resources.json"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "var(--brand-1)", textDecoration: "underline" }}
+                  style={{ color: "#d4b5ff", textDecoration: "underline" }}
                 >
                   resources.json file
                 </a>
