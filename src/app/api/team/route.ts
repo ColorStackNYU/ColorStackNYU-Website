@@ -53,17 +53,71 @@ function toMember(p: any): Member {
   };
 }
 
+// Mock data for local development
+const MOCK_TEAM_DATA = {
+  leadership: [
+    {
+      id: "mock-lead-1",
+      name: "Sarah Johnson",
+      role: "President",
+      year: "Senior",
+      major: "Computer Science",
+      email: "president@colorstack.nyu.edu",
+      icon: { type: "emoji" as const, value: "👩‍💻" },
+      url: "https://notion.so/mock-lead-1",
+    },
+    {
+      id: "mock-lead-2",
+      name: "Michael Chen",
+      role: "Vice President",
+      year: "Junior",
+      major: "Computer Science & Data Science",
+      email: "vp@colorstack.nyu.edu",
+      icon: { type: "emoji" as const, value: "🚀" },
+      url: "https://notion.so/mock-lead-2",
+    },
+    {
+      id: "mock-lead-3",
+      name: "Aisha Patel",
+      role: "Lead Developer",
+      year: "Senior",
+      major: "Computer Science",
+      minor: "Business",
+      email: "dev@colorstack.nyu.edu",
+      icon: { type: "emoji" as const, value: "💻" },
+      url: "https://notion.so/mock-lead-3",
+    },
+  ],
+  core: [
+    {
+      id: "mock-core-1",
+      name: "James Rodriguez",
+      role: "Developer",
+      year: "Sophomore",
+      major: "Computer Science",
+      icon: { type: "emoji" as const, value: "🎨" },
+      url: "https://notion.so/mock-core-1",
+    },
+    {
+      id: "mock-core-2",
+      name: "Emily Zhang",
+      role: "Events Coordinator",
+      year: "Junior",
+      major: "Integrated Digital Media",
+      icon: { type: "emoji" as const, value: "🎉" },
+      url: "https://notion.so/mock-core-2",
+    },
+  ],
+};
+
 export async function GET() {
   try {
     if (!NOTION_TOKEN || !DATABASE_ID) {
-      console.error("Missing environment variables:", {
-        hasToken: !!NOTION_TOKEN,
-        hasDatabase: !!DATABASE_ID,
-      });
-      return NextResponse.json(
-        { error: "Missing NOTION_API_TOKEN or NOTION_DATABASE_ID" },
-        { status: 500 }
-      );
+      console.warn("⚠️ Missing environment variables - using mock data for local development");
+      console.warn("Set NOTION_API_TOKEN and NOTION_DATABASE_ID in .env.local to use real data");
+      
+      // Return mock data instead of error
+      return NextResponse.json(MOCK_TEAM_DATA, { status: 200 });
     }
 
     console.log("Token format check:", {
