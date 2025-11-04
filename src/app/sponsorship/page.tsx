@@ -14,7 +14,7 @@ export default function SponsorshipPage() {
         }}>
           <section className="page-heading max-w-3xl mx-auto" style={{ 
             animation: "fadeUp 420ms ease both",
-            marginBottom: "60px"
+            marginBottom: "32px"
           }}>
             <h1 className="wordmark">Sponsorship</h1>
             <p>Partner with ColorStackNYU to empower the next generation of tech leaders</p>
@@ -22,8 +22,8 @@ export default function SponsorshipPage() {
 
           {/* Why Partner Section */}
           <section style={{
-            marginBottom: "80px",
-            paddingBottom: "80px",
+            marginBottom: "24px",
+            paddingBottom: "24px",
             borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
             animation: "fadeUp 420ms ease both 100ms backwards"
           }}>
@@ -37,7 +37,7 @@ export default function SponsorshipPage() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "32px",
-            marginTop: "var(--space-medium)"
+            marginTop: "8px"
           }}>
             <div className="card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
               <h3>Diverse Talent Pool</h3>
@@ -57,7 +57,7 @@ export default function SponsorshipPage() {
         {/* Get in Touch Section */}
         <section style={{
           textAlign: "center",
-          marginTop: "60px",
+          marginTop: "24px",
           animation: "fadeUp 420ms ease both 200ms backwards"
         }}>
           <h2 style={{
