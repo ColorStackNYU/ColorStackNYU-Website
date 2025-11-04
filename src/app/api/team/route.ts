@@ -45,9 +45,11 @@ function toMember(p: any): Member {
   const role = props["Club Position"]?.select?.name || "Member";
   const rawLinkedinUrl = props["Linked-In"]?.url ?? undefined;
   
-  // Hall of Fame is a text field - if it has content, they're an alumni
-  const hallOfFameText = getPlainRichText(props["Hall of Fame"]?.rich_text ?? []);
-  const hallOfFame = Boolean(hallOfFameText);
+  // Alumni status is determined by Club Position being "Alumni"
+  const isAlumni = role === "Alumni";
+  
+  // Hall of Fame text is displayed only if member is alumni
+  const hallOfFameText = isAlumni ? getPlainRichText(props["Hall of Fame"]?.rich_text ?? []) : undefined;
 
   return {
     id: p.id,
@@ -62,7 +64,7 @@ function toMember(p: any): Member {
     url: p.url,
     // Normalize LinkedIn URL: add https:// if missing
     linkedinUrl: normalizeUrl(rawLinkedinUrl) ?? undefined,
-    hallOfFame,
+    hallOfFame: isAlumni,
     hallOfFameText,
     quote: getPlainRichText(props["Quote"]?.rich_text ?? []),
   };
@@ -216,12 +218,10 @@ export async function GET() {
       "Faculty Advisor",
     ]);
 
-    // Filter: Alumni role OR hallOfFame checkbox determines alumni status
-    const isAlumni = (m: Member) => m.role === "Alumni" || m.hallOfFame;
-    
-    const leadership: Member[] = members.filter((m) => leadershipSet.has(m.role) && !isAlumni(m));
-    const core: Member[] = members.filter((m) => !leadershipSet.has(m.role) && !isAlumni(m));
-    const hallOfFame: Member[] = members.filter((m) => isAlumni(m));
+    // Filter based on role and alumni status
+    const leadership: Member[] = members.filter((m) => leadershipSet.has(m.role) && m.role !== "Alumni");
+    const core: Member[] = members.filter((m) => !leadershipSet.has(m.role) && m.role !== "Alumni");
+    const hallOfFame: Member[] = members.filter((m) => m.role === "Alumni");
 
     console.log(`Returning ${leadership.length} leadership, ${core.length} core members, and ${hallOfFame.length} Hall of Fame`);
 
