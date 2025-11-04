@@ -35,6 +35,18 @@
   --side-pad-desktop: 24px;
   --side-pad-mobile: 16px;
 
+  /* Granular spacing scale (for replacing magic numbers) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 48px;
+  --spacing-5xl: 64px;
+  --spacing-6xl: 80px;
+
   /* radii and shadows */
   --radius: 12px;
   --card-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
@@ -61,6 +73,33 @@
   --lh-head: 1.08;
   /* compatibility border token (subtle) */
   --border: rgba(255, 255, 255, 0.04);
+}
+
+/* ====================================
+   LIGHT THEME TOKENS
+   ==================================== */
+/* Add a light theme via a data attribute on <html> or <body> */
+[data-theme="light"] {
+  /* core tokens - LIGHT MODE */
+  --canvas: #ffffff;
+  --surface: #f8f9fa;
+  --text-high: #1a1a1a;
+  --text-mid: #4a4a4a;
+  --brand: #7c3aed;
+  --brand-hover: #6d28d9;
+  --brand-1: #ab82c5;
+  --brand-1-hover: #9a63b8;
+  --accent: #d946ef;
+
+  /* borders and shadows - adjusted for light */
+  --border: rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  /* marquee */
+  --marquee-bg: #f0f0f0;
+
+  /* footer link */
+  --footer-link: #7c3aed;
 }
 
 /* Theme-aware fallbacks (keeps previous data-theme attribute working) */
@@ -633,6 +672,12 @@ a {
   opacity: 0.75; /* subtle, professional look */
 }
 
+/* Light theme: use original brand logo colors (no white invert) */
+[data-theme="light"] .marquee-item img {
+  filter: none;
+  opacity: 1;
+}
+
 /* Title / subheading spacing and color inside logos band */
 .logos-section .site-container h3 {
   margin-bottom: 16px; /* 16px gap between title and subheading */
@@ -968,4 +1013,145 @@ main,
   font-size: 14px;
   line-height: 1.6;
   margin-bottom: 8px;
+}
+
+/* ====================================
+   SHARED COMPONENT STYLES (Resources, etc.)
+   ==================================== */
+
+/* Resource Tags */
+.resource-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: transparent;
+  color: #d4b5ff;
+  border-radius: 5px;
+  border: 1px solid #d4b5ff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.resource-tag:hover {
+  background-color: rgba(212, 181, 255, 0.15);
+}
+.resource-tag:focus {
+  outline: 2px solid #d4b5ff;
+  outline-offset: 2px;
+}
+
+/* Filter Buttons */
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(171, 130, 197, 0.3);
+  background-color: transparent;
+  color: var(--text-high);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.filter-btn:hover {
+  border-color: var(--brand-1);
+  background-color: rgba(171, 130, 197, 0.1);
+}
+.filter-btn:focus {
+  outline: 2px solid #d4b5ff;
+  outline-offset: 2px;
+}
+.filter-btn-active {
+  border: 2px solid var(--brand-1);
+  background-color: rgba(171, 130, 197, 0.2);
+  font-weight: 600;
+  padding: 7px 15px; /* Adjust for thicker border */
+}
+.filter-btn-all {
+  border-color: rgba(171, 130, 197, 0.5);
+  color: var(--text-mid);
+}
+
+/* Text Links */
+.text-link {
+  background: none;
+  border: none;
+  color: #d4b5ff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+  padding: 0;
+  font: inherit;
+}
+.text-link:focus {
+  outline: 2px solid #d4b5ff;
+  outline-offset: 2px;
+}
+
+/* External Link Icon */
+.external-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(212, 181, 255, 0.1);
+  border: 1px solid rgba(212, 181, 255, 0.4);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.resource-card:hover .external-link-icon {
+  background-color: rgba(212, 181, 255, 0.2);
+}
+.external-link-icon-arrow {
+  color: #b5a3d4;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+.resource-card:hover .external-link-icon-arrow {
+  color: #d4b5ff;
+  transform: scale(1.15);
+}
+
+/* Stat Strip Badge */
+.stat-strip {
+  margin-top: 16px;
+  display: inline-flex;
+  gap: 20px;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: rgba(171, 130, 197, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(171, 130, 197, 0.15);
+}
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e8e6ff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* CTA Secondary Button */
+.cta-secondary {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(212, 181, 255, 0.4);
+  background-color: transparent;
+  color: #d4b5ff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+.cta-secondary:hover {
+  border-color: #d4b5ff;
+  background-color: rgba(212, 181, 255, 0.1);
+}
+.cta-secondary:focus {
+  outline: 2px solid #d4b5ff;
+  outline-offset: 2px;
 }
