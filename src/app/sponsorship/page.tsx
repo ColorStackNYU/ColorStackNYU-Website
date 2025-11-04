@@ -7,18 +7,26 @@ export default function SponsorshipPage() {
     <>
       <Navigation />
       <main className="page-main site-container">
-        <section className="page-heading max-w-3xl mx-auto" style={{ animation: "fadeUp 420ms ease both" }}>
-          <h1 className="wordmark">Sponsorship</h1>
-          <p>Partner with ColorStackNYU to empower the next generation of tech leaders</p>
-        </section>
-
-        {/* Why Partner Section */}
-        <section style={{
-          marginBottom: "48px",
-          paddingBottom: "48px",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          animation: "fadeUp 420ms ease both 100ms backwards"
+        <div style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0 24px"
         }}>
+          <section className="page-heading max-w-3xl mx-auto" style={{ 
+            animation: "fadeUp 420ms ease both",
+            marginBottom: "60px"
+          }}>
+            <h1 className="wordmark">Sponsorship</h1>
+            <p>Partner with ColorStackNYU to empower the next generation of tech leaders</p>
+          </section>
+
+          {/* Why Partner Section */}
+          <section style={{
+            marginBottom: "80px",
+            paddingBottom: "80px",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+            animation: "fadeUp 420ms ease both 100ms backwards"
+          }}>
           <h2 style={{
             fontSize: "32px",
             fontWeight: 700,
@@ -49,6 +57,7 @@ export default function SponsorshipPage() {
         {/* Get in Touch Section */}
         <section style={{
           textAlign: "center",
+          marginTop: "60px",
           animation: "fadeUp 420ms ease both 200ms backwards"
         }}>
           <h2 style={{
@@ -93,6 +102,7 @@ export default function SponsorshipPage() {
             Contact Us by Email
           </a>
         </section>
+        </div>
       </main>
     </>
   );
