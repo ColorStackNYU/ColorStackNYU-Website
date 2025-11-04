@@ -229,7 +229,9 @@ export default function ResourcesPage() {
             <h1 className="wordmark">Resources</h1>
           </div>
           <p>
-            Helpful links, guides, and tools. For the community, By the community{" "}
+            Helpful links, guides, and tools—curated by our community.
+          </p>
+          <p>
             <a
               href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
               target="_blank"
