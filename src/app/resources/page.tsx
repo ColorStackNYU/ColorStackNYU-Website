@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Navigation from "../../components/navigation";
 import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
 
@@ -76,6 +76,61 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
   );
 }
 
+function StatStrip({ resources }: { resources: Resource[] }) {
+  const { resourcesCount, contributorsCount, lastAddedDays } = useMemo(() => {
+    const links = new Set<string>();
+    const contributors = new Set<string>();
+    const exclude = new Set(["community/anonymous", "community", "anonymous"]);
+    let latest: number | null = null;
+
+    resources.forEach((r) => {
+      if (r.link) links.add(r.link);
+
+      if (r.contributedBy) {
+        const name = r.contributedBy.trim().toLowerCase();
+        if (name && !exclude.has(name)) {
+          contributors.add(name);
+        }
+      }
+
+      if (r.dateAdded) {
+        const t = Date.parse(r.dateAdded);
+        if (!Number.isNaN(t)) {
+          if (latest === null || t > latest) latest = t;
+        }
+      }
+    });
+
+    const resourcesCount = links.size;
+    const contributorsCount = contributors.size;
+    const lastAddedDays = latest !== null ? Math.floor((Date.now() - latest) / (1000 * 60 * 60 * 24)) : null;
+    return { resourcesCount, contributorsCount, lastAddedDays };
+  }, [resources]);
+
+  const resourceLabel = resourcesCount === 1 ? "resource" : "resources";
+  const contributorLabel = contributorsCount === 1 ? "contributor" : "contributors";
+
+  return (
+    <div style={{ marginTop: "12px", color: "var(--text-mid)", fontSize: "14px", display: "flex", gap: "12px", alignItems: "center" }}>
+      <span>
+        {resourcesCount} {resourceLabel}
+      </span>
+      <span>•</span>
+      <span>
+        {contributorsCount} {contributorLabel}
+      </span>
+      {lastAddedDays !== null && (
+        <>
+          <span>•</span>
+          <span>
+            Last added: {lastAddedDays === 0 ? "today" : lastAddedDays === 1 ? "1 day ago" : `${lastAddedDays} days ago`}
+          </span>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function ResourcesPage() {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
@@ -128,7 +183,7 @@ export default function ResourcesPage() {
             </a>
           </div>
           <p>
-            Helpful links, guides, and tools—curated by our community.{" "}
+            Helpful links, guides, and tools—curated by our community. {" "}
             <button
               onClick={scrollToContribute}
               style={{
@@ -145,6 +200,14 @@ export default function ResourcesPage() {
               How to contribute
             </button>
           </p>
+
+          {/* Stat strip: global counts (computed from JSON) */}
+          {/**
+           * Resources: unique links (exact URL dedupe)
+           * Contributors: unique contributedBy (case-insensitive), excluding Community/Anonymous
+           * Optional: Last added: N days ago
+           */}
+          <StatStrip resources={resources} />
         </section>
 
         <section>
