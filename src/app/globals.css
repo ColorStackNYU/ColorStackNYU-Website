@@ -245,7 +245,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 24px;
+  padding: var(--spacing-xl);
   background: linear-gradient(
     180deg,
     rgba(7, 5, 10, 0) 0%,
@@ -253,7 +253,7 @@ html {
     rgba(7, 5, 10, 0.85) 100%
   );
   color: var(--text-high);
-  font-size: 18px;
+  font-size: var(--fs-h3);
   font-weight: 500;
   line-height: 1.5;
   text-align: left;
@@ -312,19 +312,19 @@ html {
 .site-header .nav-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 .site-header .nav-center {
   display: flex;
   align-items: center;
-  gap: 24px; /* horizontal spacing between nav items */
+  gap: var(--spacing-xl); /* horizontal spacing between nav items */
   flex: 1;
   justify-content: center;
 }
 .site-header .nav-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 /* Mobile: hide desktop nav, show hamburger */
@@ -374,7 +374,7 @@ html {
   font-weight: 500;
   font-size: var(--fs-small);
   text-decoration: none;
-  padding: 8px 16px;
+  padding: var(--spacing-sm) var(--spacing-lg);
   border-radius: 10px;
   transition: color 160ms ease, background 160ms ease, transform 120ms ease, box-shadow 120ms ease;
   position: relative;
@@ -632,35 +632,35 @@ html {
 
 .section-inner {
   align-items: center; /* vertical align text and media */
-  row-gap: 12px; /* reduce gap between rows inside this particular grid */
+  row-gap: var(--spacing-md); /* reduce gap between rows inside this particular grid */
 }
 
 /* Benefit list styling */
 .benefit-list {
   display: block;
-  margin-top: 8px;
+  margin-top: var(--spacing-sm);
 }
 .benefit-item {
   display: flex;
-  gap: 12px;
+  gap: var(--spacing-md);
   align-items: flex-start;
-  margin-bottom: 14px;
+  margin-bottom: var(--spacing-md);
 }
 .benefit-icon {
   color: var(--brand);
-  font-size: 20px;
+  font-size: var(--fs-h3);
   line-height: 1;
-  margin-top: 6px; /* visually center with text */
+  margin-top: var(--spacing-xs); /* visually center with text */
 }
 .benefit-title {
   font-weight: 600;
   color: var(--text-high);
-  font-size: 18px; /* slightly larger than desc */
+  font-size: var(--fs-h3); /* slightly larger than desc */
 }
 .benefit-desc {
   color: var(--text-mid);
-  font-size: 15px;
-  margin-top: 6px;
+  font-size: var(--fs-small);
+  margin-top: var(--spacing-xs);
   line-height: 1.6; /* more readable */
 }
 .benefit-copy {
@@ -674,14 +674,14 @@ html {
 .connect-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 36px; /* 32-40px gap range */
+  gap: var(--spacing-3xl); /* 32-40px gap range */
   justify-items: center; /* center the row */
   align-items: stretch; /* stretch cards to equal height */
 }
 @media (max-width: 960px) {
   .connect-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: var(--spacing-xl);
   }
 }
 
@@ -689,7 +689,7 @@ html {
   width: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
-  padding: 40px;
+  padding: var(--spacing-3xl);
   border-radius: 12px;
   box-shadow: var(--card-shadow);
   transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
@@ -708,15 +708,15 @@ html {
   box-shadow: 0 10px 28px rgba(0,0,0,0.15);
 }
 .connect-title {
-  font-size: 24px;
+  font-size: var(--fs-h2);
   color: var(--text-high);
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 var(--spacing-md) 0;
 }
 .connect-desc {
-  font-size: 16px;
+  font-size: var(--fs-body);
   color: var(--text-mid);
-  margin: 0 0 18px 0;
+  margin: 0 0 var(--spacing-lg) 0;
   line-height: 1.5;
   flex: 1; /* take up available space to push button down */
 }
@@ -765,7 +765,7 @@ a {
 /* Header part of Where We've Landed */
 .logos-section .site-container:first-child {
   margin-bottom: var(--spacing-xl);
-  padding: 32px;
+  padding: var(--spacing-2xl);
   background: var(--canvas);
   backdrop-filter: blur(8px);
   border-radius: 16px;
@@ -780,41 +780,41 @@ a {
 .logos-marquee-wrap {
   position: relative;
   overflow: hidden;
-  margin-top: 24px;
+  margin-top: var(--spacing-xl);
   background: rgba(17, 19, 24, 0.3);
   backdrop-filter: blur(8px);
-  padding: 16px 0;
+  padding: var(--spacing-lg) 0;
 }
 [data-theme="light"] .logos-marquee-wrap {
   background: rgba(240, 240, 240, 0.5);
 }
 .logos-marquee {
   width: 100%;
-  padding: 12px 0;
+  padding: var(--spacing-md) 0;
   max-width: 1400px;
   margin: 0 auto;
 }
 .marquee-track {
   display: flex;
   width: max-content;
-  gap: 48px;
+  gap: var(--spacing-4xl);
   align-items: center;
   animation: marquee-scroll 38s linear infinite;
 }
 .marquee-set {
   display: flex;
-  gap: 48px;
+  gap: var(--spacing-4xl);
   align-items: center;
 }
 .marquee-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px;
+  padding: var(--spacing-xs) var(--spacing-sm);
   opacity: 0.9;
 }
 .marquee-item img {
-  height: 32px;
+  height: var(--spacing-2xl);
   width: auto;
   display: block;
   filter: brightness(0) invert(1);

@@ -260,7 +260,7 @@ export default function ResourcesPage() {
                           Category: {selectedCategory}
                           <button 
                             onClick={() => setSelectedCategory(null)}
-                            style={{ marginLeft: "6px", opacity: 0.7 }}
+                            style={{ marginLeft: "var(--spacing-xs)", opacity: 0.7 }}
                           >
                             ×
                           </button>
@@ -271,7 +271,7 @@ export default function ResourcesPage() {
                           #{selectedTag}
                           <button 
                             onClick={() => setSelectedTag(null)}
-                            style={{ marginLeft: "6px", opacity: 0.7 }}
+                            style={{ marginLeft: "var(--spacing-xs)", opacity: 0.7 }}
                           >
                             ×
                           </button>
@@ -319,7 +319,7 @@ export default function ResourcesPage() {
 
         {/* Secondary CTA: bottom of resources list */}
         {filteredResources.length > 0 && (
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "48px", marginBottom: "64px" }}>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "var(--spacing-4xl)", marginBottom: "var(--spacing-5xl)" }}>
             <a
               href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
               target="_blank"

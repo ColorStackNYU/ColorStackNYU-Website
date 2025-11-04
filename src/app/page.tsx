@@ -64,7 +64,7 @@ export default function Home() {
 
             <p
               className="max-w-4xl site-tagline"
-              style={{ marginTop: "6px", marginBottom: "var(--spacing-6xl)" }}
+              style={{ marginTop: "var(--spacing-sm)", marginBottom: "var(--spacing-6xl)" }}
             >
               The largest community of Black and Latino students in tech at NYU
             </p>

@@ -78,7 +78,7 @@ export default function Gallery() {
   const src = `/events/${current.file}`;
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
+    <div style={{ display: "grid", gap: "var(--spacing-lg)" }}>
       <div
         className="gallery-card"
         onMouseEnter={() => setPaused(true)}
