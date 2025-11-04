@@ -187,7 +187,7 @@ function StatStrip({ resources }: { resources: Resource[] }) {
 export default function ResourcesPage() {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   useEffect(() => {
@@ -212,7 +212,7 @@ export default function ResourcesPage() {
   };
 
   const filteredResources = resources.filter((r) => {
-    const matchesCategory = selectedCategories.size === 0 || selectedCategories.has(r.category);
+    const matchesCategory = !selectedCategory || r.category === selectedCategory;
     const matchesTag = !selectedTag || (r.tags && r.tags.includes(selectedTag));
     return matchesCategory && matchesTag;
   });
@@ -270,10 +270,10 @@ export default function ResourcesPage() {
                   <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)" }}>
                     Filter
                   </h3>
-                  {(selectedCategories.size > 0 || selectedTag) && (
+                  {(selectedCategory || selectedTag) && (
                     <button
                       onClick={() => {
-                        setSelectedCategories(new Set());
+                        setSelectedCategory(null);
                         setSelectedTag(null);
                       }}
                       style={{
@@ -302,31 +302,31 @@ export default function ResourcesPage() {
                 {/* Category chips */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
                   <button
-                    onClick={() => setSelectedCategories(new Set())}
+                    onClick={() => setSelectedCategory(null)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
-                        setSelectedCategories(new Set());
+                        setSelectedCategory(null);
                       }
                     }}
                     style={{
                       padding: "8px 16px",
                       borderRadius: "8px",
-                      border: selectedCategories.size === 0 ? "1px solid rgba(171, 130, 197, 0.5)" : "1px solid rgba(171, 130, 197, 0.3)",
-                      backgroundColor: selectedCategories.size === 0 ? "transparent" : "transparent",
-                      color: selectedCategories.size === 0 ? "var(--text-mid)" : "var(--text-high)",
+                      border: !selectedCategory ? "1px solid rgba(171, 130, 197, 0.5)" : "1px solid rgba(171, 130, 197, 0.3)",
+                      backgroundColor: "transparent",
+                      color: !selectedCategory ? "var(--text-mid)" : "var(--text-high)",
                       cursor: "pointer",
                       fontWeight: 500,
                       fontSize: "14px",
                       transition: "all 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
-                      if (selectedCategories.size === 0) return;
+                      if (!selectedCategory) return;
                       e.currentTarget.style.borderColor = "var(--brand-1)";
                       e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
                     }}
                     onMouseLeave={(e) => {
-                      if (selectedCategories.size === 0) return;
+                      if (!selectedCategory) return;
                       e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
                       e.currentTarget.style.backgroundColor = "transparent";
                     }}
@@ -341,29 +341,17 @@ export default function ResourcesPage() {
                     All
                   </button>
                   {RESOURCE_CATEGORIES.map((category) => {
-                    const isSelected = selectedCategories.has(category);
+                    const isSelected = selectedCategory === category;
                     return (
                       <button
                         key={category}
                         onClick={() => {
-                          const newCategories = new Set(selectedCategories);
-                          if (isSelected) {
-                            newCategories.delete(category);
-                          } else {
-                            newCategories.add(category);
-                          }
-                          setSelectedCategories(newCategories);
+                          setSelectedCategory(isSelected ? null : category);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.key === " ") {
                             e.preventDefault();
-                            const newCategories = new Set(selectedCategories);
-                            if (isSelected) {
-                              newCategories.delete(category);
-                            } else {
-                              newCategories.add(category);
-                            }
-                            setSelectedCategories(newCategories);
+                            setSelectedCategory(isSelected ? null : category);
                           }
                         }}
                         style={{
