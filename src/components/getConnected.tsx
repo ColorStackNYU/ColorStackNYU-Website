@@ -7,8 +7,8 @@ export default function GetConnected() {
     return (
         <section className="section">
             <ContentContainer>
-                <header className="text-center mb-10">
-                    <h2 className="text-3xl font-bold tracking-tight" style={{color:'var(--text-high)'}}>Get Connected</h2>
+                <header className="text-center" style={{ marginBottom: "var(--spacing-3xl)" }}>
+                    <h2 className="font-bold tracking-tight" style={{ fontSize: "28px", color: "var(--text-high)" }}>Get Connected</h2>
                 </header>
 
                 <div className="connect-grid">
@@ -19,7 +19,8 @@ export default function GetConnected() {
                             href="http://eepurl.com/jnc-JE"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block mt-6 btn btn-primary"
+                            className="inline-block btn btn-primary"
+                            style={{ marginTop: "var(--spacing-6xl)" }}
                         >
                             Subscribe
                         </a>
@@ -32,7 +33,8 @@ export default function GetConnected() {
                             href="https://www.colorstack.org/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block mt-6 btn btn-primary"
+                            className="inline-block btn btn-primary"
+                            style={{ marginTop: "var(--spacing-6xl)" }}
                         >
                             Apply Now
                         </a>
@@ -46,7 +48,8 @@ export default function GetConnected() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Join ColorStackNYU WhatsApp group chat"
-                            className="inline-block mt-6 btn btn-primary"
+                            className="inline-block btn btn-primary"
+                            style={{ marginTop: "var(--spacing-6xl)" }}
                         >
                             Join Group Chat
                         </a>

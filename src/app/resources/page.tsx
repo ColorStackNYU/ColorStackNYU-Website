@@ -213,7 +213,7 @@ export default function ResourcesPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
                   {/* Category filter */}
                   <div>
-                    <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)", marginBottom: "var(--spacing-sm)" }}>
+                    <h3 className="font-semibold" style={{ fontSize: "var(--fs-small)", color: "var(--text-high)", marginBottom: "var(--spacing-sm)" }}>
                       Browse by Category
                     </h3>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)" }}>

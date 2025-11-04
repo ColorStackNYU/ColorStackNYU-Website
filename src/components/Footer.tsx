@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="site-container">
         <div className="footer-grid">
           <div className="col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex items-center mb-6" style={{ gap: "var(--spacing-md)" }}>
               <div className="w-12 h-12 bg-gradient-to-r flex items-center justify-center">
                 <Image
                   src="/Colorstack_Logo.png"
@@ -16,7 +16,7 @@ export default function Footer() {
                   className="rounded-md"
                 />
               </div>
-              <h3 className="text-2xl font-bold" style={{ color: "var(--text-high)" }}>ColorStackNYU</h3>
+              <h3 className="font-bold" style={{ fontSize: "var(--fs-h2)", color: "var(--text-high)" }}>ColorStackNYU</h3>
             </div>
             <p className="footer-tagline">
               Empowering the next generation of Black and Latino technologists
@@ -24,7 +24,7 @@ export default function Footer() {
             </p>
           </div>
           <nav aria-label="Quick Links">
-            <h4 style={{ color: "var(--text-high)" }} className="font-semibold text-lg mb-4">
+            <h4 className="font-semibold" style={{ fontSize: "18px", marginBottom: "var(--spacing-lg)", color: "var(--text-high)" }}>
               Quick Links
             </h4>
             <ul className="space-y-3" style={{ listStyle: "none", padding: 0, margin: 0 }}>
@@ -51,7 +51,7 @@ export default function Footer() {
             </ul>
           </nav>
           <nav aria-label="Social Media">
-            <h4 style={{ color: "var(--text-high)" }} className="font-semibold text-lg mb-4">Connect</h4>
+            <h4 className="font-semibold" style={{ fontSize: "18px", marginBottom: "var(--spacing-lg)", color: "var(--text-high)" }}>Connect</h4>
             <ul className="space-y-3" style={{ listStyle: "none", padding: 0, margin: 0 }}>
               <li>
                 <a

@@ -69,11 +69,11 @@ export default function MeetTheTeamPage() {
         </section>
 
         {loading ? (
-          <p className="text-center text-white/70">Loading…</p>
+          <p className="text-center" style={{ color: "rgba(255, 255, 255, 0.7)" }}>Loading…</p>
         ) : (
           <>
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--text-high)" }}>
+            <section style={{ marginBottom: "var(--spacing-6xl)" }}>
+              <h2 className="font-bold" style={{ fontSize: "var(--fs-h2)", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
                 Current E-Board
               </h2>
               <div className="card-grid">
@@ -81,15 +81,15 @@ export default function MeetTheTeamPage() {
                   <Card key={m.id} m={m} />
                 ))}
               </div>
-              {members.length === 0 && <p className="text-center text-white/60 text-sm">No members yet.</p>}
+              {members.length === 0 && <p className="text-center" style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "var(--fs-small)" }}>No members yet.</p>}
             </section>
 
             {hallOfFame.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-2xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
+              <section style={{ marginBottom: "var(--spacing-5xl)" }}>
+                <h2 className="font-bold" style={{ fontSize: "var(--fs-h2)", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}>
                   Hall of Fame
                 </h2>
-                <p className="text-center mb-8" style={{ color: "var(--text-mid)" }}>
+                <p className="text-center" style={{ marginBottom: "var(--spacing-6xl)", color: "var(--text-mid)" }}>
                   Celebrating our alumni who helped build ColorStack @ NYU
                 </p>
                 <div className="card-grid">
@@ -142,7 +142,7 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
         </div>
       )}
       
-      <div className="flex items-start gap-3">
+      <div className="flex items-start" style={{ gap: "var(--spacing-md)" }}>
         {m.icon?.type === "url" ? (
           <Image
             src={m.icon.value}
@@ -153,18 +153,18 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
           />
         ) : (
           <div className="h-16 w-16 rounded-lg bg-brand flex items-center justify-center flex-shrink-0" aria-hidden="true">
-            <span className="text-white font-semibold text-xl">{m.name.charAt(0)}</span>
+            <span className="text-white font-semibold" style={{ fontSize: "var(--fs-h3)" }}>{m.name.charAt(0)}</span>
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-lg font-semibold" style={{ color: "var(--text-high)", paddingRight: m.linkedinUrl ? "32px" : "0" }}>{m.name}</h3>
-          <p className="text-sm" style={{ color: "var(--text-mid)" }}>{m.role}</p>
+          <h3 className="truncate font-semibold" style={{ fontSize: "18px", color: "var(--text-high)", paddingRight: m.linkedinUrl ? "32px" : "0" }}>{m.name}</h3>
+          <p style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.role}</p>
         </div>
       </div>
-      {m.bio && <p className="mt-3 text-sm leading-relaxed" style={{ color: "var(--text-mid)" }}>{m.bio}</p>}
+      {m.bio && <p className="leading-relaxed" style={{ marginTop: "var(--spacing-md)", fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.bio}</p>}
       {isAlumni && m.quote && (
-        <div className="mt-4 pt-3 border-t" style={{ borderColor: "rgba(171, 130, 197, 0.2)" }}>
-          <p className="text-sm leading-relaxed italic" style={{ color: "var(--text-mid)", opacity: 0.9 }}>
+        <div className="border-t" style={{ marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderColor: "rgba(171, 130, 197, 0.2)" }}>
+          <p className="leading-relaxed italic" style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)", opacity: 0.9 }}>
             &ldquo;{m.quote}&rdquo;
           </p>
         </div>

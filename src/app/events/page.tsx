@@ -121,8 +121,8 @@ export default function EventsPage() {
           {!loading && !error && (
             <div>
                 {/* Upcoming Events Section */}
-                <section className="mb-12">
-                <h2 className="text-xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
+                <section style={{ marginBottom: "var(--spacing-5xl)" }}>
+                <h2 className="font-bold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}>
                   Upcoming Events
                 </h2>
 
@@ -132,8 +132,8 @@ export default function EventsPage() {
                   </p>
                 ) : (
                   Object.entries(groupedUpcoming).map(([monthYear, events]) => (
-                    <div key={monthYear} className="mb-12">
-                      <h3 className="text-lg font-semibold mb-4" style={{ color: "var(--text-high)" }}>
+                    <div key={monthYear} style={{ marginBottom: "var(--spacing-5xl)" }}>
+                      <h3 className="font-semibold" style={{ fontSize: "18px", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
                         {monthYear}
                       </h3>
                       <div className="card-grid">
@@ -148,8 +148,8 @@ export default function EventsPage() {
 
               {/* Past Events Section - Only show if there are past events */}
               {pastEvents.length > 0 && (
-                <section className="mb-12">
-                  <h2 className="text-xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
+                <section style={{ marginBottom: "var(--spacing-5xl)" }}>
+                  <h2 className="font-bold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}>
                     Past Events
                   </h2>
                   <div className="card-grid">

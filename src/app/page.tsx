@@ -51,8 +51,9 @@ export default function Home() {
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             <h1
-              className="mb-4 leading-tight"
+              className="leading-tight"
               style={{
+                marginBottom: "var(--spacing-lg)",
                 color: "var(--text-high)",
                 fontSize: "clamp(36px, 6vw, 64px)",
                 fontWeight: 600,
@@ -62,13 +63,13 @@ export default function Home() {
             </h1>
 
             <p
-              className="mb-6 max-w-4xl site-tagline"
-              style={{ marginTop: "6px" }}
+              className="max-w-4xl site-tagline"
+              style={{ marginTop: "6px", marginBottom: "var(--spacing-6xl)" }}
             >
               The largest community of Black and Latino students in tech at NYU
             </p>
 
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center" style={{ gap: "var(--spacing-lg)" }}>
               <button
                 onClick={scrollToGetConnected}
                 className="btn btn-primary"
@@ -86,12 +87,12 @@ export default function Home() {
           <ContentContainer className="text-center relative">
             <div className="relative z-10">
               <h2
-                className="text-2xl font-semibold"
-                style={{ color: "var(--text-high)" }}
+                className="font-semibold"
+                style={{ fontSize: "var(--fs-h2)", color: "var(--text-high)" }}
               >
                 Where We&apos;ve Landed
               </h2>
-              <p className="text-sm mt-2" style={{ color: "var(--text-mid)" }}>
+              <p style={{ fontSize: "var(--fs-small)", marginTop: "var(--spacing-sm)", color: "var(--text-mid)" }}>
                 ColorStack members have interned and gone full time at top tech companies
               </p>
             </div>
@@ -228,12 +229,12 @@ export default function Home() {
             <div className="col-span-5">
               <h2
                 id="mission-heading"
-                className="text-4xl font-bold mb-6"
-                style={{ color: "var(--text-high)" }}
+                className="font-bold"
+                style={{ fontSize: "36px", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}
               >
                 Our Mission
               </h2>
-              <p className="text-lg mb-6" style={{ color: "var(--text-mid)" }}>
+              <p style={{ fontSize: "18px", marginBottom: "var(--spacing-6xl)", color: "var(--text-mid)" }}>
                 Dedicated to increasing the number of Black and Latinx Computer
                 Science graduates who go on to launch rewarding technical
                 careers

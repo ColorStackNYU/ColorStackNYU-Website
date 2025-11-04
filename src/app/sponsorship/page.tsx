@@ -63,7 +63,7 @@ export default function SponsorshipPage() {
             color: "var(--text-high)",
             marginBottom: "var(--spacing-xl)"
           }}>Get in Touch</h2>
-          <p style={{ color: "var(--text-mid)" }} className="mb-8 max-w-2xl mx-auto">
+          <p className="max-w-2xl mx-auto" style={{ color: "var(--text-mid)", marginBottom: "var(--spacing-6xl)" }}>
             Ready to make an impact? Join us in building a more diverse and inclusive tech industry.
           </p>
           <a
@@ -72,7 +72,7 @@ export default function SponsorshipPage() {
             style={{
               height: "56px",
               padding: "0 32px",
-              fontSize: "16px"
+              fontSize: "var(--fs-body)"
             }}
           >
             Contact Us
