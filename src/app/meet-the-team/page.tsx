@@ -43,6 +43,7 @@ export default function MeetTheTeamPage() {
       icon: m.icon,
       linkedinUrl: m.linkedinUrl,
       hallOfFame: m.hallOfFame,
+      hallOfFameText: m.hallOfFameText,
       quote: m.quote,
     });
 
