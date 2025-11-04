@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import ContentContainer from "./ContentContainer";
 
 export default function GetConnected() {
     
     return (
         <section className="section">
-            <div className="site-container">
+            <ContentContainer>
                 <header className="text-center mb-10">
                     <h2 className="text-3xl font-bold tracking-tight" style={{color:'var(--text-high)'}}>Get Connected</h2>
                 </header>
@@ -52,7 +53,7 @@ export default function GetConnected() {
                         </a>
                     </div>
                 </div>
-            </div>
+            </ContentContainer>
         </section>
     );
 }

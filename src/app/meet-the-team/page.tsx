@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Navigation from "../../components/navigation";
+import ContentContainer from "../../components/ContentContainer";
 
 type Member = {
   id: string;
@@ -54,7 +55,8 @@ export default function MeetTheTeamPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main site-container">
+      <main className="page-main">
+        <ContentContainer>
         <section className="page-heading max-w-3xl mx-auto">
           <h1 className="wordmark">Meet the Team</h1>
           <p>The students powering ColorStack @ NYU</p>
@@ -72,6 +74,7 @@ export default function MeetTheTeamPage() {
             {members.length === 0 && <p className="text-center text-white/60 text-sm">No members yet.</p>}
           </section>
         )}
+        </ContentContainer>
       </main>
     </>
   );

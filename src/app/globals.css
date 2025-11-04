@@ -167,6 +167,12 @@ body {
   align-items: center;
 }
 
+/* Light theme header: softer than pure white */
+[data-theme="light"] .site-header {
+  background: rgba(248, 249, 250, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
 /* ensure container inside header centers vertically and uses full header height */
 .site-header .site-container {
   height: 100%;
@@ -306,18 +312,28 @@ html {
 .site-header .nav-left {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-right: 20px; /* spacing between logo and nav items */
+  gap: 10px;
 }
 .site-header .nav-center {
   display: flex;
   align-items: center;
-  gap: 32px; /* horizontal spacing between nav items */
+  gap: 24px; /* horizontal spacing between nav items */
 }
 .site-header .nav-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+}
+
+/* Logo wrap ensures a stable left cluster size so center nav feels centered */
+.logo-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: var(--brand-grad);
 }
 
 /* Nav link styling - CONSOLIDATED (was split into 2 definitions) */

@@ -57,7 +57,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
         <div className="flex items-center justify-between">
           <div className="nav-left">
             <Link href="/" onClick={closeMenu} aria-label="Home">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{backgroundImage:'var(--brand-grad)'}}>
+              <div className="logo-wrap">
                 <img src="/Colorstack_Logo.png" alt="Logo" className="w-10 h-10 rounded-md" />
               </div>
             </Link>

@@ -1,17 +1,14 @@
 "use client";
 
 import Navigation from "../../components/navigation";
+import ContentContainer from "../../components/ContentContainer";
 
 export default function SponsorshipPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main site-container">
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "0 var(--spacing-xl)"
-        }}>
+      <main className="page-main">
+        <ContentContainer>
           <section className="page-heading max-w-3xl mx-auto" style={{ 
             animation: "fadeUp 420ms ease both",
             marginBottom: "var(--spacing-2xl)"
@@ -102,7 +99,7 @@ export default function SponsorshipPage() {
             Contact Us by Email
           </a>
         </section>
-        </div>
+        </ContentContainer>
       </main>
     </>
   );

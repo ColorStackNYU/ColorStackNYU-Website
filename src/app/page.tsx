@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Navigation from "../components/navigation";
+import ContentContainer from "../components/ContentContainer";
 import GetConnected from "../components/getConnected";
 import Gallery from "../components/Gallery";
 import Link from "next/link";
@@ -51,7 +52,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="section hero">
-        <div className="site-container">
+        <ContentContainer>
           <div
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
@@ -83,12 +84,12 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </div>
+        </ContentContainer>
       </section>
 
       {/* Where We've Landed - Marquee Section */}
       <section className="section logos-section">
-          <div className="site-container text-center">
+          <ContentContainer className="text-center">
           <h3
             className="text-2xl font-semibold"
             style={{ color: "var(--text-high)" }}
@@ -98,7 +99,7 @@ export default function Home() {
           <p className="text-sm mt-2" style={{ color: "var(--text-mid)" }}>
             ColorStack members have interned and gone full time at top tech companies
           </p>
-        </div>
+        </ContentContainer>
 
         <div className="logos-marquee-wrap" aria-hidden="false">
           <div className="logos-marquee">
@@ -226,7 +227,7 @@ export default function Home() {
 
       {/* Mission Section */}
       <section id="about" className="section">
-        <div className="site-container">
+        <ContentContainer>
           <div className="grid-12 section-inner">
             <div className="col-span-5">
               <h2
@@ -277,7 +278,7 @@ export default function Home() {
               <Gallery />
             </div>
           </div>
-        </div>
+        </ContentContainer>
       </section>
 
       <div id="get-connected">

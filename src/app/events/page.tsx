@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Navigation from "../../components/navigation";
+import ContentContainer from "../../components/ContentContainer";
 
 type EventItem = {
   id: string;
@@ -40,7 +41,8 @@ export default function EventsPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main site-container">
+      <main className="page-main">
+        <ContentContainer>
         <section className="page-heading max-w-3xl mx-auto">
           <h1 className="wordmark">Events</h1>
           <p>Upcoming happenings at ColorStackNYU</p>
@@ -76,7 +78,7 @@ export default function EventsPage() {
               <p className="text-center text-white/60 col-span-full">No events yet.</p>
             )}
           </ul>
-        )}
+  )}
 
         {/* Points Section - DISABLED FOR NOW, KEPT FOR LATER */}
         {false && (
@@ -114,6 +116,7 @@ export default function EventsPage() {
             </div>
           </section>
         )}
+        </ContentContainer>
       </main>
     </>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Navigation from "../../components/navigation";
+import ContentContainer from "../../components/ContentContainer";
 import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
 
 function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string) => void }) {
@@ -162,7 +163,8 @@ export default function ResourcesPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main site-container">
+      <main className="page-main">
+        <ContentContainer>
         <section className="page-heading max-w-3xl mx-auto">
           <div style={{ marginBottom: "var(--spacing-lg)" }}>
             <h1 className="wordmark">Resources</h1>
@@ -188,7 +190,7 @@ export default function ResourcesPage() {
            * Optional: Last added: N days ago
            */}
           <StatStrip resources={resources} />
-        </section>
+  </section>
 
         <section>
           {loading ? (
@@ -312,6 +314,7 @@ export default function ResourcesPage() {
             </a>
           </div>
         )}
+        </ContentContainer>
       </main>
     </>
   );
