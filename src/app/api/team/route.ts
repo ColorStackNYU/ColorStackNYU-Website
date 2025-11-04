@@ -196,9 +196,12 @@ export async function GET() {
       "Faculty Advisor",
     ]);
 
-    const leadership: Member[] = members.filter((m) => leadershipSet.has(m.role) && !m.hallOfFame);
-    const core: Member[] = members.filter((m) => !leadershipSet.has(m.role) && !m.hallOfFame);
-    const hallOfFame: Member[] = members.filter((m) => m.hallOfFame);
+    // Filter: Alumni role OR hallOfFame checkbox determines alumni status
+    const isAlumni = (m: Member) => m.role === "Alumni" || m.hallOfFame;
+    
+    const leadership: Member[] = members.filter((m) => leadershipSet.has(m.role) && !isAlumni(m));
+    const core: Member[] = members.filter((m) => !leadershipSet.has(m.role) && !isAlumni(m));
+    const hallOfFame: Member[] = members.filter((m) => isAlumni(m));
 
     console.log(`Returning ${leadership.length} leadership, ${core.length} core members, and ${hallOfFame.length} Hall of Fame`);
 

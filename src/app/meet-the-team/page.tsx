@@ -157,7 +157,7 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="truncate font-semibold" style={{ fontSize: "var(--fs-h3)", color: "var(--text-high)", paddingRight: m.linkedinUrl ? "var(--spacing-2xl)" : "0" }}>{m.name}</h3>
+          <h3 className="font-semibold" style={{ fontSize: "var(--fs-h3)", color: "var(--text-high)", paddingRight: m.linkedinUrl ? "var(--spacing-2xl)" : "0", wordWrap: "break-word", overflowWrap: "break-word" }}>{m.name}</h3>
           <p style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.role}</p>
         </div>
       </div>
