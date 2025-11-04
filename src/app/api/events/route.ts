@@ -58,12 +58,6 @@ function toEventItem(p: any): EventItem {
   
   // Extract and validate Instagram URL (optional field)
   const rawInstagramUrl = props["Instagram link"]?.url || undefined;
-  
-  // Debug: log what we're getting
-  if (title) {
-    console.log(`Event "${title}": Instagram link raw = ${rawInstagramUrl}`);
-  }
-  
   const instagramUrl = normalizeInstagramUrl(rawInstagramUrl);
 
   return {
@@ -184,17 +178,6 @@ export async function GET() {
     });
 
     console.log(`Found ${response.results.length} events in database`);
-
-    // Debug: log property names and Instagram link details from first event
-    if (response.results.length > 0) {
-      console.log("=== First Event Properties ===");
-      const props = response.results[0].properties || {};
-      Object.keys(props).forEach(key => {
-        console.log(`  "${key}"`);
-      });
-      console.log("Instagram link raw:", JSON.stringify(props["Instagram link"], null, 2));
-      console.log("=============================");
-    }
 
     const events = response.results.map(toEventItem);
     const validEvents = events.filter((event: EventItem) => event.title && event.start);
