@@ -78,40 +78,42 @@ export default function EventsPage() {
           </ul>
         )}
 
-        {/* Points Section */}
-        <section className="mt-20">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-white">What are Points?</h2>
-          </div>
+        {/* Points Section - DISABLED FOR NOW, KEPT FOR LATER */}
+        {false && (
+          <section className="mt-20">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-white">What are Points?</h2>
+            </div>
 
-          <div className="content-section">
-            <p>
-              Points are earned by attending events (1 point per event). Points help determine priority
-              for limited-capacity opportunities like office visits. Leaderboard shows consenting members
-              only.
-            </p>
+            <div className="content-section">
+              <p>
+                Points are earned by attending events (1 point per event). Points help determine priority
+                for limited-capacity opportunities like office visits. Leaderboard shows consenting members
+                only.
+              </p>
 
-            <div className="benefit-grid">
-              <div>
-                <h3>How to Earn?</h3>
-                <ul>
-                  <li>• Attend events (1 point each)</li>
-                  <li>• Participate in workshops</li>
-                  <li>• Engage in community activities</li>
-                </ul>
-              </div>
+              <div className="benefit-grid">
+                <div>
+                  <h3>How to Earn?</h3>
+                  <ul>
+                    <li>• Attend events (1 point each)</li>
+                    <li>• Participate in workshops</li>
+                    <li>• Engage in community activities</li>
+                  </ul>
+                </div>
 
-              <div>
-                <h3>Benefits</h3>
-                <ul>
-                  <li>• Priority for office visits</li>
-                  <li>• Access to exclusive events</li>
-                  <li>• Recognition in the community</li>
-                </ul>
+                <div>
+                  <h3>Benefits</h3>
+                  <ul>
+                    <li>• Priority for office visits</li>
+                    <li>• Access to exclusive events</li>
+                    <li>• Recognition in the community</li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
     </>
   );
