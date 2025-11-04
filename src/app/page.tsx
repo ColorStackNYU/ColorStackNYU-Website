@@ -285,9 +285,9 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-white/10">
+      <footer className="site-footer">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-12">
+          <div className="footer-grid">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r flex items-center justify-center">
@@ -299,7 +299,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-bold text-white">ColorStackNYU</h3>
               </div>
-              <p className="text-white/70 text-lg leading-relaxed">
+              <p className="footer-tagline">
                 Empowering the next generation of Black and Latino technologists
                 at NYU and beyond
               </p>
@@ -311,25 +311,25 @@ export default function Home() {
               <div className="space-y-3">
                 <a
                   href="#about"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   About Us
                 </a>
                 <a
                   href="/events"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   Events
                 </a>
                 <a
                   href="/resources"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   Resources
                 </a>
                 <a
                   href="/meet-the-team"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   Meet the Team
                 </a>
@@ -341,14 +341,14 @@ export default function Home() {
                 <a
                   href="https://www.instagram.com/colorstacknyu/"
                   target="_blank"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   Instagram
                 </a>
                 <a
                   href="#"
                   target="_blank"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   LinkedIn
                 </a>
@@ -356,13 +356,13 @@ export default function Home() {
                   href="https://chat.whatsapp.com/your-invite-link"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   WhatsApp
                 </a>
                 <a
                   href="mailto:colorstacknyu@gmail.com"
-                  className="block text-white/70 hover:text-white transition-colors"
+                  className="block"
                 >
                   Email
                 </a>
