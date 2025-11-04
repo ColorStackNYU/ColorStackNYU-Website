@@ -161,7 +161,7 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
           <p style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.role}</p>
         </div>
       </div>
-      {m.bio && <p className="leading-relaxed" style={{ marginTop: "var(--spacing-md)", fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.bio}</p>}
+      {m.bio && <p className="leading-relaxed" style={{ marginTop: "var(--spacing-md)", fontSize: "var(--fs-small)", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>{m.bio}</p>}
       {isAlumni && m.quote && (
         <div className="border-t" style={{ marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderColor: "rgba(171, 130, 197, 0.2)" }}>
           <p className="leading-relaxed italic" style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)", opacity: 0.9 }}>

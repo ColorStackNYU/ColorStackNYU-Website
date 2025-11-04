@@ -68,7 +68,7 @@ export default function Home() {
             <h1
               className="leading-tight"
               style={{
-                marginBottom: "var(--spacing-lg)",
+                marginBottom: "var(--spacing-xl)",
                 color: "var(--text-high)",
                 fontSize: "clamp(36px, 6vw, 64px)",
                 fontWeight: 600,
@@ -79,7 +79,7 @@ export default function Home() {
 
             <p
               className="max-w-4xl site-tagline"
-              style={{ marginTop: "var(--spacing-sm)", marginBottom: "var(--spacing-6xl)" }}
+              style={{ marginTop: "0", marginBottom: "var(--spacing-5xl)" }}
             >
               The largest community of Black and Latino students in tech at NYU
             </p>
@@ -103,11 +103,11 @@ export default function Home() {
             <div className="relative z-10">
               <h2
                 className="font-semibold"
-                style={{ fontSize: "var(--fs-h2)", color: "var(--text-high)" }}
+                style={{ fontSize: "var(--fs-h2)", color: "var(--text-high)", marginBottom: "var(--spacing-md)" }}
               >
                 Where We&apos;ve Landed
               </h2>
-              <p style={{ fontSize: "var(--fs-small)", marginTop: "var(--spacing-sm)", color: "var(--text-mid)" }}>
+              <p style={{ fontSize: "var(--fs-body)", marginTop: "0", color: "var(--text-mid)" }}>
                 ColorStack members have interned and gone full time at top tech companies
               </p>
             </div>
@@ -245,11 +245,11 @@ export default function Home() {
               <h2
                 id="mission-heading"
                 className="font-bold"
-                style={{ fontSize: "var(--fs-h1)", marginBottom: "var(--spacing-xl)", color: "var(--text-high)" }}
+                style={{ fontSize: "var(--fs-h1)", marginBottom: "var(--spacing-2xl)", color: "var(--text-high)" }}
               >
                 Our Mission
               </h2>
-              <p style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-2xl)", color: "var(--text-mid)" }}>
+              <p style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-3xl)", color: "var(--text-mid)", lineHeight: "1.5" }}>
                 Dedicated to increasing the number of Black and Latinx Computer
                 Science graduates who go on to launch rewarding technical
                 careers
