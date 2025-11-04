@@ -2,6 +2,7 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
+import { normalizeUrl } from "@/lib/urlHelpers";
 
 const NOTION_TOKEN = process.env.NOTION_API_TOKEN!;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
@@ -41,6 +42,7 @@ function toMember(p: any): Member {
   const props = p.properties || {};
   const name = (props["Name"]?.title?.[0]?.plain_text || "").trim();
   const role = props["Club Position"]?.select?.name || "Member";
+  const rawLinkedinUrl = props["Linked-In"]?.url ?? undefined;
 
   return {
     id: p.id,
@@ -53,7 +55,8 @@ function toMember(p: any): Member {
     phone: props["Phone"]?.phone_number ?? undefined,
     icon: pickIcon(p.icon),
     url: p.url,
-    linkedinUrl: props["Linked-In"]?.url ?? undefined,
+    // Normalize LinkedIn URL: add https:// if missing
+    linkedinUrl: normalizeUrl(rawLinkedinUrl) ?? undefined,
     hallOfFame: props["Hall of Fame"]?.checkbox ?? false,
     quote: getPlainRichText(props["Quote"]?.rich_text ?? []),
   };
@@ -184,6 +187,15 @@ export async function GET() {
 
     // Explicitly type the array so `m` in filters is not `any`
     const members: Member[] = (response.results as any[]).map(toMember);
+
+    // Debug logging for LinkedIn URLs
+    console.log("=== LINKEDIN URL DEBUG ===");
+    members.forEach((m) => {
+      if (m.linkedinUrl || (response.results as any[]).find((r: any) => r.properties["Name"]?.title?.[0]?.plain_text?.trim() === m.name)?.properties["Linked-In"]?.url) {
+        console.log(`${m.name}: ${m.linkedinUrl || "(not set)"}`);
+      }
+    });
+    console.log("========================");
 
     const leadershipSet = new Set<string>([
       "President",

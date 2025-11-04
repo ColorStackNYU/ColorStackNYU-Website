@@ -31,7 +31,7 @@ export default function MeetTheTeamPage() {
   useEffect(() => {
     if (!data) return;
     
-    const toCard = (m: any): Member => ({
+    const transformMember = (m: any): Member => ({
       id: m.id,
       name: m.name,
       role: m.role,
@@ -46,8 +46,8 @@ export default function MeetTheTeamPage() {
     });
 
     // Combine all current members into one array
-    const allMembers = [...(data.leadership ?? []).map(toCard), ...(data.core ?? []).map(toCard)];
-    const alumni = (data.hallOfFame ?? []).map(toCard);
+    const allMembers = [...(data.leadership ?? []), ...(data.core ?? [])].map(transformMember);
+    const alumni = (data.hallOfFame ?? []).map(transformMember);
     
     // Sort members by role priority, then alphabetically
     const roleOrder = ["President", "Vice President", "Treasurer"];
@@ -165,28 +165,12 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
         <div className="min-w-0 flex-1">
           <h3 className="font-semibold" style={{ fontSize: "var(--fs-h3)", color: "var(--text-high)", paddingRight: m.linkedinUrl ? "var(--spacing-2xl)" : "0", wordWrap: "break-word", overflowWrap: "break-word" }}>{m.name}</h3>
           <p style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.role}</p>
+          {m.bio && <p style={{ fontSize: "var(--fs-small)", color: "var(--brand-1)", marginTop: "var(--spacing-xs)", lineHeight: "1.4" }}>{m.bio}</p>}
         </div>
       </div>
-      {m.bio && <p className="leading-relaxed" style={{ marginTop: "var(--spacing-md)", fontSize: "var(--fs-small)", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>{m.bio}</p>}
-      
-      {/* Tags/Labels Section - Like Resources Page */}
-      {(m.major || m.year) && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-xs)", marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
-          {m.year && (
-            <span className="resource-tag" style={{ display: "inline-block" }}>
-              {m.year}
-            </span>
-          )}
-          {m.major && (
-            <span className="resource-tag" style={{ display: "inline-block" }}>
-              {m.major}
-            </span>
-          )}
-        </div>
-      )}
       
       {isAlumni && m.quote && (
-        <div className="border-t" style={{ marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderColor: "rgba(171, 130, 197, 0.2)" }}>
+        <div style={{ marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
           <p className="leading-relaxed italic" style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)", opacity: 0.9 }}>
             &ldquo;{m.quote}&rdquo;
           </p>
