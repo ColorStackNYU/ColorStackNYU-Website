@@ -118,7 +118,6 @@ export default function Home() {
           <div className="marquee-item"><LogoImage name="netflix" alt="Netflix" /></div>
           <div className="marquee-item"><LogoImage name="uber" alt="Uber" /></div>
           <div className="marquee-item"><LogoImage name="airbnb" alt="Airbnb" /></div>
-          <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
           <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
           <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
                 <div className="marquee-item">
@@ -157,9 +156,7 @@ export default function Home() {
                 <div className="marquee-item">
                   <LogoImage name="airbnb" alt="Airbnb" />
                 </div>
-                <div className="marquee-item">
-                  <LogoImage name="salesforce" alt="Salesforce" />
-                </div>
+                
                 <div className="marquee-item">
                   <LogoImage name="adobe" alt="Adobe" />
                 </div>
@@ -180,7 +177,6 @@ export default function Home() {
                 <div className="marquee-item"><LogoImage name="netflix" alt="Netflix" /></div>
                 <div className="marquee-item"><LogoImage name="uber" alt="Uber" /></div>
                 <div className="marquee-item"><LogoImage name="airbnb" alt="Airbnb" /></div>
-                <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
                 <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
                 <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
                 <div className="marquee-item">
@@ -218,9 +214,6 @@ export default function Home() {
                 </div>
                 <div className="marquee-item">
                   <LogoImage name="airbnb" alt="Airbnb" />
-                </div>
-                <div className="marquee-item">
-                  <LogoImage name="salesforce" alt="Salesforce" />
                 </div>
                 <div className="marquee-item">
                   <LogoImage name="adobe" alt="Adobe" />
