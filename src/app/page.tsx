@@ -104,23 +104,23 @@ export default function Home() {
           <div className="logos-marquee">
             <div className="marquee-track" aria-hidden="true">
               {/* Duplicate set 1 */}
-              <div className="marquee-set">
-                  <div className="marquee-item"><LogoImage name="google" alt="Google" /></div>
-                  <div className="marquee-item"><LogoImage name="meta" alt="Meta" /></div>
-                  <div className="marquee-item"><LogoImage name="microsoft" alt="Microsoft" /></div>
-                  <div className="marquee-item"><LogoImage name="amazon" alt="Amazon" /></div>
-                  <div className="marquee-item"><LogoImage name="apple" alt="Apple" /></div>
-                  <div className="marquee-item"><LogoImage name="bloomberg" alt="Bloomberg" /></div>
-                  <div className="marquee-item"><LogoImage name="goldman-sachs" alt="Goldman Sachs" /></div>
-                  <div className="marquee-item"><LogoImage name="jpmorgan" alt="JPMorgan" /></div>
-                  <div className="marquee-item"><LogoImage name="spotify" alt="Spotify" /></div>
-                  <div className="marquee-item"><LogoImage name="netflix" alt="Netflix" /></div>
-                  <div className="marquee-item"><LogoImage name="uber" alt="Uber" /></div>
-                  <div className="marquee-item"><LogoImage name="airbnb" alt="Airbnb" /></div>
-                  <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
-                  <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
-                  <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
-                  <div className="marquee-item"><LogoImage name="janestreet" alt="Jane Street" /></div>
+        <div className="marquee-set">
+          <div className="marquee-item"><LogoImage name="google" alt="Google" /></div>
+          <div className="marquee-item"><LogoImage name="meta" alt="Meta" /></div>
+          <div className="marquee-item"><LogoImage name="microsoft" alt="Microsoft" /></div>
+          <div className="marquee-item"><LogoImage name="janestreet" alt="Jane Street" /></div>
+          <div className="marquee-item"><LogoImage name="amazon" alt="Amazon" /></div>
+          <div className="marquee-item"><LogoImage name="apple" alt="Apple" /></div>
+          <div className="marquee-item"><LogoImage name="bloomberg" alt="Bloomberg" /></div>
+          <div className="marquee-item"><LogoImage name="goldman-sachs" alt="Goldman Sachs" /></div>
+          <div className="marquee-item"><LogoImage name="jpmorgan" alt="JPMorgan" /></div>
+          <div className="marquee-item"><LogoImage name="spotify" alt="Spotify" /></div>
+          <div className="marquee-item"><LogoImage name="netflix" alt="Netflix" /></div>
+          <div className="marquee-item"><LogoImage name="uber" alt="Uber" /></div>
+          <div className="marquee-item"><LogoImage name="airbnb" alt="Airbnb" /></div>
+          <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
+          <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
+          <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
                 <div className="marquee-item">
                   <LogoImage name="google" alt="Google" />
                 </div>
@@ -170,6 +170,7 @@ export default function Home() {
                 <div className="marquee-item"><LogoImage name="google" alt="Google" /></div>
                 <div className="marquee-item"><LogoImage name="meta" alt="Meta" /></div>
                 <div className="marquee-item"><LogoImage name="microsoft" alt="Microsoft" /></div>
+                <div className="marquee-item"><LogoImage name="janestreet" alt="Jane Street" /></div>
                 <div className="marquee-item"><LogoImage name="amazon" alt="Amazon" /></div>
                 <div className="marquee-item"><LogoImage name="apple" alt="Apple" /></div>
                 <div className="marquee-item"><LogoImage name="bloomberg" alt="Bloomberg" /></div>
@@ -182,7 +183,6 @@ export default function Home() {
                 <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
                 <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
                 <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
-                <div className="marquee-item"><LogoImage name="janestreet" alt="Jane Street" /></div>
                 <div className="marquee-item">
                   <LogoImage name="google" alt="Google" />
                 </div>
