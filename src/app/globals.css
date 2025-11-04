@@ -185,6 +185,23 @@ html {
   scroll-padding-top: calc(var(--header-h) + 16px + env(safe-area-inset-top));
 }
 
+/* Skip to main content link - accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--brand);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 /* 12-column grid helpers */
 .grid-12 {
   display: grid;

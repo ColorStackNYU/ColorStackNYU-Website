@@ -8,9 +8,22 @@ import LogoImage from "../components/LogoImage";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleChange);
+
+    // Only animate if user doesn't prefer reduced motion
+    if (!mediaQuery.matches) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(true); // Still set visible, just skip transition
+    }
 
     // Handle hash navigation when component mounts
     const handleHashNavigation = () => {
@@ -25,6 +38,8 @@ export default function Home() {
     };
 
     handleHashNavigation();
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   // Function to scroll to GetConnected section
@@ -48,7 +63,7 @@ export default function Home() {
         <div className="hero-background" aria-hidden="true"></div>
         <ContentContainer>
           <div
-            className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            className={`${!prefersReducedMotion ? "transition-all duration-1000" : ""} ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             <h1
               className="leading-tight"
