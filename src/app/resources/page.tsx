@@ -5,6 +5,8 @@ import Navigation from "../../components/navigation";
 import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
 
 function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string) => void }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <a
       href={r.link}
@@ -16,15 +18,40 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
         flexDirection: "column",
         gap: "0",
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Title + Link Icon (dominant) */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", marginBottom: "12px" }}>
         <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
           {r.title}
         </h3>
-        <span style={{ color: "var(--brand-1)", fontSize: "16px", flexShrink: 0, marginTop: "2px" }}>
-          ↗
-        </span>
+        <div
+          title="Opens in new tab"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "32px",
+            height: "32px",
+            borderRadius: "50%",
+            backgroundColor: isHovered ? "rgba(212, 181, 255, 0.2)" : "rgba(212, 181, 255, 0.1)",
+            border: "1px solid rgba(212, 181, 255, 0.4)",
+            flexShrink: 0,
+            transition: "all 0.2s ease",
+          }}
+        >
+          <span
+            style={{
+              color: isHovered ? "#d4b5ff" : "#b5a3d4",
+              fontSize: "18px",
+              transition: "all 0.2s ease",
+              transform: isHovered ? "scale(1.15)" : "scale(1)",
+            }}
+          >
+            ↗
+          </span>
+        </div>
       </div>
 
       {/* Description (secondary) */}
