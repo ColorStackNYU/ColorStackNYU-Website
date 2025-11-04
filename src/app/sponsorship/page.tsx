@@ -10,11 +10,11 @@ export default function SponsorshipPage() {
         <div style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 24px"
+          padding: "0 var(--spacing-xl)"
         }}>
           <section className="page-heading max-w-3xl mx-auto" style={{ 
             animation: "fadeUp 420ms ease both",
-            marginBottom: "32px"
+            marginBottom: "var(--spacing-2xl)"
           }}>
             <h1 className="wordmark">Sponsorship</h1>
             <p>Partner with ColorStackNYU to empower the next generation of tech leaders</p>
@@ -22,8 +22,8 @@ export default function SponsorshipPage() {
 
           {/* Why Partner Section */}
           <section style={{
-            marginBottom: "24px",
-            paddingBottom: "24px",
+            marginBottom: "var(--spacing-xl)",
+            paddingBottom: "var(--spacing-xl)",
             borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
             animation: "fadeUp 420ms ease both 100ms backwards"
           }}>
@@ -31,13 +31,13 @@ export default function SponsorshipPage() {
             fontSize: "32px",
             fontWeight: 700,
             color: "var(--text-high)",
-            marginBottom: "24px"
+            marginBottom: "var(--spacing-xl)"
           }}>Why Partner?</h2>
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "32px",
-            marginTop: "8px"
+            gap: "var(--spacing-2xl)",
+            marginTop: "var(--spacing-sm)"
           }}>
             <div className="card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
               <h3>Diverse Talent Pool</h3>
@@ -57,14 +57,14 @@ export default function SponsorshipPage() {
         {/* Get in Touch Section */}
         <section style={{
           textAlign: "center",
-          marginTop: "24px",
+          marginTop: "var(--spacing-xl)",
           animation: "fadeUp 420ms ease both 200ms backwards"
         }}>
           <h2 style={{
             fontSize: "32px",
             fontWeight: 700,
             color: "var(--text-high)",
-            marginBottom: "24px"
+            marginBottom: "var(--spacing-xl)"
           }}>Get in Touch</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
             Ready to make an impact? Join us in building a more diverse and inclusive tech industry.

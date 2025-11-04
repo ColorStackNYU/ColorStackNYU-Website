@@ -18,7 +18,7 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       }}
     >
       {/* Title + Link Icon (dominant) */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", marginBottom: "12px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "var(--spacing-md)", marginBottom: "var(--spacing-md)" }}>
         <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
           {r.title}
         </h3>
@@ -28,13 +28,13 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       </div>
 
       {/* Description (secondary) */}
-      <p style={{ flex: 1, margin: "0 0 16px 0", fontSize: "14px", fontWeight: 400, color: "#e8e6ff", lineHeight: "1.6" }}>
+      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "14px", fontWeight: 400, color: "#e8e6ff", lineHeight: "1.6" }}>
         {r.description}
       </p>
 
       {/* Tags (tertiary) */}
       {r.tags && r.tags.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "12px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)", marginBottom: "var(--spacing-md)" }}>
           {r.tags.map((tag) => (
             <button
               key={tag}
@@ -57,7 +57,7 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       )}
 
       {/* Metadata footer: Category + Contributor (de-emphasized) */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "12px", paddingTop: "8px", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "var(--spacing-md)", paddingTop: "var(--spacing-sm)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
         <div>
           {r.category && (
             <p style={{ margin: "0", fontSize: "11px", color: "#d4b5ff", opacity: 1 }}>
@@ -164,7 +164,7 @@ export default function ResourcesPage() {
       <Navigation />
       <main className="page-main site-container">
         <section className="page-heading max-w-3xl mx-auto">
-          <div style={{ marginBottom: "16px" }}>
+          <div style={{ marginBottom: "var(--spacing-lg)" }}>
             <h1 className="wordmark">Resources</h1>
           </div>
           <p>
@@ -196,8 +196,8 @@ export default function ResourcesPage() {
           ) : (
             <>
               {/* Filter Controls */}
-              <div style={{ marginBottom: "16px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <div style={{ marginBottom: "var(--spacing-lg)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--spacing-md)" }}>
                   <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)" }}>
                     Filter
                   </h3>
@@ -216,7 +216,7 @@ export default function ResourcesPage() {
                 </div>
 
                 {/* Category chips */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)", marginBottom: "var(--spacing-lg)" }}>
                   <button
                     onClick={() => setSelectedCategory(null)}
                     onKeyDown={(e) => {
@@ -253,9 +253,9 @@ export default function ResourcesPage() {
 
                 {/* Tag filter indicator */}
                 {selectedTag && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingTop: "12px", borderTop: "1px solid rgba(171, 130, 197, 0.2)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(171, 130, 197, 0.2)" }}>
                     <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Tag:</span>
-                    <span style={{ padding: "4px 12px", backgroundColor: "rgba(217, 70, 239, 0.2)", borderRadius: "6px", color: "var(--accent)", fontSize: "14px", fontWeight: 500 }}>
+                    <span style={{ padding: "var(--spacing-xs) var(--spacing-md)", backgroundColor: "rgba(217, 70, 239, 0.2)", borderRadius: "6px", color: "var(--accent)", fontSize: "14px", fontWeight: 500 }}>
                       {selectedTag}
                     </span>
                     <button
