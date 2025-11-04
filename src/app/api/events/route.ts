@@ -52,8 +52,8 @@ function toEventItem(p: any): EventItem {
   const tags = getTagsFromMultiSelect(props["Tags"]?.multi_select ?? []);
   const status = props["Status"]?.select?.name || "Scheduled";
   
-  // Extract and validate Instagram URL
-  const rawInstagramUrl = props["Instagram"]?.url || undefined;
+  // Extract and validate Instagram URL (optional field)
+  const rawInstagramUrl = props["Instagram link"]?.url || undefined;
   const instagramUrl = validateInstagramUrl(rawInstagramUrl);
 
   return {
