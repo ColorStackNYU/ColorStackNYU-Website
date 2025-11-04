@@ -122,7 +122,7 @@ export default function EventsPage() {
             <div>
                 {/* Upcoming Events Section */}
                 <section style={{ marginBottom: "var(--spacing-5xl)" }}>
-                <h2 className="font-bold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}>
+                <h2 className="font-bold" style={{ fontSize: "var(--fs-h2)", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
                   Upcoming Events
                 </h2>
 
@@ -132,8 +132,8 @@ export default function EventsPage() {
                   </p>
                 ) : (
                   Object.entries(groupedUpcoming).map(([monthYear, events]) => (
-                    <div key={monthYear} style={{ marginBottom: "var(--spacing-5xl)" }}>
-                      <h3 className="font-semibold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
+                    <div key={monthYear} style={{ marginBottom: "var(--spacing-4xl)" }}>
+                      <h3 className="font-semibold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-2xl)", color: "var(--text-high)" }}>
                         {monthYear}
                       </h3>
                       <div className="card-grid">
@@ -149,7 +149,7 @@ export default function EventsPage() {
               {/* Past Events Section - Only show if there are past events */}
               {pastEvents.length > 0 && (
                 <section style={{ marginBottom: "var(--spacing-5xl)" }}>
-                  <h2 className="font-bold" style={{ fontSize: "var(--fs-h3)", marginBottom: "var(--spacing-6xl)", color: "var(--text-high)" }}>
+                  <h2 className="font-bold" style={{ fontSize: "var(--fs-h2)", marginBottom: "var(--spacing-4xl)", color: "var(--text-high)" }}>
                     Past Events
                   </h2>
                   <div className="card-grid">
@@ -214,12 +214,12 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
       {/* Title - Dominant */}
       <h3 
         style={{ 
-          fontSize: "20px", 
+          fontSize: "var(--fs-h2)", 
           fontWeight: 700, 
           color: "var(--text-high)", 
-          marginBottom: "12px",
+          marginBottom: "var(--spacing-sm)",
           lineHeight: "1.3",
-          paddingRight: event.instagramUrl ? "32px" : "0", // Add padding when icon is present
+          paddingRight: event.instagramUrl ? "var(--spacing-2xl)" : "0",
         }}
       >
         {event.title}
@@ -227,11 +227,11 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
 
       {/* Date - Secondary */}
       <p style={{ 
-        fontSize: "14px", 
+        fontSize: "var(--fs-small)", 
         fontWeight: 400,
         color: "var(--text-mid)", 
-        marginBottom: "16px",
-        opacity: 0.9,
+        marginBottom: "var(--spacing-md)",
+        opacity: 0.85,
       }}>
         <time dateTime={event.start}>
           {formatEventDate(event.start)}
@@ -243,16 +243,16 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
         <div style={{ 
           display: "flex", 
           flexWrap: "wrap", 
-          gap: "8px",
+          gap: "var(--spacing-sm)",
           marginTop: "auto",
-          paddingTop: "12px",
+          paddingTop: "var(--spacing-md)",
           borderTop: "1px solid rgba(171, 130, 197, 0.15)",
         }}>
           {event.tags.map((tag) => (
             <span
               key={tag}
               style={{
-                fontSize: "11px",
+                fontSize: "var(--fs-small)",
                 color: "var(--brand-1)",
                 opacity: 0.9,
               }}

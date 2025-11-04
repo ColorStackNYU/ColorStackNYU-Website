@@ -69,11 +69,6 @@ export default function SponsorshipPage() {
           <a
             href="mailto:colorstacknyu@gmail.com"
             className="btn btn-primary"
-            style={{
-              height: "var(--spacing-6xl)",
-              padding: "0 var(--spacing-2xl)",
-              fontSize: "var(--fs-body)"
-            }}
           >
             Contact Us
           </a>
