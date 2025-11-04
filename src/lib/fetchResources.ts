@@ -11,7 +11,7 @@ export type Resource = {
 
 export const RESOURCE_CATEGORIES = [
   "Interview Prep",
-  "Classes",
+  "Coursework",
   "Career Growth",
   "Web Development",
   "Mobile Development",
