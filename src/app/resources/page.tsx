@@ -208,22 +208,11 @@ export default function ResourcesPage() {
       <Navigation />
       <main className="page-main site-container">
         <section className="page-heading max-w-3xl mx-auto">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "24px", marginBottom: "16px" }}>
-            <div>
-              <h1 className="wordmark">Resources</h1>
-            </div>
-            <a
-              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/issues/new?template=resource_submission.md&title=Add+Resource:+[Title]"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              Submit a resource
-            </a>
+          <div style={{ marginBottom: "16px" }}>
+            <h1 className="wordmark">Resources</h1>
           </div>
           <p>
-            Helpful links, guides, and tools. For the community, by the community.{" "}
+            Helpful links, guides, and tools—curated by our community.{" "}
             <button
               onClick={scrollToContribute}
               style={{
@@ -237,7 +226,7 @@ export default function ResourcesPage() {
                 font: "inherit",
               }}
             >
-              How to contribute
+              How to contribute →
             </button>
           </p>
 
@@ -394,6 +383,39 @@ export default function ResourcesPage() {
             </>
           )}
         </section>
+
+        {/* Secondary CTA: bottom of resources list */}
+        {filteredResources.length > 0 && (
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "48px", marginBottom: "64px" }}>
+            <a
+              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/feat/css-changes/public/resources.json"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: "12px 24px",
+                borderRadius: "8px",
+                border: "1.5px solid rgba(212, 181, 255, 0.4)",
+                backgroundColor: "transparent",
+                color: "#d4b5ff",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 500,
+                textDecoration: "none",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#d4b5ff";
+                e.currentTarget.style.backgroundColor = "rgba(212, 181, 255, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(212, 181, 255, 0.4)";
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+            >
+              Add a resource
+            </a>
+          </div>
+        )}
 
         <section id="contribute" className="max-w-3xl mx-auto" style={{ marginTop: "80px" }}>
           <h2 className="text-3xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
