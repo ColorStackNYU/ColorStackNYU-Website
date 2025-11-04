@@ -474,6 +474,50 @@ html {
   display: block;
 }
 
+/* Get Connected cards (clean, no icons) */
+.connect-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px; /* 32-40px gap range */
+  justify-items: center; /* center the row */
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .connect-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.connect-card {
+  width: 100%;
+  background: #1a1a1f; /* slightly lighter than pure black */
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  max-width: 420px;
+}
+.connect-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+.connect-title {
+  font-size: 24px;
+  color: #ffffff;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+.connect-desc {
+  font-size: 16px;
+  color: #D1D5DB; /* light gray for description */
+  margin: 0 0 18px 0;
+  line-height: 1.5;
+}
+
+
 /* Accessibility: ensure links that open new tabs show non-neon colors */
 a {
   color: var(--brand);

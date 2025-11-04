@@ -11,33 +11,42 @@ export default function GetConnected() {
                     <h2 className="text-3xl font-bold tracking-tight" style={{color:'var(--text-high)'}}>Get Connected</h2>
                 </header>
 
-                <div className="grid gap-8 sm:grid-cols-2">
-                    <div className="surface-card">
-                        <h3 className="text-xl font-semibold" style={{color:'var(--text-high)'}}>Club Newsletter</h3>
-                        <p className="text-sm mt-1" style={{color:'var(--text-mid)'}}>
-                            Stay up to date with our events and news — subscribe below.
-                        </p>
+                <div className="connect-grid">
+                    <div className="connect-card">
+                        <h3 className="connect-title">Club Newsletter</h3>
+                        <p className="connect-desc">Stay up to date with our events and news</p>
                         <a
                             href="http://eepurl.com/jnc-JE"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block mt-4 btn btn-primary"
+                            className="inline-block mt-6 btn btn-primary"
                         >
                             Subscribe
                         </a>
                     </div>
 
-                    <div className="surface-card">
-                        <h3 className="text-xl font-semibold" style={{color:'var(--text-high)'}}>WhatsApp Group Chat</h3>
-                        <p className="text-sm mt-1" style={{color:'var(--text-mid)'}}>
-                            Join our WhatsApp group to get quick updates and chat with members.
-                        </p>
+                    <div className="connect-card">
+                        <h3 className="connect-title">Join National ColorStack</h3>
+                        <p className="connect-desc">Apply to the national organization for exclusive opportunities, mentorship, and access to a community of 10,000+ members</p>
+                        <a
+                            href="https://colorstack.org/apply"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block mt-6 btn btn-primary"
+                        >
+                            Apply Now
+                        </a>
+                    </div>
+
+                    <div className="connect-card">
+                        <h3 className="connect-title">WhatsApp Group Chat</h3>
+                        <p className="connect-desc">Join our WhatsApp group to get quick updates and chat with members.</p>
                         <a
                             href="https://chat.whatsapp.com/ETvUe1brGFk9zW361SVD94?mode=ac_t"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Join ColorStackNYU WhatsApp group chat"
-                            className="inline-block mt-4 btn btn-primary"
+                            className="inline-block mt-6 btn btn-primary"
                         >
                             Join Group Chat
                         </a>
