@@ -5,6 +5,7 @@ import Navigation from "../components/navigation";
 import GetConnected from "../components/getConnected";
 import Gallery from "../components/Gallery";
 import Link from "next/link";
+import LogoImage from "../components/LogoImage";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -104,93 +105,125 @@ export default function Home() {
             <div className="marquee-track" aria-hidden="true">
               {/* Duplicate set 1 */}
               <div className="marquee-set">
+                  <div className="marquee-item"><LogoImage name="google" alt="Google" /></div>
+                  <div className="marquee-item"><LogoImage name="meta" alt="Meta" /></div>
+                  <div className="marquee-item"><LogoImage name="microsoft" alt="Microsoft" /></div>
+                  <div className="marquee-item"><LogoImage name="amazon" alt="Amazon" /></div>
+                  <div className="marquee-item"><LogoImage name="apple" alt="Apple" /></div>
+                  <div className="marquee-item"><LogoImage name="bloomberg" alt="Bloomberg" /></div>
+                  <div className="marquee-item"><LogoImage name="goldman-sachs" alt="Goldman Sachs" /></div>
+                  <div className="marquee-item"><LogoImage name="jpmorgan" alt="JPMorgan" /></div>
+                  <div className="marquee-item"><LogoImage name="spotify" alt="Spotify" /></div>
+                  <div className="marquee-item"><LogoImage name="netflix" alt="Netflix" /></div>
+                  <div className="marquee-item"><LogoImage name="uber" alt="Uber" /></div>
+                  <div className="marquee-item"><LogoImage name="airbnb" alt="Airbnb" /></div>
+                  <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
+                  <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
+                  <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
+                  <div className="marquee-item"><LogoImage name="janestreet" alt="Jane Street" /></div>
                 <div className="marquee-item">
-                  <img src="/logos/google.svg" alt="Google" />
+                  <LogoImage name="google" alt="Google" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/meta.svg" alt="Meta" />
+                  <LogoImage name="meta" alt="Meta" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/microsoft.svg" alt="Microsoft" />
+                  <LogoImage name="microsoft" alt="Microsoft" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/amazon.svg" alt="Amazon" />
+                  <LogoImage name="amazon" alt="Amazon" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/apple.svg" alt="Apple" />
+                  <LogoImage name="apple" alt="Apple" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/bloomberg.svg" alt="Bloomberg" />
+                  <LogoImage name="bloomberg" alt="Bloomberg" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/goldman-sachs.svg" alt="Goldman Sachs" />
+                  <LogoImage name="goldman-sachs" alt="Goldman Sachs" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/jpmorgan.svg" alt="JPMorgan" />
+                  <LogoImage name="jpmorgan" alt="JPMorgan" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/spotify.svg" alt="Spotify" />
+                  <LogoImage name="spotify" alt="Spotify" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/netflix.svg" alt="Netflix" />
+                  <LogoImage name="netflix" alt="Netflix" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/uber.svg" alt="Uber" />
+                  <LogoImage name="uber" alt="Uber" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/airbnb.svg" alt="Airbnb" />
+                  <LogoImage name="airbnb" alt="Airbnb" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/salesforce.svg" alt="Salesforce" />
+                  <LogoImage name="salesforce" alt="Salesforce" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/adobe.svg" alt="Adobe" />
+                  <LogoImage name="adobe" alt="Adobe" />
                 </div>
               </div>
 
               {/* Duplicate set 2 (for seamless loop) */}
               <div className="marquee-set">
+                <div className="marquee-item"><LogoImage name="google" alt="Google" /></div>
+                <div className="marquee-item"><LogoImage name="meta" alt="Meta" /></div>
+                <div className="marquee-item"><LogoImage name="microsoft" alt="Microsoft" /></div>
+                <div className="marquee-item"><LogoImage name="amazon" alt="Amazon" /></div>
+                <div className="marquee-item"><LogoImage name="apple" alt="Apple" /></div>
+                <div className="marquee-item"><LogoImage name="bloomberg" alt="Bloomberg" /></div>
+                <div className="marquee-item"><LogoImage name="goldman-sachs" alt="Goldman Sachs" /></div>
+                <div className="marquee-item"><LogoImage name="jpmorgan" alt="JPMorgan" /></div>
+                <div className="marquee-item"><LogoImage name="spotify" alt="Spotify" /></div>
+                <div className="marquee-item"><LogoImage name="netflix" alt="Netflix" /></div>
+                <div className="marquee-item"><LogoImage name="uber" alt="Uber" /></div>
+                <div className="marquee-item"><LogoImage name="airbnb" alt="Airbnb" /></div>
+                <div className="marquee-item"><LogoImage name="salesforce" alt="Salesforce" /></div>
+                <div className="marquee-item"><LogoImage name="adobe" alt="Adobe" /></div>
+                <div className="marquee-item"><LogoImage name="duolingo" alt="Duolingo" /></div>
+                <div className="marquee-item"><LogoImage name="janestreet" alt="Jane Street" /></div>
                 <div className="marquee-item">
-                  <img src="/logos/google.svg" alt="Google" />
+                  <LogoImage name="google" alt="Google" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/meta.svg" alt="Meta" />
+                  <LogoImage name="meta" alt="Meta" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/microsoft.svg" alt="Microsoft" />
+                  <LogoImage name="microsoft" alt="Microsoft" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/amazon.svg" alt="Amazon" />
+                  <LogoImage name="amazon" alt="Amazon" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/apple.svg" alt="Apple" />
+                  <LogoImage name="apple" alt="Apple" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/bloomberg.svg" alt="Bloomberg" />
+                  <LogoImage name="bloomberg" alt="Bloomberg" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/goldman-sachs.svg" alt="Goldman Sachs" />
+                  <LogoImage name="goldman-sachs" alt="Goldman Sachs" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/jpmorgan.svg" alt="JPMorgan" />
+                  <LogoImage name="jpmorgan" alt="JPMorgan" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/spotify.svg" alt="Spotify" />
+                  <LogoImage name="spotify" alt="Spotify" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/netflix.svg" alt="Netflix" />
+                  <LogoImage name="netflix" alt="Netflix" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/uber.svg" alt="Uber" />
+                  <LogoImage name="uber" alt="Uber" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/airbnb.svg" alt="Airbnb" />
+                  <LogoImage name="airbnb" alt="Airbnb" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/salesforce.svg" alt="Salesforce" />
+                  <LogoImage name="salesforce" alt="Salesforce" />
                 </div>
                 <div className="marquee-item">
-                  <img src="/logos/adobe.svg" alt="Adobe" />
+                  <LogoImage name="adobe" alt="Adobe" />
                 </div>
               </div>
             </div>
@@ -214,33 +247,35 @@ export default function Home() {
                 Science graduates who go on to launch rewarding technical
                 careers
               </p>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <span className="bullet-dot" aria-hidden></span>
-                  <span
-                    style={{ color: "var(--text-high)" }}
-                    className="text-lg"
-                  >
-                    Office visits
+              <div className="benefit-list">
+                <div className="benefit-item">
+                  <span className="benefit-icon" aria-hidden>
+                    →
                   </span>
+                  <div className="benefit-copy">
+                    <div className="benefit-title">Connect with tech companies</div>
+                    <div className="benefit-desc">Office tours, coffee chats, and insider access</div>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <span className="bullet-dot" aria-hidden></span>
-                  <span
-                    style={{ color: "var(--text-high)" }}
-                    className="text-lg"
-                  >
-                    Weekly coding sessions
+
+                <div className="benefit-item">
+                  <span className="benefit-icon" aria-hidden>
+                    →
                   </span>
+                  <div className="benefit-copy">
+                    <div className="benefit-title">Build real projects together</div>
+                    <div className="benefit-desc">Weekly coding sessions with peers and mentors</div>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <span className="bullet-dot" aria-hidden></span>
-                  <span
-                    style={{ color: "var(--text-high)" }}
-                    className="text-lg"
-                  >
-                    Open to all CS levels
+
+                <div className="benefit-item">
+                  <span className="benefit-icon" aria-hidden>
+                    →
                   </span>
+                  <div className="benefit-copy">
+                    <div className="benefit-title">All experience levels welcome</div>
+                    <div className="benefit-desc">From first line of code to advanced algorithms</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -325,11 +360,12 @@ export default function Home() {
                   LinkedIn
                 </a>
                 <a
-                  href="#"
+                  href="https://chat.whatsapp.com/your-invite-link"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="block text-white/70 hover:text-white transition-colors"
                 >
-                  Discord
+                  WhatsApp
                 </a>
                 <a
                   href="mailto:colorstacknyu@gmail.com"

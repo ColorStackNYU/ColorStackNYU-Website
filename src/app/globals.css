@@ -154,8 +154,8 @@ html {
   aspect-ratio: 16/9;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.06); /* subtle light border to frame the photo */
+  box-shadow: 0 8px 20px rgba(3, 3, 6, 0.48); /* moderate shadow to lift the image */
   background: var(--surface);
   display: block;
   position: relative;
@@ -177,10 +177,15 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 10px 12px;
-  background: rgba(7, 5, 10, 0.6);
+  padding: 12px 16px; /* slightly more breathing room */
+  background: linear-gradient(
+    180deg,
+    rgba(7, 5, 10, 0) 0%,
+    rgba(7, 5, 10, 0.65) 70%
+  );
   color: var(--text-high);
-  font-size: 15px;
+  font-size: 16px; /* slightly larger caption text */
+  line-height: 1.4;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -247,6 +252,12 @@ html {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* Target Jane Street PNG specifically in case the PNG needs a slight tweak */
+.marquee-item img[data-name="janestreet"] {
+  /* If the PNG is dark on dark, adding a tiny contrast boost helps. Keep minimal. */
+  filter: none;
 }
 
 /* Nav link styles */
@@ -405,6 +416,44 @@ html {
   padding-bottom: calc(var(--section-vertical) * 0.6);
 }
 
+/* Section inner (used by .section .site-container internal grid) */
+.section-inner {
+  align-items: center; /* vertical align text and media */
+  row-gap: 12px; /* reduce gap between rows inside this particular grid */
+}
+
+/* Benefit list (Our Mission) styling */
+.benefit-list {
+  display: block;
+  margin-top: 8px;
+}
+.benefit-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.benefit-icon {
+  color: var(--brand);
+  font-size: 20px;
+  line-height: 1;
+  margin-top: 6px; /* visually center with text */
+}
+.benefit-title {
+  font-weight: 600;
+  color: var(--text-high);
+  font-size: 18px; /* slightly larger than desc */
+}
+.benefit-desc {
+  color: var(--text-mid);
+  font-size: 15px;
+  margin-top: 6px;
+  line-height: 1.6; /* more readable */
+}
+.benefit-copy {
+  display: block;
+}
+
 /* Accessibility: ensure links that open new tabs show non-neon colors */
 a {
   color: var(--brand);
@@ -484,13 +533,12 @@ main,
 
 /* Logos marquee */
 .logos-section {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.01),
-    rgba(255, 255, 255, 0.02)
-  );
-  padding-top: 64px;
-  padding-bottom: 64px;
+  /* Keep the section background the same as the page (no full-section tint).
+     We'll add a lighter inner band behind the marquee so black logos read
+     clearly while preserving the original section color. */
+  background: transparent;
+  padding-top: 40px; /* tightened gap above title */
+  padding-bottom: 60px; /* 60px below logos */
 }
 .logos-section .site-container {
   position: relative;
@@ -499,10 +547,15 @@ main,
 .logos-marquee-wrap {
   position: relative;
   overflow: hidden;
-  margin-top: 28px;
+  margin-top: 24px; /* reduced gap between subheading and logos */
 }
 .logos-marquee {
   width: 100%;
+  /* Use the exact pastel color requested by the user so the band is
+     uniformly #F3E8FF. */
+  background: #F3E8FF;
+  padding: 18px 0; /* gives breathing room inside the band */
+  border-radius: 8px;
 }
 .marquee-track {
   display: flex;
@@ -524,10 +577,24 @@ main,
   opacity: 0.8;
 }
 .marquee-item img {
-  height: 44px;
+  height: 40px; /* normalized logo height */
   width: auto;
   display: block;
   filter: none;
+}
+
+/* Allow targeting specific logos if we need small visual fixes (janestreet PNG) */
+.marquee-item img[data-name="janestreet"] {
+  filter: none;
+}
+
+/* Title / subheading spacing and color inside logos band */
+.logos-section .site-container h3 {
+  margin-bottom: 16px; /* 16px gap between title and subheading */
+}
+.logos-section .site-container p {
+  color: #b4b4bb; /* lighter gray for subheading */
+  margin: 0 0 0 0;
 }
 
 /* Edge fade: mask the left/right edges so logos fade in/out */
@@ -539,6 +606,7 @@ main,
   bottom: 0;
   width: 12%;
   pointer-events: none;
+  /* Fade from page canvas into the marquee area */
   background: linear-gradient(to right, var(--canvas), rgba(11, 10, 18, 0));
   mix-blend-mode: normal;
 }
