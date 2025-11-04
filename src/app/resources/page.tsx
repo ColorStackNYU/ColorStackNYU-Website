@@ -173,7 +173,7 @@ export default function ResourcesPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main">
+      <main id="main-content" className="page-main">
         <ContentContainer>
         <section className="page-heading max-w-3xl mx-auto">
           <div style={{ marginBottom: "var(--spacing-lg)" }}>
@@ -280,23 +280,6 @@ export default function ResourcesPage() {
                   )}
                 </div>
               </div>
-
-                {/* Tag filter indicator */}
-                {selectedTag && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(171, 130, 197, 0.2)" }}>
-                    <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Tag:</span>
-                    <span style={{ padding: "var(--spacing-xs) var(--spacing-md)", backgroundColor: "rgba(217, 70, 239, 0.2)", borderRadius: "6px", color: "var(--accent)", fontSize: "14px", fontWeight: 500 }}>
-                      {selectedTag}
-                    </span>
-                    <button
-                      onClick={() => setSelectedTag(null)}
-                      className="text-link"
-                      style={{ fontSize: "13px" }}
-                    >
-                      Clear tag
-                    </button>
-                  </div>
-                )}
 
               {/* Results */}
               {filteredResources.length === 0 ? (

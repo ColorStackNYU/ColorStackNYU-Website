@@ -1,88 +1,102 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" role="contentinfo">
       <div className="site-container">
         <div className="footer-grid">
           <div className="col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-r flex items-center justify-center">
-                <img
+                <Image
                   src="/Colorstack_Logo.png"
-                  alt="Logo"
-                  className="w-10 h-10 rounded-md"
+                  alt="ColorStackNYU logo"
+                  width={40}
+                  height={40}
+                  className="rounded-md"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-high">ColorStackNYU</h3>
+              <h3 className="text-2xl font-bold" style={{ color: "var(--text-high)" }}>ColorStackNYU</h3>
             </div>
             <p className="footer-tagline">
               Empowering the next generation of Black and Latino technologists
               at NYU and beyond
             </p>
           </div>
-          <div>
-            <h4 className="text-high font-semibold text-lg mb-4">
+          <nav aria-label="Quick Links">
+            <h4 style={{ color: "var(--text-high)" }} className="font-semibold text-lg mb-4">
               Quick Links
             </h4>
-            <div className="space-y-3">
-              <a
-                href="#about"
-                className="block"
-              >
-                About Us
-              </a>
-              <a
-                href="/events"
-                className="block"
-              >
-                Events
-              </a>
-              <a
-                href="/resources"
-                className="block"
-              >
-                Resources
-              </a>
-              <a
-                href="/meet-the-team"
-                className="block"
-              >
-                Meet the Team
-              </a>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-high font-semibold text-lg mb-4">Connect</h4>
-            <div className="space-y-3">
-              <a
-                href="https://www.instagram.com/colorstacknyu/"
-                target="_blank"
-                className="block"
-              >
-                Instagram
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                className="block"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://chat.whatsapp.com/your-invite-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                WhatsApp
-              </a>
-              <a
-                href="mailto:colorstacknyu@gmail.com"
-                className="block"
-              >
-                Email
-              </a>
-            </div>
-          </div>
+            <ul className="space-y-3" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              <li>
+                <a href="#about" className="block">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/events" className="block">
+                  Events
+                </a>
+              </li>
+              <li>
+                <a href="/resources" className="block">
+                  Resources
+                </a>
+              </li>
+              <li>
+                <a href="/meet-the-team" className="block">
+                  Meet the Team
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <nav aria-label="Social Media">
+            <h4 style={{ color: "var(--text-high)" }} className="font-semibold text-lg mb-4">Connect</h4>
+            <ul className="space-y-3" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              <li>
+                <a
+                  href="https://www.instagram.com/colorstacknyu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  aria-label="Follow us on Instagram (opens in new tab)"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/company/colorstacknyu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  aria-label="Connect with us on LinkedIn (opens in new tab)"
+                >
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://chat.whatsapp.com/ETvUe1brGFk9zW361SVD94"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  aria-label="Join our WhatsApp group (opens in new tab)"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:colorstacknyu@gmail.com"
+                  className="block"
+                  aria-label="Email us at colorstacknyu@gmail.com"
+                >
+                  Email
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>

@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useTheme } from "../context/ThemeContext";
 import ThemeToggle from "./ThemeToggle";
 
@@ -12,7 +13,6 @@ interface NavigationProps {
 
 export default function Navigation({ className = "" }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
@@ -35,21 +35,6 @@ export default function Navigation({ className = "" }: NavigationProps) {
     setIsOpen(false);
   };
 
-  const handleGetConnected = () => {
-    // Check if we're already on the home page
-    if (window.location.pathname === '/') {
-      // If on home page, just scroll to the section
-      const element = document.getElementById('get-connected');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // If on another page, navigate to home page with hash
-      router.push('/#get-connected');
-    }
-    closeMenu();
-  };
-
   return (
     <nav className={`site-header ${className}`}>
       <div className="site-container">
@@ -57,7 +42,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
           <div className="nav-left">
             <Link href="/" onClick={closeMenu} aria-label="Home">
               <div className="logo-wrap">
-                <img src="/Colorstack_Logo.png" alt="Logo" className="w-10 h-10 rounded-md" />
+                <Image src="/Colorstack_Logo.png" alt="ColorStackNYU logo" width={40} height={40} className="rounded-md" />
               </div>
             </Link>
           </div>

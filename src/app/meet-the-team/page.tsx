@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
 
@@ -55,7 +56,7 @@ export default function MeetTheTeamPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main">
+      <main id="main-content" className="page-main">
         <ContentContainer>
         <section className="page-heading max-w-3xl mx-auto">
           <h1 className="wordmark">Meet the Team</h1>
@@ -82,25 +83,27 @@ export default function MeetTheTeamPage() {
 
 function Card({ m }: { m: Member }) {
   return (
-    <div className="card">
+    <article className="card">
       <div className="flex items-start gap-3">
         {m.icon?.type === "url" ? (
-          <img
+          <Image
             src={m.icon.value}
-            alt={`${m.name}`}
+            alt={`${m.name} profile picture`}
+            width={64}
+            height={64}
             className="h-16 w-16 rounded-lg object-cover flex-shrink-0"
           />
         ) : (
-          <div className="h-16 w-16 rounded-lg bg-brand flex items-center justify-center flex-shrink-0">
+          <div className="h-16 w-16 rounded-lg bg-brand flex items-center justify-center flex-shrink-0" aria-hidden="true">
             <span className="text-white font-semibold text-xl">{m.name.charAt(0)}</span>
           </div>
         )}
         <div className="min-w-0">
-          <h3 className="truncate text-lg font-semibold text-white">{m.name}</h3>
-          <p className="text-sm text-white/80">{m.role}</p>
+          <h3 className="truncate text-lg font-semibold" style={{ color: "var(--text-high)" }}>{m.name}</h3>
+          <p className="text-sm" style={{ color: "var(--text-mid)" }}>{m.role}</p>
         </div>
       </div>
-      {m.bio && <p className="mt-3 text-sm leading-relaxed text-white/80">{m.bio}</p>}
-    </div>
+      {m.bio && <p className="mt-3 text-sm leading-relaxed" style={{ color: "var(--text-mid)" }}>{m.bio}</p>}
+    </article>
   );
 }

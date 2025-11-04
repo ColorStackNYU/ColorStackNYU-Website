@@ -4,7 +4,7 @@ import Image from "next/image";
 
 type Slide = { file: string; caption?: string; url?: string };
 
-export default function Gallery({ maxWidth }: { maxWidth?: number }) {
+export default function Gallery() {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -111,24 +111,6 @@ export default function Gallery({ maxWidth }: { maxWidth?: number }) {
     };
   }, [slides, paused, preferReduced]);
 
-  // heuristic: if natural aspect ratio differs significantly from 16:9, use contain
-  const onImageLoad = (i: number, e: any) => {
-    try {
-      const img = e.target as HTMLImageElement;
-      const naturalRatio = img.naturalWidth / img.naturalHeight;
-      const targetRatio = 16 / 9;
-      if (Math.abs(naturalRatio - targetRatio) > 0.35) {
-        setContain((prev) => {
-          const copy = [...prev];
-          copy[i] = true;
-          return copy;
-        });
-      }
-    } catch (err) {
-      // ignore
-    }
-  };
-
   if (!slides || slides.length === 0) return null;
 
   const current = slides[index];
@@ -141,13 +123,14 @@ export default function Gallery({ maxWidth }: { maxWidth?: number }) {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* Use native img because next/image with fill inside dynamic sizes can be trickier for a simple gallery */}
-        <img
+        <Image
           src={src}
           alt={current.caption || "Event photo"}
-          onLoad={(e) => onImageLoad(index, e)}
-          style={{ width: "100%", height: "100%", borderRadius: "inherit" }}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          style={{ objectFit: contain[index] ? "contain" : "cover", objectPosition: "50% 35%" }}
           className={contain[index] ? "gallery-image contain" : "gallery-image"}
+          priority={index === 0}
         />
 
         {/* Caption overlay (rendered inside image, positioned at bottom) */}

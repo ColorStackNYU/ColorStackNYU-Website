@@ -41,7 +41,7 @@ export default function EventsPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main">
+      <main id="main-content" className="page-main">
         <ContentContainer>
         <section className="page-heading max-w-3xl mx-auto">
           <h1 className="wordmark">Events</h1>
@@ -52,30 +52,35 @@ export default function EventsPage() {
         {error && <p className="text-center text-red-300">Error: {error}</p>}
 
         {!loading && !error && (
-          <ul className="card-grid">
+          <ul className="card-grid" style={{ listStyle: "none", padding: 0 }}>
             {events.map((ev) => (
-              <li key={ev.id} className="card">
-                <h3>{ev.title}</h3>
-                <p>
-                  {ev.start}
-                  {ev.end ? ` – ${ev.end}` : ""}
-                </p>
-                {ev.location && <p>{ev.location}</p>}
-                {ev.description && <p>{ev.description}</p>}
-                {ev.link && (
-                  <a
-                    className="text-brand underline mt-2 inline-block hover:text-brand-hover"
-                    href={ev.link}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    More info
-                  </a>
-                )}
+              <li key={ev.id}>
+                <article className="card">
+                  <h3>{ev.title}</h3>
+                  <p>
+                    <time dateTime={ev.start}>{ev.start}</time>
+                    {ev.end && <> – <time dateTime={ev.end}>{ev.end}</time></>}
+                  </p>
+                  {ev.location && <p><span className="sr-only">Location: </span>{ev.location}</p>}
+                  {ev.description && <p>{ev.description}</p>}
+                  {ev.link && (
+                    <a
+                      className="text-brand underline mt-2 inline-block hover:text-brand-hover"
+                      href={ev.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`More information about ${ev.title} (opens in new tab)`}
+                    >
+                      More info
+                    </a>
+                  )}
+                </article>
               </li>
             ))}
             {events.length === 0 && (
-              <p className="text-center text-white/60 col-span-full">No events yet.</p>
+              <li className="col-span-full">
+                <p className="text-center" style={{ color: "var(--text-mid)" }}>No upcoming events at this time.</p>
+              </li>
             )}
           </ul>
   )}

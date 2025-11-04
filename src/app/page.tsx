@@ -1,22 +1,16 @@
 "use client";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import Navigation from "../components/navigation";
 import ContentContainer from "../components/ContentContainer";
 import GetConnected from "../components/getConnected";
 import Gallery from "../components/Gallery";
-import Link from "next/link";
 import LogoImage from "../components/LogoImage";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     setIsVisible(true);
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 3);
-    }, 4000);
 
     // Handle hash navigation when component mounts
     const handleHashNavigation = () => {
@@ -31,8 +25,6 @@ export default function Home() {
     };
 
     handleHashNavigation();
-
-    return () => clearInterval(interval);
   }, []);
 
   // Function to scroll to GetConnected section
@@ -50,9 +42,10 @@ export default function Home() {
     <div className="min-h-screen">
       <Navigation />
 
+      <main id="main-content">
       {/* Hero Section */}
-      <section className="section hero">
-        <div className="hero-background"></div>
+      <section className="section hero" aria-label="Hero">
+        <div className="hero-background" aria-hidden="true"></div>
         <ContentContainer>
           <div
             className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
@@ -79,7 +72,7 @@ export default function Home() {
               <button
                 onClick={scrollToGetConnected}
                 className="btn btn-primary"
-                aria-label="Get Connected"
+                aria-label="Scroll to Get Connected section"
               >
                 Get Connected
               </button>
@@ -89,22 +82,22 @@ export default function Home() {
       </section>
 
       {/* Where We've Landed - Marquee Section */}
-      <section className="section logos-section">
+      <section className="section logos-section" aria-label="Company Partnerships">
           <ContentContainer className="text-center relative">
             <div className="relative z-10">
-              <h3
+              <h2
                 className="text-2xl font-semibold"
                 style={{ color: "var(--text-high)" }}
               >
                 Where We&apos;ve Landed
-              </h3>
+              </h2>
               <p className="text-sm mt-2" style={{ color: "var(--text-mid)" }}>
                 ColorStack members have interned and gone full time at top tech companies
               </p>
             </div>
           </ContentContainer>
 
-        <div className="logos-marquee-wrap" aria-hidden="false">
+        <div className="logos-marquee-wrap" aria-label="Company logos carousel">
           <div className="logos-marquee">
             <div className="marquee-track" aria-hidden="true">
               {/* Duplicate set 1 */}
@@ -229,11 +222,12 @@ export default function Home() {
       </section>
 
       {/* Mission Section */}
-      <section id="about" className="section">
+      <section id="about" className="section" aria-labelledby="mission-heading">
         <ContentContainer>
           <div className="grid-12 section-inner">
             <div className="col-span-5">
               <h2
+                id="mission-heading"
                 className="text-4xl font-bold mb-6"
                 style={{ color: "var(--text-high)" }}
               >
@@ -287,6 +281,7 @@ export default function Home() {
       <div id="get-connected">
         <GetConnected />
       </div>
+      </main>
     </div>
   );
 }

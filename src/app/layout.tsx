@@ -31,6 +31,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
           {children}
           <Footer />
         </ThemeProvider>

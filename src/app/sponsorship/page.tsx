@@ -7,7 +7,7 @@ export default function SponsorshipPage() {
   return (
     <>
       <Navigation />
-      <main className="page-main">
+      <main id="main-content" className="page-main">
         <ContentContainer>
           <section className="page-heading max-w-3xl mx-auto" style={{ 
             animation: "fadeUp 420ms ease both",
@@ -75,7 +75,7 @@ export default function SponsorshipPage() {
               fontSize: "16px"
             }}
           >
-            Contact Us by Email
+            Contact Us
           </a>
         </section>
         </ContentContainer>

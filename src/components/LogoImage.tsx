@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React from "react";
 
 interface Props {
   name: string; // file base name without extension (e.g. 'google')
@@ -12,7 +12,6 @@ export default function LogoImage({ name, alt, className }: Props) {
   const svg = `/logos/${name}.svg`;
 
   return (
-    // eslint-disable-next-line jsx-a11y/img-redundant-alt
     <img data-name={name} src={svg} alt={alt || name} className={className} />
   );
 }

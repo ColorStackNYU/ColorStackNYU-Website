@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import ContentContainer from "./ContentContainer";
 
 export default function GetConnected() {
