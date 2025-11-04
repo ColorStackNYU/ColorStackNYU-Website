@@ -169,13 +169,20 @@ export default function EventsPage() {
 
 // EventCard Component
 function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boolean }) {
-  const cardUrl = event.instagramUrl || event.url;
+  // Only use instagramUrl if it exists, otherwise make it a non-clickable card
+  const isClickable = Boolean(event.instagramUrl);
+  const CardWrapper = isClickable ? "a" : "div";
+  const cardProps = isClickable
+    ? {
+        href: event.instagramUrl,
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }
+    : {};
   
   return (
-    <a
-      href={cardUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+    <CardWrapper
+      {...(cardProps as any)}
       className="card"
       style={{
         opacity: isPast ? 0.8 : 1,
@@ -183,6 +190,7 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
         flexDirection: "column",
         height: "100%",
         position: "relative",
+        cursor: isClickable ? "pointer" : "default",
       }}
     >
       {/* Instagram Icon - Top Right */}
@@ -262,6 +270,6 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
           ))}
         </div>
       )}
-    </a>
+    </CardWrapper>
   );
 }
