@@ -24,6 +24,32 @@ function getTagsFromMultiSelect(multiSelect: any[]): string[] {
   return multiSelect.map((tag) => tag.name).filter(Boolean);
 }
 
+/**
+ * Validates and sanitizes Instagram URLs
+ * Filters out invalid URLs (like Notion links) and ensures proper Instagram format
+ * @param url - The URL to validate
+ * @returns Valid Instagram URL or undefined
+ */
+function validateInstagramUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  
+  // Check if URL is a valid Instagram URL
+  const instagramPatterns = [
+    /^https?:\/\/(www\.)?instagram\.com\/.+/i,
+    /^https?:\/\/(www\.)?instagr\.am\/.+/i,
+  ];
+  
+  const isValidInstagram = instagramPatterns.some(pattern => pattern.test(url));
+  
+  if (!isValidInstagram) {
+    console.warn(`⚠️ Invalid Instagram URL detected (possibly Notion link): "${url}"`);
+    console.warn(`   Expected format: https://instagram.com/username or https://instagram.com/p/postid`);
+    return undefined;
+  }
+  
+  return url;
+}
+
 function toEventItem(p: any): EventItem {
   const props = p.properties || {};
   const title = (props["Name"]?.title?.[0]?.plain_text || "").trim();
@@ -34,7 +60,10 @@ function toEventItem(p: any): EventItem {
 
   const tags = getTagsFromMultiSelect(props["Tags"]?.multi_select ?? []);
   const status = props["Status"]?.select?.name || "Scheduled";
-  const instagramUrl = props["Instagram"]?.url || undefined;
+  
+  // Extract and validate Instagram URL
+  const rawInstagramUrl = props["Instagram"]?.url || undefined;
+  const instagramUrl = validateInstagramUrl(rawInstagramUrl);
 
   return {
     id: p.id,
