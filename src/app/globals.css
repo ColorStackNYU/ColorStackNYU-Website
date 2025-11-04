@@ -274,11 +274,7 @@ html {
   gap: 12px;
 }
 
-/* Target Jane Street PNG specifically in case the PNG needs a slight tweak */
-.marquee-item img[data-name="janestreet"] {
-  /* If the PNG is dark on dark, adding a tiny contrast boost helps. Keep minimal. */
-  filter: none;
-}
+/* (removed janestreet-specific override so global logo filter can apply uniformly) */
 
 /* Nav link styles */
 .nav-link {
@@ -649,11 +645,7 @@ main,
 }
 
 /* Allow targeting specific logos if we need small visual fixes (janestreet PNG) */
-.marquee-item img[data-name="janestreet"] {
-  filter: none;
-}
-
-/* removed per-logo targeting — all logos are forced to the same light treatment above */
+/* per-logo janestreet override removed */
 
 /* Title / subheading spacing and color inside logos band */
 .logos-section .site-container h3 {
