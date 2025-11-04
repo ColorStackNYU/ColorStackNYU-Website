@@ -25,7 +25,7 @@ export default function SponsorshipPage() {
             animation: "fadeUp 420ms ease both 100ms backwards"
           }}>
           <h2 style={{
-            fontSize: "32px",
+            fontSize: "var(--fs-h2)",
             fontWeight: 700,
             color: "var(--text-high)",
             marginBottom: "var(--spacing-xl)"
@@ -58,7 +58,7 @@ export default function SponsorshipPage() {
           animation: "fadeUp 420ms ease both 200ms backwards"
         }}>
           <h2 style={{
-            fontSize: "32px",
+            fontSize: "var(--fs-h2)",
             fontWeight: 700,
             color: "var(--text-high)",
             marginBottom: "var(--spacing-xl)"
@@ -70,8 +70,8 @@ export default function SponsorshipPage() {
             href="mailto:colorstacknyu@gmail.com"
             className="btn btn-primary"
             style={{
-              height: "56px",
-              padding: "0 32px",
+              height: "var(--spacing-6xl)",
+              padding: "0 var(--spacing-2xl)",
               fontSize: "var(--fs-body)"
             }}
           >

@@ -20,7 +20,6 @@ export default function GetConnected() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block btn btn-primary"
-                            style={{ marginTop: "var(--spacing-6xl)" }}
                         >
                             Subscribe
                         </a>
@@ -34,7 +33,6 @@ export default function GetConnected() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block btn btn-primary"
-                            style={{ marginTop: "var(--spacing-6xl)" }}
                         >
                             Apply Now
                         </a>
@@ -49,7 +47,6 @@ export default function GetConnected() {
                             rel="noopener noreferrer"
                             aria-label="Join ColorStackNYU WhatsApp group chat"
                             className="inline-block btn btn-primary"
-                            style={{ marginTop: "var(--spacing-6xl)" }}
                         >
                             Join Group Chat
                         </a>

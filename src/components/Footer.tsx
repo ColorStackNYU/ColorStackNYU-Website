@@ -6,8 +6,8 @@ export default function Footer() {
       <div className="site-container">
         <div className="footer-grid">
           <div className="col-span-2">
-            <div className="flex items-center" style={{ gap: "var(--spacing-md)", marginBottom: "var(--spacing-6xl)" }}>
-              <div className="w-12 h-12 bg-gradient-to-r flex items-center justify-center">
+            <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)", marginBottom: "var(--spacing-6xl)" }}>
+              <div style={{ width: "var(--spacing-4xl)", height: "var(--spacing-4xl)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Image
                   src="/Colorstack_Logo.png"
                   alt="ColorStackNYU logo"
