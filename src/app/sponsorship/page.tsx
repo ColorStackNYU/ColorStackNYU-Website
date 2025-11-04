@@ -9,7 +9,7 @@ export default function SponsorshipPage() {
       <Navigation />
       <main id="main-content" className="page-main">
         <ContentContainer>
-          <section className="page-heading max-w-3xl mx-auto" style={{ 
+          <section className="page-heading" style={{ 
             animation: "fadeUp 420ms ease both",
             marginBottom: "var(--spacing-2xl)"
           }}>
@@ -25,7 +25,7 @@ export default function SponsorshipPage() {
             animation: "fadeUp 420ms ease both 100ms backwards"
           }}>
           <h2 style={{
-            fontSize: "32px",
+            fontSize: "var(--fs-h2)",
             fontWeight: 700,
             color: "var(--text-high)",
             marginBottom: "var(--spacing-xl)"
@@ -58,21 +58,21 @@ export default function SponsorshipPage() {
           animation: "fadeUp 420ms ease both 200ms backwards"
         }}>
           <h2 style={{
-            fontSize: "32px",
+            fontSize: "var(--fs-h2)",
             fontWeight: 700,
             color: "var(--text-high)",
             marginBottom: "var(--spacing-xl)"
           }}>Get in Touch</h2>
-          <p style={{ color: "var(--text-mid)" }} className="mb-8 max-w-2xl mx-auto">
+          <p className="max-w-2xl mx-auto" style={{ color: "var(--text-mid)", marginBottom: "var(--spacing-6xl)" }}>
             Ready to make an impact? Join us in building a more diverse and inclusive tech industry.
           </p>
           <a
             href="mailto:colorstacknyu@gmail.com"
             className="btn btn-primary"
             style={{
-              height: "56px",
-              padding: "0 32px",
-              fontSize: "16px"
+              height: "var(--spacing-6xl)",
+              padding: "0 var(--spacing-2xl)",
+              fontSize: "var(--fs-body)"
             }}
           >
             Contact Us

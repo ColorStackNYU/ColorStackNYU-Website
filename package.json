@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "reinstall": "rimraf node_modules package-lock.json && npm i"
+    "reinstall": "rimraf node_modules package-lock.json && npm i",
+    "validate-mock": "npx tsx scripts/validate-mock-data.ts"
   },
   "dependencies": {
     "@notionhq/client": "2.2.14",

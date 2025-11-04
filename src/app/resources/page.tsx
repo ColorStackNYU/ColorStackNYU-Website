@@ -3,7 +3,8 @@
 import { useEffect, useState, useMemo } from "react";
 import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
-import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
+import { fetchResources, type Resource } from "../../lib/fetchResources";
+import { RESOURCE_CATEGORIES } from "../../lib/constants";
 
 function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onTagClick: (tag: string) => void; setSelectedCategory: (category: string | null) => void }) {
   return (
@@ -20,7 +21,7 @@ function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onT
     >
       {/* Title + Link Icon (dominant) */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "var(--spacing-md)", marginBottom: "var(--spacing-md)" }}>
-        <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
+        <h3 style={{ margin: "0", fontSize: "var(--fs-h3)", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
           {r.title}
         </h3>
         <div className="external-link-icon" title="Opens in new tab">
@@ -29,7 +30,7 @@ function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onT
       </div>
 
       {/* Description (secondary) */}
-      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "14px", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>
+      <p style={{ flex: 1, margin: "0 0 var(--spacing-lg) 0", fontSize: "var(--fs-small)", fontWeight: 400, color: "var(--text-mid)", lineHeight: "1.6" }}>
         {r.description}
       </p>
 
@@ -175,7 +176,7 @@ export default function ResourcesPage() {
       <Navigation />
       <main id="main-content" className="page-main">
         <ContentContainer>
-        <section className="page-heading max-w-3xl mx-auto">
+        <section className="page-heading">
           <div style={{ marginBottom: "var(--spacing-lg)" }}>
             <h1 className="wordmark">Resources</h1>
           </div>
@@ -189,7 +190,7 @@ export default function ResourcesPage() {
               rel="noopener noreferrer"
               className="text-link"
             >
-              How to contribute →
+              How to contribute
             </a>
           </p>
 
@@ -212,7 +213,7 @@ export default function ResourcesPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
                   {/* Category filter */}
                   <div>
-                    <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)", marginBottom: "var(--spacing-sm)" }}>
+                    <h3 className="font-semibold" style={{ fontSize: "var(--fs-small)", color: "var(--text-high)", marginBottom: "var(--spacing-sm)" }}>
                       Browse by Category
                     </h3>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-sm)" }}>
@@ -253,13 +254,13 @@ export default function ResourcesPage() {
                       background: "rgba(171, 130, 197, 0.1)",
                       borderRadius: "8px",
                     }}>
-                      <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Active filters:</span>
+                      <span style={{ color: "var(--text-mid)", fontSize: "var(--fs-small)" }}>Active filters:</span>
                       {selectedCategory && (
                         <span className="filter-tag">
                           Category: {selectedCategory}
                           <button 
                             onClick={() => setSelectedCategory(null)}
-                            style={{ marginLeft: "6px", opacity: 0.7 }}
+                            style={{ marginLeft: "var(--spacing-xs)", opacity: 0.7 }}
                           >
                             ×
                           </button>
@@ -270,7 +271,7 @@ export default function ResourcesPage() {
                           #{selectedTag}
                           <button 
                             onClick={() => setSelectedTag(null)}
-                            style={{ marginLeft: "6px", opacity: 0.7 }}
+                            style={{ marginLeft: "var(--spacing-xs)", opacity: 0.7 }}
                           >
                             ×
                           </button>
@@ -283,18 +284,18 @@ export default function ResourcesPage() {
 
               {/* Results */}
               {filteredResources.length === 0 ? (
-                <div style={{ textAlign: "center", padding: "64px 32px" }}>
-                  <p style={{ color: "var(--text-mid)", fontSize: "16px", marginBottom: "12px" }}>
+                <div style={{ textAlign: "center", padding: "var(--spacing-5xl) var(--spacing-2xl)" }}>
+                  <p style={{ color: "var(--text-mid)", fontSize: "var(--fs-body)", marginBottom: "var(--spacing-md)" }}>
                     No resources yet in this category.
                   </p>
-                  <p style={{ color: "var(--text-mid)", fontSize: "14px", marginBottom: "24px" }}>
+                  <p style={{ color: "var(--text-mid)", fontSize: "var(--fs-small)", marginBottom: "var(--spacing-xl)" }}>
                     Want to add one?{" "}
                     <a
                       href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-link"
-                      style={{ fontSize: "14px" }}
+                      style={{ fontSize: "var(--fs-small)" }}
                     >
                       Learn how to contribute
                     </a>
@@ -318,7 +319,7 @@ export default function ResourcesPage() {
 
         {/* Secondary CTA: bottom of resources list */}
         {filteredResources.length > 0 && (
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "48px", marginBottom: "64px" }}>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "var(--spacing-4xl)", marginBottom: "var(--spacing-5xl)" }}>
             <a
               href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
               target="_blank"

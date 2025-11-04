@@ -11,20 +11,13 @@ const notion = new Client({ auth: NOTION_EVENTS_TOKEN });
 type EventItem = {
   id: string;
   title: string;
-  description?: string;
   start: string;
   end?: string;
-  location?: string;
-  link?: string;
   tags?: string[];
   status?: string;
   url: string;
+  instagramUrl?: string;
 };
-
-function getPlainRichText(rich: any[]): string | undefined {
-  if (!Array.isArray(rich) || rich.length === 0) return undefined;
-  return rich.map((r) => r.plain_text).join("").trim() || undefined;
-}
 
 function getTagsFromMultiSelect(multiSelect: any[]): string[] {
   if (!Array.isArray(multiSelect)) return [];
@@ -39,37 +32,96 @@ function toEventItem(p: any): EventItem {
   const start = dateProperty?.start || "";
   const end = dateProperty?.end || undefined;
 
-  const description = getPlainRichText(props["Description"]?.rich_text ?? []);
-  const location = getPlainRichText(props["Location"]?.rich_text ?? []);
-  const link = props["Link"]?.url || undefined;
   const tags = getTagsFromMultiSelect(props["Tags"]?.multi_select ?? []);
-  const status = props["Status"]?.select?.name || "Active";
+  const status = props["Status"]?.select?.name || "Scheduled";
+  const instagramUrl = props["Instagram"]?.url || undefined;
 
   return {
     id: p.id,
     title,
-    description,
     start,
     end,
-    location,
-    link,
     tags,
     status,
     url: p.url,
+    instagramUrl,
   };
 }
+
+// Mock data for local development
+const MOCK_EVENTS: EventItem[] = [
+  // Upcoming events
+  {
+    id: "mock-1",
+    title: "ColorStack General Body Meeting",
+    start: "2025-11-10T18:00:00",
+    end: "2025-11-10T19:30:00",
+    tags: ["general body meeting"],
+    status: "Scheduled",
+    url: "https://notion.so/mock-event-1",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
+  },
+  {
+    id: "mock-2",
+    title: "Technical Interview Workshop",
+    start: "2025-11-15T17:00:00",
+    end: "2025-11-15T19:00:00",
+    tags: ["Workshop", "Career Development"],
+    status: "Scheduled",
+    url: "https://notion.so/mock-event-2",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
+  },
+  {
+    id: "mock-3",
+    title: "Resume Review Sessions",
+    start: "2025-12-05T16:00:00",
+    end: "2025-12-05T18:00:00",
+    tags: ["Career Development"],
+    status: "Scheduled",
+    url: "https://notion.so/mock-event-3",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
+  },
+  // Past events
+  {
+    id: "mock-4",
+    title: "Fall Kickoff Social",
+    start: "2025-09-15T17:00:00",
+    end: "2025-09-15T19:00:00",
+    tags: ["Social", "Networking"],
+    status: "Completed",
+    url: "https://notion.so/mock-event-4",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
+  },
+  {
+    id: "mock-5",
+    title: "Google Office Visit",
+    start: "2025-10-20T14:00:00",
+    end: "2025-10-20T17:00:00",
+    tags: ["Office Visit", "Networking"],
+    status: "Completed",
+    url: "https://notion.so/mock-event-5",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
+  },
+  {
+    id: "mock-6",
+    title: "Hackathon Prep Workshop",
+    start: "2025-10-01T18:00:00",
+    end: "2025-10-01T20:00:00",
+    tags: ["Workshop", "Hackathon"],
+    status: "Completed",
+    url: "https://notion.so/mock-event-6",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
+  },
+];
 
 export async function GET() {
   try {
     if (!NOTION_EVENTS_TOKEN || !EVENTS_DATABASE_ID) {
-      console.error("Missing environment variables:", {
-        hasToken: !!NOTION_EVENTS_TOKEN,
-        hasDatabase: !!EVENTS_DATABASE_ID,
-      });
-      return NextResponse.json(
-        { error: "Missing NOTION_EVENTS_API_TOKEN or NOTION_EVENTS_DATABASE_ID" },
-        { status: 500 }
-      );
+      console.warn("⚠️ Missing environment variables - using mock data for local development");
+      console.warn("Set NOTION_EVENTS_API_TOKEN and NOTION_EVENTS_DATABASE_ID in .env.local to use real data");
+      
+      // Return mock data instead of error
+      return NextResponse.json({ events: MOCK_EVENTS }, { status: 200 });
     }
 
     console.log("Events API token format check:", {

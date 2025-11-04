@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 interface Props {
   name: string; // file base name without extension (e.g. 'google')
