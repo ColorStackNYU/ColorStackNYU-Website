@@ -134,7 +134,7 @@ function StatStrip({ resources }: { resources: Resource[] }) {
 export default function ResourcesPage() {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   useEffect(() => {
@@ -159,7 +159,7 @@ export default function ResourcesPage() {
   };
 
   const filteredResources = resources.filter((r) => {
-    const matchesCategory = !selectedCategory || r.category === selectedCategory;
+    const matchesCategory = selectedCategories.size === 0 || selectedCategories.has(r.category);
     const matchesTag = !selectedTag || (r.tags && r.tags.includes(selectedTag));
     return matchesCategory && matchesTag;
   });
@@ -217,70 +217,106 @@ export default function ResourcesPage() {
             <>
               {/* Filter Controls */}
               <div style={{ marginBottom: "32px" }}>
-                <h3 className="text-sm font-semibold mb-3" style={{ color: "var(--text-high)" }}>
-                  Filter by Category
-                </h3>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                  <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)" }}>
+                    Filter
+                  </h3>
+                  {(selectedCategories.size > 0 || selectedTag) && (
+                    <button
+                      onClick={() => {
+                        setSelectedCategories(new Set());
+                        setSelectedTag(null);
+                      }}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "var(--brand-1)",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        fontSize: "13px",
+                        padding: 0,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Clear filters
+                    </button>
+                  )}
+                </div>
+
+                {/* Category chips */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
                   <button
-                    onClick={() => setSelectedCategory(null)}
+                    onClick={() => setSelectedCategories(new Set())}
                     style={{
                       padding: "8px 16px",
                       borderRadius: "8px",
-                      border: !selectedCategory ? "2px solid var(--brand-1)" : "1px solid rgba(171, 130, 197, 0.3)",
-                      backgroundColor: !selectedCategory ? "rgba(171, 130, 197, 0.2)" : "transparent",
-                      color: "var(--text-high)",
+                      border: selectedCategories.size === 0 ? "1px solid rgba(171, 130, 197, 0.5)" : "1px solid rgba(171, 130, 197, 0.3)",
+                      backgroundColor: selectedCategories.size === 0 ? "transparent" : "transparent",
+                      color: selectedCategories.size === 0 ? "var(--text-mid)" : "var(--text-high)",
                       cursor: "pointer",
-                      fontWeight: !selectedCategory ? 600 : 500,
+                      fontWeight: 500,
                       fontSize: "14px",
                       transition: "all 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
-                      if (!selectedCategory) return;
+                      if (selectedCategories.size === 0) return;
                       e.currentTarget.style.borderColor = "var(--brand-1)";
-                      e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.15)";
+                      e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
                     }}
                     onMouseLeave={(e) => {
-                      if (!selectedCategory) return;
+                      if (selectedCategories.size === 0) return;
                       e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
                       e.currentTarget.style.backgroundColor = "transparent";
                     }}
                   >
                     All
                   </button>
-                  {RESOURCE_CATEGORIES.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      style={{
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        border: selectedCategory === category ? "2px solid var(--brand-1)" : "1px solid rgba(171, 130, 197, 0.3)",
-                        backgroundColor: selectedCategory === category ? "rgba(171, 130, 197, 0.2)" : "transparent",
-                        color: "var(--text-high)",
-                        cursor: "pointer",
-                        fontWeight: selectedCategory === category ? 600 : 500,
-                        fontSize: "14px",
-                        transition: "all 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        if (selectedCategory === category) return;
-                        e.currentTarget.style.borderColor = "var(--brand-1)";
-                        e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.15)";
-                      }}
-                      onMouseLeave={(e) => {
-                        if (selectedCategory === category) return;
-                        e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
-                        e.currentTarget.style.backgroundColor = "transparent";
-                      }}
-                    >
-                      {category}
-                    </button>
-                  ))}
+                  {RESOURCE_CATEGORIES.map((category) => {
+                    const isSelected = selectedCategories.has(category);
+                    return (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          const newCategories = new Set(selectedCategories);
+                          if (isSelected) {
+                            newCategories.delete(category);
+                          } else {
+                            newCategories.add(category);
+                          }
+                          setSelectedCategories(newCategories);
+                        }}
+                        style={{
+                          padding: "8px 16px",
+                          borderRadius: "8px",
+                          border: isSelected ? "2px solid var(--brand-1)" : "1px solid rgba(171, 130, 197, 0.3)",
+                          backgroundColor: isSelected ? "rgba(171, 130, 197, 0.2)" : "transparent",
+                          color: "var(--text-high)",
+                          cursor: "pointer",
+                          fontWeight: isSelected ? 600 : 500,
+                          fontSize: "14px",
+                          transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          if (isSelected) return;
+                          e.currentTarget.style.borderColor = "var(--brand-1)";
+                          e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
+                        }}
+                        onMouseLeave={(e) => {
+                          if (isSelected) return;
+                          e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
+                          e.currentTarget.style.backgroundColor = "transparent";
+                        }}
+                      >
+                        {category}
+                      </button>
+                    );
+                  })}
                 </div>
 
+                {/* Tag filter indicator */}
                 {selectedTag && (
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingTop: "12px", borderTop: "1px solid rgba(171, 130, 197, 0.2)" }}>
-                    <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Tag filter active:</span>
+                    <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Tag:</span>
                     <span style={{ padding: "4px 12px", backgroundColor: "rgba(217, 70, 239, 0.2)", borderRadius: "6px", color: "var(--accent)", fontSize: "14px", fontWeight: 500 }}>
                       {selectedTag}
                     </span>
@@ -292,11 +328,12 @@ export default function ResourcesPage() {
                         color: "var(--brand-1)",
                         cursor: "pointer",
                         textDecoration: "underline",
-                        fontSize: "14px",
+                        fontSize: "13px",
                         padding: 0,
+                        fontWeight: 500,
                       }}
                     >
-                      Clear
+                      Clear tag
                     </button>
                   </div>
                 )}
