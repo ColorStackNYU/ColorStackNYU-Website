@@ -5,8 +5,6 @@ import Navigation from "../../components/navigation";
 import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
 
 function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string) => void }) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <a
       href={r.link}
@@ -18,39 +16,14 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
         flexDirection: "column",
         gap: "0",
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Title + Link Icon (dominant) */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", marginBottom: "12px" }}>
         <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
           {r.title}
         </h3>
-        <div
-          title="Opens in new tab"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "32px",
-            height: "32px",
-            borderRadius: "50%",
-            backgroundColor: isHovered ? "rgba(212, 181, 255, 0.2)" : "rgba(212, 181, 255, 0.1)",
-            border: "1px solid rgba(212, 181, 255, 0.4)",
-            flexShrink: 0,
-            transition: "all 0.2s ease",
-          }}
-        >
-          <span
-            style={{
-              color: isHovered ? "#d4b5ff" : "#b5a3d4",
-              fontSize: "18px",
-              transition: "all 0.2s ease",
-              transform: isHovered ? "scale(1.15)" : "scale(1)",
-            }}
-          >
-            ↗
-          </span>
+        <div className="external-link-icon" title="Opens in new tab">
+          <span className="external-link-icon-arrow">↗</span>
         </div>
       </div>
 
@@ -76,31 +49,6 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
                 }
               }}
               className="resource-tag"
-              style={{
-                display: "inline-block",
-                padding: "3px 8px",
-                backgroundColor: "transparent",
-                color: "#d4b5ff",
-                borderRadius: "5px",
-                fontSize: "11px",
-                fontWeight: 600,
-                border: "1px solid #d4b5ff",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(212, 181, 255, 0.15)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.outline = "2px solid #d4b5ff";
-                e.currentTarget.style.outlineOffset = "2px";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.outline = "none";
-              }}
             >
               {tag}
             </button>
@@ -164,29 +112,20 @@ function StatStrip({ resources }: { resources: Resource[] }) {
   const contributorLabel = contributorsCount === 1 ? "contributor" : "contributors";
 
   return (
-    <div style={{
-      marginTop: "16px",
-      display: "inline-flex",
-      gap: "20px",
-      alignItems: "center",
-      padding: "12px 16px",
-      backgroundColor: "rgba(171, 130, 197, 0.08)",
-      borderRadius: "8px",
-      border: "1px solid rgba(171, 130, 197, 0.15)",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+    <div className="stat-strip">
+      <div className="stat-item">
+        <span>
           {resourcesCount} {resourceLabel}
         </span>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+      <div className="stat-item">
+        <span>
           {contributorsCount} {contributorLabel}
         </span>
       </div>
       {lastAddedDays !== null && (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+        <div className="stat-item">
+          <span>
             Last added: {lastAddedDays === 0 ? "today" : lastAddedDays === 1 ? "1 day ago" : `${lastAddedDays} days ago`}
           </span>
         </div>
@@ -236,23 +175,7 @@ export default function ResourcesPage() {
               href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                background: "none",
-                border: "none",
-                color: "#d4b5ff",
-                cursor: "pointer",
-                textDecoration: "underline",
-                fontWeight: 500,
-                padding: 0,
-                font: "inherit",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.outline = "2px solid #d4b5ff";
-                e.currentTarget.style.outlineOffset = "2px";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.outline = "none";
-              }}
+              className="text-link"
             >
               How to contribute →
             </a>
@@ -284,23 +207,8 @@ export default function ResourcesPage() {
                         setSelectedCategory(null);
                         setSelectedTag(null);
                       }}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        color: "#d4b5ff",
-                        cursor: "pointer",
-                        textDecoration: "underline",
-                        fontSize: "13px",
-                        padding: 0,
-                        fontWeight: 500,
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.outline = "2px solid #d4b5ff";
-                        e.currentTarget.style.outlineOffset = "2px";
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.outline = "none";
-                      }}
+                      className="text-link"
+                      style={{ fontSize: "13px" }}
                     >
                       Clear filters
                     </button>
@@ -317,34 +225,7 @@ export default function ResourcesPage() {
                         setSelectedCategory(null);
                       }
                     }}
-                    style={{
-                      padding: "8px 16px",
-                      borderRadius: "8px",
-                      border: !selectedCategory ? "1px solid rgba(171, 130, 197, 0.5)" : "1px solid rgba(171, 130, 197, 0.3)",
-                      backgroundColor: "transparent",
-                      color: !selectedCategory ? "var(--text-mid)" : "var(--text-high)",
-                      cursor: "pointer",
-                      fontWeight: 500,
-                      fontSize: "14px",
-                      transition: "all 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!selectedCategory) return;
-                      e.currentTarget.style.borderColor = "var(--brand-1)";
-                      e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!selectedCategory) return;
-                      e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
-                      e.currentTarget.style.backgroundColor = "transparent";
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.outline = "2px solid #d4b5ff";
-                      e.currentTarget.style.outlineOffset = "2px";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.outline = "none";
-                    }}
+                    className={`filter-btn ${!selectedCategory ? 'filter-btn-all' : ''}`}
                   >
                     All
                   </button>
@@ -362,34 +243,7 @@ export default function ResourcesPage() {
                             setSelectedCategory(isSelected ? null : category);
                           }
                         }}
-                        style={{
-                          padding: "8px 16px",
-                          borderRadius: "8px",
-                          border: isSelected ? "2px solid var(--brand-1)" : "1px solid rgba(171, 130, 197, 0.3)",
-                          backgroundColor: isSelected ? "rgba(171, 130, 197, 0.2)" : "transparent",
-                          color: "var(--text-high)",
-                          cursor: "pointer",
-                          fontWeight: isSelected ? 600 : 500,
-                          fontSize: "14px",
-                          transition: "all 0.2s ease",
-                        }}
-                        onMouseEnter={(e) => {
-                          if (isSelected) return;
-                          e.currentTarget.style.borderColor = "var(--brand-1)";
-                          e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
-                        }}
-                        onMouseLeave={(e) => {
-                          if (isSelected) return;
-                          e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
-                          e.currentTarget.style.backgroundColor = "transparent";
-                        }}
-                        onFocus={(e) => {
-                          e.currentTarget.style.outline = "2px solid #d4b5ff";
-                          e.currentTarget.style.outlineOffset = "2px";
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.outline = "none";
-                        }}
+                        className={`filter-btn ${isSelected ? 'filter-btn-active' : ''}`}
                       >
                         {category}
                       </button>
@@ -406,23 +260,8 @@ export default function ResourcesPage() {
                     </span>
                     <button
                       onClick={() => setSelectedTag(null)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        color: "#d4b5ff",
-                        cursor: "pointer",
-                        textDecoration: "underline",
-                        fontSize: "13px",
-                        padding: 0,
-                        fontWeight: 500,
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.outline = "2px solid #d4b5ff";
-                        e.currentTarget.style.outlineOffset = "2px";
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.outline = "none";
-                      }}
+                      className="text-link"
+                      style={{ fontSize: "13px" }}
                     >
                       Clear tag
                     </button>
@@ -442,24 +281,8 @@ export default function ResourcesPage() {
                       href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        color: "#d4b5ff",
-                        cursor: "pointer",
-                        textDecoration: "underline",
-                        fontWeight: 500,
-                        padding: 0,
-                        font: "inherit",
-                        fontSize: "14px",
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.outline = "2px solid #d4b5ff";
-                        e.currentTarget.style.outlineOffset = "2px";
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.outline = "none";
-                      }}
+                      className="text-link"
+                      style={{ fontSize: "14px" }}
                     >
                       Learn how to contribute
                     </a>
@@ -483,33 +306,7 @@ export default function ResourcesPage() {
               href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                padding: "12px 24px",
-                borderRadius: "8px",
-                border: "1.5px solid rgba(212, 181, 255, 0.4)",
-                backgroundColor: "transparent",
-                color: "#d4b5ff",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: 500,
-                textDecoration: "none",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#d4b5ff";
-                e.currentTarget.style.backgroundColor = "rgba(212, 181, 255, 0.1)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(212, 181, 255, 0.4)";
-                e.currentTarget.style.backgroundColor = "transparent";
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.outline = "2px solid #d4b5ff";
-                e.currentTarget.style.outlineOffset = "2px";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.outline = "none";
-              }}
+              className="cta-secondary"
             >
               Add a resource
             </a>

@@ -1055,8 +1055,17 @@ main,
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
-.external-link-icon:hover {
+.resource-card:hover .external-link-icon {
   background-color: rgba(212, 181, 255, 0.2);
+}
+.external-link-icon-arrow {
+  color: #b5a3d4;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+.resource-card:hover .external-link-icon-arrow {
+  color: #d4b5ff;
+  transform: scale(1.15);
 }
 
 /* Stat Strip Badge */
