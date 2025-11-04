@@ -17,7 +17,6 @@ export const RESOURCE_CATEGORIES = [
   "Mobile Development",
   "Data Science",
   "System Design",
-  "Leadership",
 ] as const;
 
 export async function fetchResources(): Promise<Resource[]> {
