@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
-import { normalizeUrl, isValidInstagramUrl } from "@/lib/urlHelpers";
+import { normalizeUrl } from "@/lib/urlHelpers";
 
 const NOTION_EVENTS_TOKEN = process.env.NOTION_EVENTS_API_TOKEN!;
 const EVENTS_DATABASE_ID = process.env.NOTION_EVENTS_DATABASE_ID!;
@@ -26,19 +26,23 @@ function getTagsFromMultiSelect(multiSelect: any[]): string[] {
 }
 
 /**
- * Validates and normalizes Instagram URLs
- * @param url - The URL to validate
- * @returns Valid Instagram URL or undefined
+ * Normalizes Instagram URLs
+ * @param url - The URL to normalize
+ * @returns Normalized Instagram URL or undefined if not a valid Instagram link
  */
-function validateInstagramUrl(url: string | undefined): string | undefined {
+function normalizeInstagramUrl(url: string | undefined): string | undefined {
   if (!url) return undefined;
   
-  // Normalize the URL first (add https:// if needed)
   const normalized = normalizeUrl(url);
   if (!normalized) return undefined;
   
-  // Check if it's a valid Instagram URL
-  return isValidInstagramUrl(normalized) ? normalized : undefined;
+  // If it's an Instagram URL, return it
+  if (normalized.includes('instagram.com') || normalized.includes('instagr.am')) {
+    return normalized;
+  }
+  
+  // Not an Instagram URL
+  return undefined;
 }
 
 function toEventItem(p: any): EventItem {
@@ -54,7 +58,13 @@ function toEventItem(p: any): EventItem {
   
   // Extract and validate Instagram URL (optional field)
   const rawInstagramUrl = props["Instagram link"]?.url || undefined;
-  const instagramUrl = validateInstagramUrl(rawInstagramUrl);
+  
+  // Debug: log what we're getting
+  if (title) {
+    console.log(`Event "${title}": Instagram link raw = ${rawInstagramUrl}`);
+  }
+  
+  const instagramUrl = normalizeInstagramUrl(rawInstagramUrl);
 
   return {
     id: p.id,
@@ -174,6 +184,16 @@ export async function GET() {
     });
 
     console.log(`Found ${response.results.length} events in database`);
+
+    // Debug: log property names from first event
+    if (response.results.length > 0) {
+      console.log("=== First Event Properties ===");
+      const props = response.results[0].properties || {};
+      Object.keys(props).forEach(key => {
+        console.log(`  "${key}"`);
+      });
+      console.log("=============================");
+    }
 
     const events = response.results.map(toEventItem);
     const validEvents = events.filter((event: EventItem) => event.title && event.start);
