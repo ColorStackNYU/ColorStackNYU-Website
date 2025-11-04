@@ -146,17 +146,11 @@ export default function Gallery({ maxWidth }: { maxWidth?: number }) {
           src={src}
           alt={current.caption || "Event photo"}
           onLoad={(e) => onImageLoad(index, e)}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", borderRadius: "inherit" }}
           className={contain[index] ? "gallery-image contain" : "gallery-image"}
         />
 
-        {current.caption && (
-          <div className="gallery-caption" aria-hidden={false}>
-            {current.caption}
-          </div>
-        )}
-
-        {/* arrows */}
+        {/* arrows (visible but subtle) */}
         {slides.length > 1 && (
           <>
             <button
@@ -183,22 +177,9 @@ export default function Gallery({ maxWidth }: { maxWidth?: number }) {
         )}
       </div>
 
-      {slides.length > 1 && (
-        <div
-          className="gallery-controls"
-          role="tablist"
-          aria-label="Gallery navigation"
-        >
-          {slides.map((s, i) => (
-            <button
-              key={i}
-              className={`gallery-dot ${i === index ? "active" : ""}`}
-              onClick={() => setIndex(i)}
-              onFocus={() => setPaused(true)}
-              onBlur={() => setPaused(false)}
-              aria-label={`Go to slide ${i + 1} of ${slides.length}`}
-            ></button>
-          ))}
+      {current.caption && (
+        <div className="gallery-caption-below" aria-hidden={false}>
+          {current.caption}
         </div>
       )}
     </div>

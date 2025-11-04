@@ -10,6 +10,9 @@
   --text-mid: #c7c3e6; /* secondary text */
   --brand: #7c3aed; /* brand purple */
   --brand-hover: #6d28d9;
+  /* Light Violet 1 requested for band + primary buttons */
+  --brand-1: #ab82c5; /* Light Violet 1 */
+  --brand-1-hover: #9a63b8;
   --accent: #d946ef; /* small accents */
 
   /* small optional gradient used only for the wordmark */
@@ -31,6 +34,9 @@
   /* radii and shadows */
   --radius: 12px;
   --card-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+
+  /* marquee background token (so it isn't pure black) */
+  --marquee-bg: #111318; /* subtle, dark gray — softer than pure black */
 
   /* Header sizing (sticky header token) */
   --header-h-desktop: 72px;
@@ -149,13 +155,13 @@ html {
 
 /* Gallery card styling */
 .gallery-card {
-  max-width: 520px;
+  max-width: 760px;
   width: 100%;
   aspect-ratio: 16/9;
-  border-radius: var(--radius);
+  border-radius: 10px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.06); /* subtle light border to frame the photo */
-  box-shadow: 0 8px 20px rgba(3, 3, 6, 0.48); /* moderate shadow to lift the image */
+  border: 1px solid rgba(255, 255, 255, 0.10); /* subtle border to separate from dark canvas */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* gentle shadow to lift the image */
   background: var(--surface);
   display: block;
   position: relative;
@@ -185,10 +191,19 @@ html {
   );
   color: var(--text-high);
   font-size: 16px; /* slightly larger caption text */
-  line-height: 1.4;
+  line-height: 1.45;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* New caption style when rendered below the image */
+.gallery-caption-below {
+  text-align: center;
+  color: rgba(255,255,255,0.9);
+  font-size: 16px;
+  line-height: 1.45;
+  margin-top: 16px; /* spacing between image and caption */
 }
 .gallery-controls {
   display: flex;
@@ -212,19 +227,24 @@ html {
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: var(--text-high);
+  color: rgba(255,255,255,0.7); /* white arrows at 70% opacity for slightly more contrast */
+  font-size: 20px;
   padding: 8px;
+  transition: color 120ms ease, transform 120ms ease;
+  z-index: 2;
 }
 .gallery-arrow.left {
-  left: -40px;
+  left: 12px; /* position arrows over the image */
 }
 .gallery-arrow.right {
-  right: -40px;
+  right: 12px; /* position arrows over the image */
 }
 .gallery-arrow:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.12);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.08);
 }
+.gallery-arrow:hover { color: rgba(255,255,255,1); transform: translateY(-50%) translateX(2px); }
+.gallery-arrow.left:hover { transform: translateY(-50%) translateX(-2px); }
 
 /* Logo / hero helpers */
 .logo-block {
@@ -319,18 +339,18 @@ html {
 
 /* primary filled */
 .btn-primary {
-  background: var(--brand);
+  background: var(--brand-1);
   color: var(--text-high);
   border: 1px solid transparent;
   height: 48px;
 }
 .btn-primary:hover {
-  background: var(--brand-hover);
+  background: var(--brand-1-hover);
   transform: translateY(-1px);
 }
 .btn-primary:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.14);
+  box-shadow: 0 0 0 4px rgba(171,130,197,0.14);
 }
 .btn-primary:disabled {
   opacity: 0.6;
@@ -551,22 +571,21 @@ main,
 }
 .logos-marquee {
   width: 100%;
-  /* Use the exact pastel color requested by the user so the band is
-     uniformly #F3E8FF. */
-  background: #F3E8FF;
+  /* Keep a softer dark/gray band behind the logos so they read on the page */
+  background: var(--marquee-bg);
   padding: 18px 0; /* gives breathing room inside the band */
   border-radius: 8px;
 }
 .marquee-track {
   display: flex;
   width: max-content;
-  gap: 48px;
+  gap: 72px; /* increased spacing between logos (60-80px range) */
   align-items: center;
-  animation: marquee-scroll 40s linear infinite;
+  animation: marquee-scroll 38s linear infinite; /* smooth infinite scroll ~35-40s */
 }
 .marquee-set {
   display: flex;
-  gap: 48px;
+  gap: 72px;
   align-items: center;
 }
 .marquee-item {
@@ -574,19 +593,23 @@ main,
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .marquee-item img {
-  height: 40px; /* normalized logo height */
+  height: 38px; /* keep logos consistent height (35-40px max) */
   width: auto;
   display: block;
-  filter: none;
+  /* Force all logos to render as light/white regardless of source color */
+  filter: brightness(0) invert(1);
+  opacity: 0.75; /* subtle, professional look */
 }
 
 /* Allow targeting specific logos if we need small visual fixes (janestreet PNG) */
 .marquee-item img[data-name="janestreet"] {
   filter: none;
 }
+
+/* removed per-logo targeting — all logos are forced to the same light treatment above */
 
 /* Title / subheading spacing and color inside logos band */
 .logos-section .site-container h3 {
@@ -598,28 +621,22 @@ main,
 }
 
 /* Edge fade: mask the left/right edges so logos fade in/out */
-.logos-marquee-wrap::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 12%;
-  pointer-events: none;
-  /* Fade from page canvas into the marquee area */
-  background: linear-gradient(to right, var(--canvas), rgba(11, 10, 18, 0));
-  mix-blend-mode: normal;
-}
-.logos-marquee-wrap::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 12%;
-  pointer-events: none;
-  background: linear-gradient(to left, var(--canvas), rgba(11, 10, 18, 0));
-  mix-blend-mode: normal;
+.logos-marquee-wrap {
+  /* use a mask so the marquee content softly fades in/out at the edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
 }
 
 @keyframes marquee-scroll {
