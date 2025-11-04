@@ -313,20 +313,18 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1 1 0;
 }
 .site-header .nav-center {
   display: flex;
   align-items: center;
   gap: 24px; /* horizontal spacing between nav items */
-  flex: 0 0 auto;
+  flex: 1;
   justify-content: center;
 }
 .site-header .nav-right {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1 1 0;
 }
 
 /* Logo wrap ensures a stable left cluster size so center nav feels centered */
@@ -338,6 +336,16 @@ html {
   align-items: center;
   justify-content: center;
   background-image: var(--brand-grad);
+}
+
+/* Navigation layout - constrain nav content width like page content */
+.nav-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px; /* slightly smaller than full container for tighter layout */
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* Nav link styling - CONSOLIDATED (was split into 2 definitions) */

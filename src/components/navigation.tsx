@@ -53,7 +53,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
   return (
     <nav className={`site-header ${className}`}>
       <div className="site-container">
-        <div className="flex items-center justify-between">
+        <div className="nav-layout">
           <div className="nav-left">
             <Link href="/" onClick={closeMenu} aria-label="Home">
               <div className="logo-wrap">
