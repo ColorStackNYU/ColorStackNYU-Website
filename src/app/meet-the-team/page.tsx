@@ -17,6 +17,7 @@ type Member = {
   icon?: { type: "emoji" | "url"; value: string };
   linkedinUrl?: string;
   hallOfFame?: boolean;
+  hallOfFameText?: string;
   quote?: string;
 };
 
@@ -165,15 +166,23 @@ function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
         <div className="min-w-0 flex-1">
           <h3 className="font-semibold" style={{ fontSize: "var(--fs-h3)", color: "var(--text-high)", paddingRight: m.linkedinUrl ? "var(--spacing-2xl)" : "0", wordWrap: "break-word", overflowWrap: "break-word" }}>{m.name}</h3>
           <p style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)" }}>{m.role}</p>
-          {m.bio && <p style={{ fontSize: "var(--fs-small)", color: "var(--brand-1)", marginTop: "var(--spacing-xs)", lineHeight: "1.4" }}>{m.bio}</p>}
+          {m.year && <p style={{ fontSize: "var(--fs-small)", color: "var(--brand-1)", marginTop: "var(--spacing-xs)" }}>{m.year}</p>}
+          {m.major && <p style={{ fontSize: "var(--fs-small)", color: "var(--brand-1)" }}>{m.major}</p>}
         </div>
       </div>
       
-      {isAlumni && m.quote && (
+      {isAlumni && (
         <div style={{ marginTop: "var(--spacing-lg)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
-          <p className="leading-relaxed italic" style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)", opacity: 0.9 }}>
-            &ldquo;{m.quote}&rdquo;
-          </p>
+          {m.hallOfFameText && (
+            <p style={{ fontSize: "var(--fs-small)", color: "var(--brand-1)", marginBottom: "var(--spacing-md)", fontWeight: 500 }}>
+              {m.hallOfFameText}
+            </p>
+          )}
+          {m.quote && (
+            <p className="leading-relaxed italic" style={{ fontSize: "var(--fs-small)", color: "var(--text-mid)", opacity: 0.9 }}>
+              &ldquo;{m.quote}&rdquo;
+            </p>
+          )}
         </div>
       )}
     </CardWrapper>

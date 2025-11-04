@@ -22,6 +22,7 @@ type Member = {
   url: string; // Notion page url
   linkedinUrl?: string;
   hallOfFame?: boolean;
+  hallOfFameText?: string;
   quote?: string;
 };
 
@@ -43,6 +44,10 @@ function toMember(p: any): Member {
   const name = (props["Name"]?.title?.[0]?.plain_text || "").trim();
   const role = props["Club Position"]?.select?.name || "Member";
   const rawLinkedinUrl = props["Linked-In"]?.url ?? undefined;
+  
+  // Hall of Fame is a text field - if it has content, they're an alumni
+  const hallOfFameText = getPlainRichText(props["Hall of Fame"]?.rich_text ?? []);
+  const hallOfFame = Boolean(hallOfFameText);
 
   return {
     id: p.id,
@@ -57,7 +62,8 @@ function toMember(p: any): Member {
     url: p.url,
     // Normalize LinkedIn URL: add https:// if missing
     linkedinUrl: normalizeUrl(rawLinkedinUrl) ?? undefined,
-    hallOfFame: props["Hall of Fame"]?.checkbox ?? false,
+    hallOfFame,
+    hallOfFameText,
     quote: getPlainRichText(props["Quote"]?.rich_text ?? []),
   };
 }
@@ -130,6 +136,7 @@ const MOCK_TEAM_DATA = {
       url: "https://notion.so/mock-hof-1",
       linkedinUrl: "https://linkedin.com/in/davidmartinez",
       hallOfFame: true,
+      hallOfFameText: "Google",
       quote: "ColorStack @ NYU helped me land my dream job at Google. The community support was invaluable!",
     },
     {
@@ -142,6 +149,7 @@ const MOCK_TEAM_DATA = {
       url: "https://notion.so/mock-hof-2",
       linkedinUrl: "https://linkedin.com/in/jessicaliu",
       hallOfFame: true,
+      hallOfFameText: "Meta",
       quote: "Being part of this community shaped my career path and connected me with amazing people.",
     },
   ],

@@ -2,6 +2,7 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
+import { normalizeUrl, isValidInstagramUrl } from "@/lib/urlHelpers";
 
 const NOTION_EVENTS_TOKEN = process.env.NOTION_EVENTS_API_TOKEN!;
 const EVENTS_DATABASE_ID = process.env.NOTION_EVENTS_DATABASE_ID!;
@@ -25,29 +26,19 @@ function getTagsFromMultiSelect(multiSelect: any[]): string[] {
 }
 
 /**
- * Validates and sanitizes Instagram URLs
- * Filters out invalid URLs (like Notion links) and ensures proper Instagram format
+ * Validates and normalizes Instagram URLs
  * @param url - The URL to validate
  * @returns Valid Instagram URL or undefined
  */
 function validateInstagramUrl(url: string | undefined): string | undefined {
   if (!url) return undefined;
   
-  // Check if URL is a valid Instagram URL
-  const instagramPatterns = [
-    /^https?:\/\/(www\.)?instagram\.com\/.+/i,
-    /^https?:\/\/(www\.)?instagr\.am\/.+/i,
-  ];
+  // Normalize the URL first (add https:// if needed)
+  const normalized = normalizeUrl(url);
+  if (!normalized) return undefined;
   
-  const isValidInstagram = instagramPatterns.some(pattern => pattern.test(url));
-  
-  if (!isValidInstagram) {
-    console.warn(`⚠️ Invalid Instagram URL detected (possibly Notion link): "${url}"`);
-    console.warn(`   Expected format: https://instagram.com/username or https://instagram.com/p/postid`);
-    return undefined;
-  }
-  
-  return url;
+  // Check if it's a valid Instagram URL
+  return isValidInstagramUrl(normalized) ? normalized : undefined;
 }
 
 function toEventItem(p: any): EventItem {
