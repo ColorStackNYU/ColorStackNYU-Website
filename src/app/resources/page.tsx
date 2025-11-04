@@ -113,9 +113,22 @@ export default function ResourcesPage() {
       <Navigation />
       <main className="page-main site-container">
         <section className="page-heading max-w-3xl mx-auto">
-          <h1 className="wordmark">Resources</h1>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "24px", marginBottom: "16px" }}>
+            <div>
+              <h1 className="wordmark">Resources</h1>
+            </div>
+            <a
+              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/issues/new?template=resource_submission.md&title=Add+Resource:+[Title]"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              Submit a resource
+            </a>
+          </div>
           <p>
-            Helpful links, guides, and opportunities curated for our community.{" "}
+            Helpful links, guides, and tools—curated by our community.{" "}
             <button
               onClick={scrollToContribute}
               style={{
