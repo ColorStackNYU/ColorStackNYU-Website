@@ -313,16 +313,20 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1 1 0;
 }
 .site-header .nav-center {
   display: flex;
   align-items: center;
   gap: 24px; /* horizontal spacing between nav items */
+  flex: 0 0 auto;
+  justify-content: center;
 }
 .site-header .nav-right {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1 1 0;
 }
 
 /* Logo wrap ensures a stable left cluster size so center nav feels centered */
