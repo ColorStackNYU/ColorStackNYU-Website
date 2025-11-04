@@ -211,13 +211,6 @@ export default function ResourcesPage() {
     loadResources();
   }, []);
 
-  const scrollToContribute = () => {
-    const element = document.getElementById("contribute");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const handleTagClick = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag);
   };
@@ -236,9 +229,11 @@ export default function ResourcesPage() {
             <h1 className="wordmark">Resources</h1>
           </div>
           <p>
-            Helpful links, guides, and tools—curated by our community.{" "}
-            <button
-              onClick={scrollToContribute}
+            Helpful links, guides, and tools. For the community, By the community{" "}
+            <a
+              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 background: "none",
                 border: "none",
@@ -258,7 +253,7 @@ export default function ResourcesPage() {
               }}
             >
               How to contribute →
-            </button>
+            </a>
           </p>
 
           {/* Stat strip: global counts (computed from JSON) */}
@@ -441,8 +436,10 @@ export default function ResourcesPage() {
                   </p>
                   <p style={{ color: "var(--text-mid)", fontSize: "14px", marginBottom: "24px" }}>
                     Want to add one?{" "}
-                    <button
-                      onClick={scrollToContribute}
+                    <a
+                      href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         background: "none",
                         border: "none",
@@ -463,7 +460,7 @@ export default function ResourcesPage() {
                       }}
                     >
                       Learn how to contribute
-                    </button>
+                    </a>
                   </p>
                 </div>
               ) : (
@@ -481,7 +478,7 @@ export default function ResourcesPage() {
         {filteredResources.length > 0 && (
           <div style={{ display: "flex", justifyContent: "center", marginTop: "48px", marginBottom: "64px" }}>
             <a
-              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/feat/css-changes/public/resources.json"
+              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -516,65 +513,6 @@ export default function ResourcesPage() {
             </a>
           </div>
         )}
-
-        <section id="contribute" className="max-w-3xl mx-auto" style={{ marginTop: "80px" }}>
-          <h2 className="text-3xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
-            How to Contribute
-          </h2>
-          <p style={{ color: "var(--text-mid)", marginBottom: "24px", lineHeight: "1.6" }}>
-            Know a great resource? We'd love to add it! Contributing is simple and doesn't require any coding experience.
-          </p>
-
-          <div style={{ backgroundColor: "rgba(171, 130, 197, 0.08)", padding: "24px", borderRadius: "12px", border: "1px solid rgba(171, 130, 197, 0.2)" }}>
-            <h3 className="text-xl font-semibold mb-4" style={{ color: "var(--text-high)" }}>
-              Add a Resource on GitHub
-            </h3>
-            <ol style={{ color: "var(--text-mid)", lineHeight: "1.8", paddingLeft: "24px", marginBottom: "16px" }}>
-              <li style={{ marginBottom: "12px" }}>
-                Go to the{" "}
-                <a
-                  href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/feat/css-changes/public/resources.json"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#d4b5ff", textDecoration: "underline" }}
-                >
-                  resources.json file
-                </a>
-              </li>
-              <li style={{ marginBottom: "12px" }}>
-                Click the <strong>pencil icon</strong> to edit (you'll need a GitHub account)
-              </li>
-              <li style={{ marginBottom: "12px" }}>
-                Add your resource as a new object in the <code style={{ color: "var(--accent)" }}>"resources"</code> array
-              </li>
-              <li style={{ marginBottom: "12px" }}>
-                Fill in the required fields:
-                <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
-                  <li><code style={{ color: "var(--accent)" }}>title</code>, <code style={{ color: "var(--accent)" }}>description</code>, <code style={{ color: "var(--accent)" }}>link</code>, <code style={{ color: "var(--accent)" }}>category</code>, <code style={{ color: "var(--accent)" }}>dateAdded</code></li>
-                </ul>
-              </li>
-              <li style={{ marginBottom: "12px" }}>
-                <strong>Optional fields:</strong>
-                <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
-                  <li><code style={{ color: "var(--accent)" }}>tags</code> - Array of labels (e.g., "algorithms", "python")</li>
-                  <li><code style={{ color: "var(--accent)" }}>contributedBy</code> - Your name to get credit</li>
-                </ul>
-              </li>
-              <li style={{ marginBottom: "12px" }}>
-                At the bottom, select <strong>"Create a new branch"</strong> and submit a pull request
-              </li>
-              <li>
-                We'll review and merge it! That's it.
-              </li>
-            </ol>
-          </div>
-
-          <div style={{ marginTop: "24px", padding: "12px", backgroundColor: "rgba(124, 58, 237, 0.08)", borderRadius: "6px", borderLeft: "3px solid #d4b5ff" }}>
-            <p style={{ color: "var(--text-mid)", fontSize: "12px", margin: 0 }}>
-              <strong>New to GitHub?</strong> Use the web editor—no installation needed.
-            </p>
-          </div>
-        </section>
       </main>
     </>
   );
