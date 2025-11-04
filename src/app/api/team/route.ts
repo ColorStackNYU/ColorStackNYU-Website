@@ -53,7 +53,7 @@ function toMember(p: any): Member {
     phone: props["Phone"]?.phone_number ?? undefined,
     icon: pickIcon(p.icon),
     url: p.url,
-    linkedinUrl: props["LinkedIn"]?.url ?? undefined,
+    linkedinUrl: props["Linked-In"]?.url ?? undefined,
     hallOfFame: props["Hall of Fame"]?.checkbox ?? false,
     quote: getPlainRichText(props["Quote"]?.rich_text ?? []),
   };
