@@ -65,21 +65,21 @@ export default function Home() {
             >
               <span className="wordmark">ColorStack @ NYU</span>
             </h1>
+
             <p
-              className="mb-8 max-w-4xl site-tagline"
+              className="mb-6 max-w-4xl site-tagline"
               style={{ marginTop: "6px" }}
             >
               The largest community of Black and Latino students in tech at NYU
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
+
+            <div className="flex flex-col items-center gap-4">
               <button
                 onClick={scrollToGetConnected}
                 className="btn btn-primary"
+                aria-label="Get Connected"
               >
                 Get Connected
-                <span className="ml-2 transition-transform inline-block">
-                  →
-                </span>
               </button>
             </div>
           </div>
@@ -88,15 +88,15 @@ export default function Home() {
 
       {/* Where We've Landed - Marquee Section */}
       <section className="section logos-section">
-        <div className="site-container text-center">
+          <div className="site-container text-center">
           <h3
             className="text-2xl font-semibold"
             style={{ color: "var(--text-high)" }}
           >
-            Where We've Landed
+            Where We&apos;ve Landed
           </h3>
           <p className="text-sm mt-2" style={{ color: "var(--text-mid)" }}>
-            Our members have interned at 20+ top tech companies
+            ColorStack members have interned and gone full time at top tech companies
           </p>
         </div>
 
@@ -228,7 +228,7 @@ export default function Home() {
       <section id="about" className="section">
         <div className="site-container">
           <div className="grid-12 section-inner">
-            <div className="col-span-7">
+            <div className="col-span-5">
               <h2
                 className="text-4xl font-bold mb-6"
                 style={{ color: "var(--text-high)" }}
@@ -273,7 +273,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="col-span-5">
+            <div className="col-span-7">
               <Gallery />
             </div>
           </div>

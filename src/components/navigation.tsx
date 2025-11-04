@@ -70,15 +70,8 @@ export default function Navigation({ className = "" }: NavigationProps) {
             <Link href="/sponsorship" className="nav-link">Sponsorship</Link>
           </div>
 
-          {/* Right: CTA */}
+          {/* Right: empty (removed Get Connected button) */}
           <div className="nav-right hidden md:flex">
-            <button
-              onClick={handleGetConnected}
-              className="btn btn-primary header-cta"
-              aria-label="Get Connected"
-            >
-              Get Connected
-            </button>
           </div>
 
           <div className="md:hidden">
@@ -150,15 +143,6 @@ export default function Navigation({ className = "" }: NavigationProps) {
             >
               {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             </button>
-            <div className="pt-2">
-              <button
-                onClick={handleGetConnected}
-                className="w-full btn btn-primary"
-                style={{padding:'0.75rem'}}
-              >
-                Get Connected
-              </button>
-            </div>
           </div>
         </div>
       </div>

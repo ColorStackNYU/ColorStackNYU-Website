@@ -27,7 +27,7 @@ export default function GetConnected() {
 
                     <div className="connect-card">
                         <h3 className="connect-title">Join National ColorStack</h3>
-                        <p className="connect-desc">Apply to the national organization for exclusive opportunities, mentorship, and access to a community of 10,000+ members</p>
+                        <p className="connect-desc">Access opportunities, mentorship, and join 10,000+ members</p>
                         <a
                             href="https://colorstack.org/apply"
                             target="_blank"

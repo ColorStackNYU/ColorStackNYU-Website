@@ -26,7 +26,11 @@
   /* layout tokens */
   --container-max: 1200px;
   --gutter: 24px; /* grid gutters */
-  --section-vertical: 80px;
+  /* Vertical spacing scale for consistent rhythm - tighter */
+  --space-small: 48px;
+  --space-medium: 80px;
+  --space-large: 96px;
+  --section-vertical: var(--space-medium); /* default section spacing */
   --section-gap: 24px; /* internal gap */
   --side-pad-desktop: 24px;
   --side-pad-mobile: 16px;
@@ -101,6 +105,10 @@ body {
   /* switch header token for mobile */
   :root {
     --header-h: var(--header-h-mobile);
+    /* Reduce spacing scale proportionally on mobile */
+    --space-small: 36px;
+    --space-medium: 60px;
+    --space-large: 72px;
   }
 }
 
@@ -132,9 +140,6 @@ html {
   scroll-padding-top: calc(var(--header-h) + 16px + env(safe-area-inset-top));
 }
 
-/* Make sections start below the header when targeted by an anchor */
-/* (Consolidated further down into the main .section rule.) */
-
 /* 12-column grid helpers */
 .grid-12 {
   display: grid;
@@ -155,9 +160,12 @@ html {
   }
 }
 
-/* Gallery card styling */
+/* ====================================
+   GALLERY / CAROUSEL STYLES
+   ==================================== */
+
 .gallery-card {
-  max-width: 760px;
+  max-width: 100%; /* take up full width of container/grid column */
   width: 100%;
   aspect-ratio: 16/9;
   border-radius: 10px;
@@ -167,6 +175,11 @@ html {
   background: var(--surface);
   display: block;
   position: relative;
+}
+/* Ensure Gallery component fills its parent column */
+.gallery-card > div,
+.gallery-card > img {
+  width: 100% !important;
 }
 .gallery-card img,
 .gallery-card .next-image {
@@ -180,79 +193,70 @@ html {
   --gutter: 32px; /* grid gutters */
   background: var(--canvas);
 }
-.gallery-caption {
+
+/* Caption overlay (rendered inside image) */
+.gallery-caption-below {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 12px 16px; /* slightly more breathing room */
+  padding: 24px;
   background: linear-gradient(
     180deg,
     rgba(7, 5, 10, 0) 0%,
-    rgba(7, 5, 10, 0.65) 70%
+    rgba(7, 5, 10, 0.75) 50%,
+    rgba(7, 5, 10, 0.85) 100%
   );
-  color: var(--text-high);
-  font-size: 16px; /* slightly larger caption text */
-  line-height: 1.45;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: rgba(255,255,255,1);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  z-index: 1;
 }
 
-/* New caption style when rendered below the image */
-.gallery-caption-below {
-  text-align: center;
-  color: rgba(255,255,255,0.9);
-  font-size: 16px;
-  line-height: 1.45;
-  margin-top: 16px; /* spacing between image and caption */
-}
-.gallery-controls {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 8px;
-}
-.gallery-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-}
-.gallery-dot.active {
-  background: rgba(255, 255, 255, 0.6);
-}
+/* Gallery arrows */
 .gallery-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.2); /* semi-transparent white circular background */
   border: none;
-  color: rgba(255,255,255,0.7); /* white arrows at 70% opacity for slightly more contrast */
-  font-size: 20px;
-  padding: 8px;
-  transition: color 120ms ease, transform 120ms ease;
+  border-radius: 50%;
+  color: rgba(255,255,255,1); /* white, high contrast */
+  font-size: 24px; /* smaller arrow */
+  padding: 4px 6px; /* minimal padding */
+  width: 32px; /* small circle */
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   z-index: 2;
+  cursor: pointer;
 }
-.gallery-arrow.left {
-  left: 12px; /* position arrows over the image */
-}
-.gallery-arrow.right {
-  right: 12px; /* position arrows over the image */
+.gallery-arrow:hover {
+  background: rgba(255, 255, 255, 0.35); /* brighter on hover */
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.1); /* scale up on hover */
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
 }
 .gallery-arrow:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
 }
-.gallery-arrow:hover { color: rgba(255,255,255,1); transform: translateY(-50%) translateX(2px); }
-.gallery-arrow.left:hover { transform: translateY(-50%) translateX(-2px); }
+.gallery-arrow.left {
+  left: 20px; /* position arrows over the image */
+}
+.gallery-arrow.right {
+  right: 20px; /* position arrows over the image */
+}
 
-/* Logo / hero helpers */
-.logo-block {
-  padding-top: 0.15rem;
-  padding-bottom: 0.15rem;
-}
+/* ====================================
+   HEADER & NAVIGATION STYLES
+   ==================================== */
+
 .site-tagline {
   line-height: 1.4;
   color: var(--text-mid);
@@ -264,11 +268,12 @@ html {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-right: 20px; /* spacing between logo and nav items */
 }
 .site-header .nav-center {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 32px; /* horizontal spacing between nav items */
 }
 .site-header .nav-right {
   display: flex;
@@ -276,21 +281,28 @@ html {
   gap: 12px;
 }
 
-/* (removed janestreet-specific override so global logo filter can apply uniformly) */
-
-/* Nav link styles */
+/* Nav link styling - CONSOLIDATED (was split into 2 definitions) */
 .nav-link {
   color: var(--text-mid);
   font-weight: 500;
   font-size: var(--fs-small);
   text-decoration: none;
+  padding: 6px 8px; /* improves hit area on desktop/tablet */
+  border-radius: 8px;
+  transition: color 160ms ease, background 160ms ease, transform 120ms ease, box-shadow 120ms ease;
+  position: relative;
 }
 .nav-link:hover {
   color: var(--text-high);
+  background: rgba(255,255,255,0.03);
+  transform: translateY(-1px);
+}
+.nav-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
 }
 .nav-link[aria-current="page"] {
   color: var(--text-high);
-  position: relative;
 }
 .nav-link[aria-current="page"]::after {
   content: "";
@@ -302,12 +314,34 @@ html {
   background: var(--brand);
   border-radius: 2px;
 }
-.nav-link:focus {
+
+/* Header CTA button - CONSOLIDATED (was split into 2 definitions) */
+.header-cta {
+  background: transparent !important;
+  color: var(--brand);
+  border: 1px solid var(--brand);
+  padding: 0 18px;
+  height: 44px;
+  min-width: 140px;
+  border-radius: 12px;
+  box-shadow: none;
+  font-size: 14px;
+}
+.header-cta:hover {
+  background: rgba(124,58,237,0.12); /* subtle purple wash */
+  color: #fff;
+  border-color: var(--brand-hover);
+  transform: translateY(-1px);
+}
+.header-cta:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+  box-shadow: 0 0 0 4px rgba(124,58,237,0.10);
 }
 
-/* Button size and compact nav variant */
+/* ====================================
+   BUTTON STYLES
+   ==================================== */
+
 .btn {
   font-size: var(--fs-body);
   height: 48px;
@@ -328,14 +362,16 @@ html {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* Small button variant - CONSOLIDATED (was split into 2 definitions) */
 .btn-sm {
   height: 40px;
-  padding: 0 12px;
+  padding: 0 16px; /* increased from 12px for better click target */
   font-size: 14px;
   border-radius: 12px;
 }
 
-/* primary filled */
+/* Primary filled button */
 .btn-primary {
   background: var(--brand-1);
   color: var(--text-high);
@@ -354,7 +390,7 @@ html {
   opacity: 0.6;
 }
 
-/* secondary outline */
+/* Secondary outline button */
 .btn-secondary {
   background: transparent;
   color: var(--text-mid);
@@ -370,49 +406,38 @@ html {
   box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
 }
 
-/* hero-specific: use brand gradient only on the wordmark (not on buttons) */
+/* Hero CTA button - larger variant */
+.hero .btn-primary {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 18px;
+  font-weight: 600;
+  min-width: 200px;
+}
+
+/* ====================================
+   HERO SECTION
+   ==================================== */
+
+/* Brand gradient wordmark - CONSOLIDATED (was split into 2 definitions) */
 .wordmark {
   background: var(--brand);
   background-image: var(--brand-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  text-shadow: 0 1px 6px rgba(2, 6, 23, 0.65);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Utility to scale header CTA down */
-.btn-sm {
-  height: 40px;
-  padding: 0 16px;
-  font-size: 14px;
-  border-radius: 12px;
-}
-.header-cta {
-  font-size: 14px;
-}
-
-/* Global card radius/shadow (surface) */
-.surface-card {
-  background: var(--surface);
-  color: var(--text-high);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: var(--radius);
-  padding: 1rem;
-  box-shadow: var(--card-shadow);
-}
-
-/* Surfaces */
-.bullet-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  display: inline-block;
-  margin-right: 8px;
-}
-
-/* Hero spacing override to ensure headline is never covered by header */
+/* Hero container */
 .hero .site-container {
   padding-top: calc(var(--header-h) + 32px);
+  /* center the hero content vertically/horizontally and stack it */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .hero h1 {
   margin-top: 0;
@@ -421,26 +446,32 @@ html {
   font-weight: 600;
   color: var(--text-high);
 }
-/* Make the tagline more prominent (+25%) to improve value-prop visibility */
+
+/* Hero paragraph/tagline */
 .hero p {
-  margin-top: 8px;
+  margin-top: 12px;
+  margin-bottom: 16px; /* tighter spacing before button */
   font-size: calc(var(--fs-h3) * 1.25);
   color: var(--text-mid);
   max-width: 62ch;
 }
 
-/* Reduce vertical space between hero and the next section by ~40% */
+/* Hero section - CONSOLIDATED (animation + padding were split) */
 .hero {
-  padding-bottom: calc(var(--section-vertical) * 0.6);
+  padding-bottom: var(--space-small); /* use small spacing after hero */
+  animation: fadeUp 420ms ease both;
 }
 
-/* Section inner (used by .section .site-container internal grid) */
+/* ====================================
+   MISSION SECTION
+   ==================================== */
+
 .section-inner {
   align-items: center; /* vertical align text and media */
   row-gap: 12px; /* reduce gap between rows inside this particular grid */
 }
 
-/* Benefit list (Our Mission) styling */
+/* Benefit list styling */
 .benefit-list {
   display: block;
   margin-top: 8px;
@@ -472,13 +503,16 @@ html {
   display: block;
 }
 
-/* Get Connected cards (clean, no icons) */
+/* ====================================
+   GET CONNECTED CARDS
+   ==================================== */
+
 .connect-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 36px; /* 32-40px gap range */
   justify-items: center; /* center the row */
-  align-items: start;
+  align-items: stretch; /* stretch cards to equal height */
 }
 @media (max-width: 960px) {
   .connect-grid {
@@ -496,6 +530,9 @@ html {
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
   max-width: 420px;
+  /* Use flexbox to stack content and push button to bottom */
+  display: flex;
+  flex-direction: column;
 }
 .connect-card:hover {
   transform: translateY(-6px);
@@ -513,8 +550,17 @@ html {
   color: #D1D5DB; /* light gray for description */
   margin: 0 0 18px 0;
   line-height: 1.5;
+  flex: 1; /* take up available space to push button down */
 }
 
+/* Button styles within connect cards — pushed to bottom */
+.connect-card .btn {
+  margin-top: auto; /* push button to bottom of flex container */
+}
+
+/* ====================================
+   SECTION SPACING
+   ==================================== */
 
 /* Accessibility: ensure links that open new tabs show non-neon colors */
 a {
@@ -531,76 +577,17 @@ a {
   scroll-margin-top: calc(var(--header-h) + 16px + env(safe-area-inset-top));
 }
 
-/* Subtle background dot texture for visual interest without distraction */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.02) 0.75px,
-    transparent 0.75px
-  );
-  background-size: 18px 18px;
-  opacity: 0.75;
-  mix-blend-mode: overlay;
-  z-index: 0;
-}
+/* ====================================
+   LOGOS MARQUEE SECTION
+   ==================================== */
 
-/* Ensure main content sits above the subtle texture */
-main,
-.site-container,
-.site-header,
-.section,
-.hero {
-  position: relative;
-  z-index: 1;
-}
-
-/* Motion: restrained */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.hero {
-  animation: fadeUp 420ms ease both;
-}
-.card-hover {
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
-}
-.card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.32);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero {
-    animation: none;
-  }
-  .card-hover,
-  .card-hover:hover {
-    transition: none;
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-/* Logos marquee */
 .logos-section {
   /* Keep the section background the same as the page (no full-section tint).
      We'll add a lighter inner band behind the marquee so black logos read
      clearly while preserving the original section color. */
   background: transparent;
-  padding-top: 40px; /* tightened gap above title */
-  padding-bottom: 60px; /* 60px below logos */
+  padding-top: var(--space-medium); /* consistent medium spacing */
+  padding-bottom: var(--space-medium);
 }
 .logos-section .site-container {
   position: relative;
@@ -646,16 +633,13 @@ main,
   opacity: 0.75; /* subtle, professional look */
 }
 
-/* Allow targeting specific logos if we need small visual fixes (janestreet PNG) */
-/* per-logo janestreet override removed */
-
 /* Title / subheading spacing and color inside logos band */
 .logos-section .site-container h3 {
   margin-bottom: 16px; /* 16px gap between title and subheading */
 }
 .logos-section .site-container p {
   color: #b4b4bb; /* lighter gray for subheading */
-  margin: 0 0 0 0;
+  margin: 0;
 }
 
 /* Edge fade: mask the left/right edges so logos fade in/out */
@@ -686,52 +670,302 @@ main,
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
-}
+/* ====================================
+   FOOTER STYLES
+   ==================================== */
 
-/* Site footer specific layout & spacing adjustments */
 .site-footer {
-  padding-top: 80px; /* increased top padding */
-  padding-bottom: 36px; /* increased bottom padding */
+  padding-top: var(--space-large); /* use large spacing above footer */
+  padding-bottom: var(--space-medium); /* medium spacing below footer */
   padding-left: 24px;
   padding-right: 24px;
-  border-top: 1px solid rgba(255,255,255,0.10);
+  border-top: 1px solid rgba(255,255,255,0.08); /* subtle top border to separate from content */
 }
 
 /* Footer grid: larger horizontal gaps and top-aligned columns */
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0 96px; /* horizontal gap 96px between columns */
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* first column wider for logo/tagline */
+  gap: 0 64px; /* horizontal gap 64px between columns (improved spacing) */
   align-items: start; /* align columns to the top */
+  row-gap: 24px; /* vertical gap for mobile stacking */
 }
 @media (max-width: 1024px) {
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 24px 0;
+    gap: 32px 0; /* more space between stacked sections */
   }
+}
+
+/* Footer section headings - consistent sizing */
+.site-footer h4 {
+  font-size: 16px; /* consistent size */
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px; /* consistent spacing below headings */
+  letter-spacing: 0.3px;
+}
+
+/* Footer column groups */
+.footer-grid > div {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Footer link styling: unify to the purple brand and add hover feedback */
 .site-footer a {
   color: var(--footer-link);
-  opacity: 0.9;
-  transition: opacity 140ms ease, text-decoration 140ms ease, color 140ms ease;
+  opacity: 0.85;
+  transition: opacity 160ms ease, text-decoration 160ms ease, color 160ms ease;
   text-decoration: none;
+  font-size: 15px; /* consistent link size */
+  line-height: 1.6;
 }
-.site-footer a:hover,
-.site-footer a:focus {
+.site-footer a:hover {
   opacity: 1;
+  color: #ffffff; /* brighten on hover */
   text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.site-footer a:focus {
+  outline: none;
+  opacity: 1;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25);
+  border-radius: 2px;
 }
 
 /* Footer tagline (make secondary to the logo) */
 .footer-tagline {
   color: rgba(255,255,255,0.65);
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 8px;
 }
 
-/* No unknown at-rules retained to avoid tooling errors. */
+/* ====================================
+   ANIMATIONS & MOTION
+   ==================================== */
+
+/* Subtle background dot texture for visual interest without distraction */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.02) 0.75px,
+    transparent 0.75px
+  );
+  background-size: 18px 18px;
+  opacity: 0.75;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+/* Ensure main content sits above the subtle texture */
+main,
+.site-container,
+.site-header,
+.section,
+.hero {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fade-up animation on hero load */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    animation: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ====================================
+   PAGE LAYOUT & COMMON PATTERNS
+   ==================================== */
+
+/* Page main container - consistent across all pages */
+.page-main {
+  position: relative;
+  min-height: 100vh;
+  padding-top: calc(var(--header-h) + 32px);
+  padding-bottom: var(--space-medium); /* tighter bottom padding */
+}
+
+/* Page section heading - consistent style */
+.page-heading {
+  margin-bottom: var(--space-medium);
+  text-align: center;
+}
+.page-heading h1 {
+  font-size: clamp(32px, 6vw, 60px);
+  font-weight: 600;
+  color: var(--text-high);
+  line-height: var(--lh-head);
+  margin-bottom: 12px;
+}
+.page-heading p {
+  color: var(--text-mid);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 0 auto;
+}
+
+/* Card - reusable for all sections */
+.card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  text-decoration: none;
+  color: var(--text-high);
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-high);
+  margin: 0 0 8px 0;
+}
+.card p {
+  font-size: 14px;
+  color: var(--text-mid);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Card grid - 3-column responsive layout */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: var(--space-medium);
+}
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section with background - optional container */
+.content-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 40px;
+  margin: var(--space-medium) 0;
+}
+.content-section h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-high);
+  margin-bottom: 24px;
+}
+.content-section p {
+  color: var(--text-mid);
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Ordered list styling */
+.content-section ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.content-section li {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: var(--text-mid);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.content-section li::before {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--brand);
+  color: var(--text-high);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 600;
+}
+.content-section li:nth-child(1)::before {
+  content: "1";
+}
+.content-section li:nth-child(2)::before {
+  content: "2";
+}
+.content-section li:nth-child(3)::before {
+  content: "3";
+}
+.content-section li:nth-child(4)::before {
+  content: "4";
+}
+.content-section li:nth-child(5)::before {
+  content: "5";
+}
+
+/* Two-column benefit grid */
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+@media (max-width: 640px) {
+  .benefit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.benefit-grid > div {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 20px;
+}
+.benefit-grid h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-high);
+  margin-bottom: 12px;
+}
+.benefit-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.benefit-grid li {
+  color: var(--text-mid);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}

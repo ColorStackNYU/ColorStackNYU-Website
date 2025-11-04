@@ -150,6 +150,13 @@ export default function Gallery({ maxWidth }: { maxWidth?: number }) {
           className={contain[index] ? "gallery-image contain" : "gallery-image"}
         />
 
+        {/* Caption overlay (rendered inside image, positioned at bottom) */}
+        {current.caption && (
+          <div className="gallery-caption-below" aria-hidden={false}>
+            {current.caption}
+          </div>
+        )}
+
         {/* arrows (visible but subtle) */}
         {slides.length > 1 && (
           <>
@@ -176,12 +183,6 @@ export default function Gallery({ maxWidth }: { maxWidth?: number }) {
           </>
         )}
       </div>
-
-      {current.caption && (
-        <div className="gallery-caption-below" aria-hidden={false}>
-          {current.caption}
-        </div>
-      )}
     </div>
   );
 }

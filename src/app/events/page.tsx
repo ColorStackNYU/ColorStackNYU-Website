@@ -20,7 +20,7 @@ type EventItem = {
 export default function EventsPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -40,72 +40,74 @@ export default function EventsPage() {
   return (
     <>
       <Navigation />
-      <main className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8 min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-        <section className="mx-auto mb-10 max-w-3xl text-center">
-          <h1 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
-            Events
-          </h1>
-          <p className="mt-4 text-base text-white/80 md:text-lg">
-            Upcoming happenings at ColorStackNYU
-          </p>
+      <main className="page-main site-container">
+        <section className="page-heading max-w-3xl mx-auto">
+          <h1 className="wordmark">Events</h1>
+          <p>Upcoming happenings at ColorStackNYU</p>
         </section>
 
-        {loading && <p className="text-white/70">Loading…</p>}
-        {error && <p className="text-red-300">Error: {error}</p>}
+        {loading && <p className="text-center text-white/70">Loading…</p>}
+        {error && <p className="text-center text-red-300">Error: {error}</p>}
 
         {!loading && !error && (
-          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="card-grid">
             {events.map((ev) => (
-              <li key={ev.id} className="relative rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur">
-                <h3 className="text-lg font-semibold text-white">{ev.title}</h3>
-                <p className="text-white/70 text-sm mt-1">
-                  {ev.start}{ev.end ? ` – ${ev.end}` : ""}
+              <li key={ev.id} className="card">
+                <h3>{ev.title}</h3>
+                <p>
+                  {ev.start}
+                  {ev.end ? ` – ${ev.end}` : ""}
                 </p>
-                {ev.location && <p className="text-white/80 text-sm mt-1">{ev.location}</p>}
-                {ev.description && <p className="text-white/80 text-sm mt-3">{ev.description}</p>}
+                {ev.location && <p>{ev.location}</p>}
+                {ev.description && <p>{ev.description}</p>}
                 {ev.link && (
-                  <a className="text-indigo-300 underline mt-3 inline-block" href={ev.link} target="_blank" rel="noreferrer">
+                  <a
+                    className="text-brand underline mt-2 inline-block hover:text-brand-hover"
+                    href={ev.link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     More info
                   </a>
                 )}
               </li>
             ))}
-            {events.length === 0 && <p className="text-white/60">No events yet.</p>}
+            {events.length === 0 && (
+              <p className="text-center text-white/60 col-span-full">No events yet.</p>
+            )}
           </ul>
         )}
 
         {/* Points Section */}
-        <section className="mt-20 mx-auto max-w-4xl">
+        <section className="mt-20">
           <div className="text-center mb-10">
-            <h2 className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-              What are Points?
-            </h2>
+            <h2 className="text-3xl font-bold text-white">What are Points?</h2>
           </div>
-          
-          <div className="relative rounded-2xl border border-white/10 bg-white/5 p-8 shadow-lg backdrop-blur">
-            <div className="mx-auto max-w-2xl">
-              <p className="text-white/80 text-lg leading-relaxed">
-                Points are earned by attending events (1 point per event). Points help determine priority for limited-capacity opportunities like office visits. Leaderboard shows consenting members only.
-              </p>
-              
-              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-                  <h3 className="text-lg font-semibold text-white mb-2">How to Earn?</h3>
-                  <ul className="text-white/80 space-y-2">
-                    <li>• Attend events (1 point each)</li>
-                    <li>• Participate in workshops</li>
-                    <li>• Engage in community activities</li>
-                  </ul>
-                </div>
-                
-                <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-                  <h3 className="text-lg font-semibold text-white mb-2">Benefits</h3>
-                  <ul className="text-white/80 space-y-2">
-                    <li>• Priority for office visits</li>
-                    <li>• Access to exclusive events</li>
-                    <li>• Recognition in the community</li>
-                  </ul>
-                </div>
+
+          <div className="content-section">
+            <p>
+              Points are earned by attending events (1 point per event). Points help determine priority
+              for limited-capacity opportunities like office visits. Leaderboard shows consenting members
+              only.
+            </p>
+
+            <div className="benefit-grid">
+              <div>
+                <h3>How to Earn?</h3>
+                <ul>
+                  <li>• Attend events (1 point each)</li>
+                  <li>• Participate in workshops</li>
+                  <li>• Engage in community activities</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3>Benefits</h3>
+                <ul>
+                  <li>• Priority for office visits</li>
+                  <li>• Access to exclusive events</li>
+                  <li>• Recognition in the community</li>
+                </ul>
               </div>
             </div>
           </div>
