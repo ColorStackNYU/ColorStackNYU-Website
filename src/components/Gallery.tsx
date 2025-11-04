@@ -21,74 +21,35 @@ export default function Gallery() {
   }, []);
 
   useEffect(() => {
-    // Prefer fetching events from the API. If that fails, fall back to captions.json.
+    // Load slides from static captions.json file only (no API calls)
     let cancelled = false;
-    Promise.all([
-      fetch("/api/events")
-        .then((r) => (r.ok ? r.json().catch(() => null) : null))
-        .catch(() => null),
-      fetch("/events/captions.json")
-        .then((r) => (r.ok ? r.json().catch(() => null) : null))
-        .catch(() => null),
-    ])
-      .then(([apiData, captions]) => {
+    
+    fetch("/events/captions.json")
+      .then((r) => r.json())
+      .then((captions) => {
         if (cancelled) return;
-
-        // If API returned events, build slides from that data
-        if (
-          apiData &&
-          Array.isArray(apiData.events) &&
-          apiData.events.length > 0
-        ) {
-          const events = apiData.events as any[];
-          const captionList = Array.isArray(captions)
-            ? (captions as Slide[])
-            : [];
-          const mapped: Slide[] = events.map((ev, i) => ({
-            file:
-              captionList[i] && captionList[i].file
-                ? captionList[i].file
-                : `slide-${i + 1}.jpg`,
-            caption:
-              ev.title ||
-              (captionList[i] && captionList[i].caption) ||
-              ev.description ||
-              "",
-            url: ev.url || undefined,
-          }));
-          setSlides(mapped);
-          setContain(new Array(mapped.length).fill(false));
-          return;
-        }
-
-        // Otherwise use captions.json if available
-        if (Array.isArray(captions) && captions.length) {
+        
+        if (Array.isArray(captions) && captions.length > 0) {
           setSlides(captions as Slide[]);
-          setContain(new Array((captions as Slide[]).length).fill(false));
-          return;
+          setContain(new Array(captions.length).fill(false));
+        } else {
+          // Fallback to hardcoded slides
+          const fallback: Slide[] = [
+            { file: "slide-1.jpg", caption: "First ColorStack @ NYU event" },
+            { file: "slide-2.jpg", caption: "Vice President Sebastian Capellan hosting a weekly coding session" },
+            { file: "slide-3.jpg", caption: "ColorStack @ NYU community gathering" },
+          ];
+          setSlides(fallback);
+          setContain(new Array(fallback.length).fill(false));
         }
-
-        // Final fallback
-        const fallback: Slide[] = [
-          { file: "slide-1.jpg", caption: "First ColorStack @ NYU event" },
-          {
-            file: "slide-2.jpg",
-            caption:
-              "Vice President Sebastian Capellan hosting a weekly coding session",
-          },
-        ];
-        setSlides(fallback);
-        setContain(new Array(fallback.length).fill(false));
       })
       .catch(() => {
         if (cancelled) return;
+        // Fallback if captions.json fails to load
         const fallback: Slide[] = [
           { file: "slide-1.jpg", caption: "First ColorStack @ NYU event" },
-          {
-            file: "slide-2.jpg",
-            caption:
-              "Vice President Sebastian Capellan hosting a weekly coding session",
-          },
+          { file: "slide-2.jpg", caption: "Vice President Sebastian Capellan hosting a weekly coding session" },
+          { file: "slide-3.jpg", caption: "ColorStack @ NYU community gathering" },
         ];
         setSlides(fallback);
         setContain(new Array(fallback.length).fill(false));
