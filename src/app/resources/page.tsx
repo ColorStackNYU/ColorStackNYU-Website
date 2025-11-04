@@ -1,52 +1,520 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
 import Navigation from "../../components/navigation";
+import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
 
-type Resource = {
-  title: string;
-  description: string;
-  link: string;
-};
+function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string) => void }) {
+  const [isHovered, setIsHovered] = useState(false);
 
-const resources: Resource[] = [
-  {
-    title: "example resource",
-    description: "example desc",
-    link: "/docs/getting-started",
-  },
-];
-
-function ResourceCard({ r }: { r: Resource }) {
   return (
     <a
       href={r.link}
       target={r.link.startsWith("http") ? "_blank" : "_self"}
       rel="noopener noreferrer"
-      className="card"
+      className="card resource-card"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "0",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <h3>{r.title}</h3>
-      <p>{r.description}</p>
+      {/* Title + Link Icon (dominant) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", marginBottom: "12px" }}>
+        <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
+          {r.title}
+        </h3>
+        <div
+          title="Opens in new tab"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "32px",
+            height: "32px",
+            borderRadius: "50%",
+            backgroundColor: isHovered ? "rgba(212, 181, 255, 0.2)" : "rgba(212, 181, 255, 0.1)",
+            border: "1px solid rgba(212, 181, 255, 0.4)",
+            flexShrink: 0,
+            transition: "all 0.2s ease",
+          }}
+        >
+          <span
+            style={{
+              color: isHovered ? "#d4b5ff" : "#b5a3d4",
+              fontSize: "18px",
+              transition: "all 0.2s ease",
+              transform: isHovered ? "scale(1.15)" : "scale(1)",
+            }}
+          >
+            ↗
+          </span>
+        </div>
+      </div>
+
+      {/* Description (secondary) */}
+      <p style={{ flex: 1, margin: "0 0 16px 0", fontSize: "14px", fontWeight: 400, color: "#e8e6ff", lineHeight: "1.6" }}>
+        {r.description}
+      </p>
+
+      {/* Tags (tertiary) */}
+      {r.tags && r.tags.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "12px" }}>
+          {r.tags.map((tag) => (
+            <button
+              key={tag}
+              onClick={(e) => {
+                e.preventDefault();
+                onTagClick(tag);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onTagClick(tag);
+                }
+              }}
+              className="resource-tag"
+              style={{
+                display: "inline-block",
+                padding: "3px 8px",
+                backgroundColor: "transparent",
+                color: "#d4b5ff",
+                borderRadius: "5px",
+                fontSize: "11px",
+                fontWeight: 600,
+                border: "1px solid #d4b5ff",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(212, 181, 255, 0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #d4b5ff";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
+              }}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Metadata footer: Category + Contributor (de-emphasized) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "12px", paddingTop: "8px", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
+        <div>
+          {r.category && (
+            <p style={{ margin: "0", fontSize: "11px", color: "#d4b5ff", opacity: 1 }}>
+              {r.category}
+            </p>
+          )}
+        </div>
+        <div>
+          {r.contributedBy && (
+            <p style={{ margin: "0", fontSize: "10px", color: "#d4b5ff", opacity: 0.9, textAlign: "right" }}>
+              Contributed by {r.contributedBy}
+            </p>
+          )}
+        </div>
+      </div>
     </a>
   );
 }
 
+function StatStrip({ resources }: { resources: Resource[] }) {
+  const { resourcesCount, contributorsCount, lastAddedDays } = useMemo(() => {
+    const links = new Set<string>();
+    const contributors = new Set<string>();
+    const exclude = new Set(["community/anonymous", "community", "anonymous"]);
+    let latest: number | null = null;
+
+    resources.forEach((r) => {
+      if (r.link) links.add(r.link);
+
+      if (r.contributedBy) {
+        const name = r.contributedBy.trim().toLowerCase();
+        if (name && !exclude.has(name)) {
+          contributors.add(name);
+        }
+      }
+
+      if (r.dateAdded) {
+        const t = Date.parse(r.dateAdded);
+        if (!Number.isNaN(t)) {
+          if (latest === null || t > latest) latest = t;
+        }
+      }
+    });
+
+    const resourcesCount = links.size;
+    const contributorsCount = contributors.size;
+    const lastAddedDays = latest !== null ? Math.floor((Date.now() - latest) / (1000 * 60 * 60 * 24)) : null;
+    return { resourcesCount, contributorsCount, lastAddedDays };
+  }, [resources]);
+
+  const resourceLabel = resourcesCount === 1 ? "resource" : "resources";
+  const contributorLabel = contributorsCount === 1 ? "contributor" : "contributors";
+
+  return (
+    <div style={{
+      marginTop: "16px",
+      display: "inline-flex",
+      gap: "20px",
+      alignItems: "center",
+      padding: "12px 16px",
+      backgroundColor: "rgba(171, 130, 197, 0.08)",
+      borderRadius: "8px",
+      border: "1px solid rgba(171, 130, 197, 0.15)",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+          {resourcesCount} {resourceLabel}
+        </span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+          {contributorsCount} {contributorLabel}
+        </span>
+      </div>
+      {lastAddedDays !== null && (
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ color: "#e8e6ff", fontSize: "15px", fontWeight: 500 }}>
+            Last added: {lastAddedDays === 0 ? "today" : lastAddedDays === 1 ? "1 day ago" : `${lastAddedDays} days ago`}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ResourcesPage() {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadResources = async () => {
+      const data = await fetchResources();
+      setResources(data);
+      setLoading(false);
+    };
+
+    loadResources();
+  }, []);
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(selectedTag === tag ? null : tag);
+  };
+
+  const filteredResources = resources.filter((r) => {
+    const matchesCategory = !selectedCategory || r.category === selectedCategory;
+    const matchesTag = !selectedTag || (r.tags && r.tags.includes(selectedTag));
+    return matchesCategory && matchesTag;
+  });
   return (
     <>
       <Navigation />
       <main className="page-main site-container">
         <section className="page-heading max-w-3xl mx-auto">
-          <h1 className="wordmark">Resources</h1>
-          <p>Helpful links, guides, and opportunities curated for our community.</p>
+          <div style={{ marginBottom: "16px" }}>
+            <h1 className="wordmark">Resources</h1>
+          </div>
+          <p>
+            Helpful links, guides, and tools—curated by our community.
+          </p>
+          <p>
+            <a
+              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: "none",
+                border: "none",
+                color: "#d4b5ff",
+                cursor: "pointer",
+                textDecoration: "underline",
+                fontWeight: 500,
+                padding: 0,
+                font: "inherit",
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #d4b5ff";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
+              }}
+            >
+              How to contribute →
+            </a>
+          </p>
+
+          {/* Stat strip: global counts (computed from JSON) */}
+          {/**
+           * Resources: unique links (exact URL dedupe)
+           * Contributors: unique contributedBy (case-insensitive), excluding Community/Anonymous
+           * Optional: Last added: N days ago
+           */}
+          <StatStrip resources={resources} />
         </section>
 
         <section>
-          <div className="card-grid">
-            {resources.map((r) => (
-              <ResourceCard key={r.title} r={r} />
-            ))}
-          </div>
+          {loading ? (
+            <p style={{ color: "var(--text-mid)" }}>Loading resources...</p>
+          ) : (
+            <>
+              {/* Filter Controls */}
+              <div style={{ marginBottom: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                  <h3 className="text-sm font-semibold" style={{ color: "var(--text-high)" }}>
+                    Filter
+                  </h3>
+                  {(selectedCategory || selectedTag) && (
+                    <button
+                      onClick={() => {
+                        setSelectedCategory(null);
+                        setSelectedTag(null);
+                      }}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#d4b5ff",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        fontSize: "13px",
+                        padding: 0,
+                        fontWeight: 500,
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.outline = "2px solid #d4b5ff";
+                        e.currentTarget.style.outlineOffset = "2px";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.outline = "none";
+                      }}
+                    >
+                      Clear filters
+                    </button>
+                  )}
+                </div>
+
+                {/* Category chips */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelectedCategory(null);
+                      }
+                    }}
+                    style={{
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      border: !selectedCategory ? "1px solid rgba(171, 130, 197, 0.5)" : "1px solid rgba(171, 130, 197, 0.3)",
+                      backgroundColor: "transparent",
+                      color: !selectedCategory ? "var(--text-mid)" : "var(--text-high)",
+                      cursor: "pointer",
+                      fontWeight: 500,
+                      fontSize: "14px",
+                      transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!selectedCategory) return;
+                      e.currentTarget.style.borderColor = "var(--brand-1)";
+                      e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!selectedCategory) return;
+                      e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
+                      e.currentTarget.style.backgroundColor = "transparent";
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.outline = "2px solid #d4b5ff";
+                      e.currentTarget.style.outlineOffset = "2px";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.outline = "none";
+                    }}
+                  >
+                    All
+                  </button>
+                  {RESOURCE_CATEGORIES.map((category) => {
+                    const isSelected = selectedCategory === category;
+                    return (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          setSelectedCategory(isSelected ? null : category);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setSelectedCategory(isSelected ? null : category);
+                          }
+                        }}
+                        style={{
+                          padding: "8px 16px",
+                          borderRadius: "8px",
+                          border: isSelected ? "2px solid var(--brand-1)" : "1px solid rgba(171, 130, 197, 0.3)",
+                          backgroundColor: isSelected ? "rgba(171, 130, 197, 0.2)" : "transparent",
+                          color: "var(--text-high)",
+                          cursor: "pointer",
+                          fontWeight: isSelected ? 600 : 500,
+                          fontSize: "14px",
+                          transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          if (isSelected) return;
+                          e.currentTarget.style.borderColor = "var(--brand-1)";
+                          e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.1)";
+                        }}
+                        onMouseLeave={(e) => {
+                          if (isSelected) return;
+                          e.currentTarget.style.borderColor = "rgba(171, 130, 197, 0.3)";
+                          e.currentTarget.style.backgroundColor = "transparent";
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.outline = "2px solid #d4b5ff";
+                          e.currentTarget.style.outlineOffset = "2px";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.outline = "none";
+                        }}
+                      >
+                        {category}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Tag filter indicator */}
+                {selectedTag && (
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingTop: "12px", borderTop: "1px solid rgba(171, 130, 197, 0.2)" }}>
+                    <span style={{ color: "var(--text-mid)", fontSize: "14px" }}>Tag:</span>
+                    <span style={{ padding: "4px 12px", backgroundColor: "rgba(217, 70, 239, 0.2)", borderRadius: "6px", color: "var(--accent)", fontSize: "14px", fontWeight: 500 }}>
+                      {selectedTag}
+                    </span>
+                    <button
+                      onClick={() => setSelectedTag(null)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#d4b5ff",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        fontSize: "13px",
+                        padding: 0,
+                        fontWeight: 500,
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.outline = "2px solid #d4b5ff";
+                        e.currentTarget.style.outlineOffset = "2px";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.outline = "none";
+                      }}
+                    >
+                      Clear tag
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Results */}
+              {filteredResources.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "64px 32px" }}>
+                  <p style={{ color: "var(--text-mid)", fontSize: "16px", marginBottom: "12px" }}>
+                    No resources yet in this category.
+                  </p>
+                  <p style={{ color: "var(--text-mid)", fontSize: "14px", marginBottom: "24px" }}>
+                    Want to add one?{" "}
+                    <a
+                      href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#d4b5ff",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        fontWeight: 500,
+                        padding: 0,
+                        font: "inherit",
+                        fontSize: "14px",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.outline = "2px solid #d4b5ff";
+                        e.currentTarget.style.outlineOffset = "2px";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.outline = "none";
+                      }}
+                    >
+                      Learn how to contribute
+                    </a>
+                  </p>
+                </div>
+              ) : (
+                <div className="card-grid">
+                  {filteredResources.map((r) => (
+                    <ResourceCard key={r.id} r={r} onTagClick={handleTagClick} />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </section>
+
+        {/* Secondary CTA: bottom of resources list */}
+        {filteredResources.length > 0 && (
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "48px", marginBottom: "64px" }}>
+            <a
+              href="https://github.com/ColorStackNYU/ColorStackNYU-Website/blob/main/CONTRIBUTING.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: "12px 24px",
+                borderRadius: "8px",
+                border: "1.5px solid rgba(212, 181, 255, 0.4)",
+                backgroundColor: "transparent",
+                color: "#d4b5ff",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 500,
+                textDecoration: "none",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#d4b5ff";
+                e.currentTarget.style.backgroundColor = "rgba(212, 181, 255, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(212, 181, 255, 0.4)";
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid #d4b5ff";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
+              }}
+            >
+              Add a resource
+            </a>
+          </div>
+        )}
       </main>
     </>
   );
