@@ -14,8 +14,8 @@ export default function SponsorshipPage() {
 
         {/* Why Partner Section */}
         <section style={{
-          marginBottom: "80px",
-          paddingBottom: "80px",
+          marginBottom: "48px",
+          paddingBottom: "48px",
           borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
           animation: "fadeUp 420ms ease both 100ms backwards"
         }}>
@@ -46,95 +46,10 @@ export default function SponsorshipPage() {
           </div>
         </section>
 
-        {/* How it Works Section */}
-        <section style={{
-          marginBottom: "80px",
-          paddingBottom: "80px",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          animation: "fadeUp 420ms ease both 200ms backwards"
-        }}>
-          <h2 style={{
-            fontSize: "32px",
-            fontWeight: 700,
-            color: "var(--text-high)",
-            marginBottom: "24px"
-          }}>How it Works</h2>
-          <div className="content-section">
-            <ol style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-              <li style={{
-                display: "flex",
-                gap: "16px",
-                fontSize: "16px",
-                fontWeight: 500,
-                color: "var(--text-high)"
-              }}>
-                <span style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "40px",
-                  height: "40px",
-                  minWidth: "40px",
-                  backgroundColor: "var(--brand)",
-                  color: "white",
-                  borderRadius: "50%",
-                  fontWeight: 700,
-                  fontSize: "18px"
-                }}>1</span>
-                Email us to learn about sponsorship opportunities
-              </li>
-              <li style={{
-                display: "flex",
-                gap: "16px",
-                fontSize: "16px",
-                fontWeight: 500,
-                color: "var(--text-high)"
-              }}>
-                <span style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "40px",
-                  height: "40px",
-                  minWidth: "40px",
-                  backgroundColor: "var(--brand)",
-                  color: "white",
-                  borderRadius: "50%",
-                  fontWeight: 700,
-                  fontSize: "18px"
-                }}>2</span>
-                Schedule a meeting with our partnership team
-              </li>
-              <li style={{
-                display: "flex",
-                gap: "16px",
-                fontSize: "16px",
-                fontWeight: 500,
-                color: "var(--text-high)"
-              }}>
-                <span style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "40px",
-                  height: "40px",
-                  minWidth: "40px",
-                  backgroundColor: "var(--brand)",
-                  color: "white",
-                  borderRadius: "50%",
-                  fontWeight: 700,
-                  fontSize: "18px"
-                }}>3</span>
-                Choose your sponsorship package and customize engagement opportunities
-              </li>
-            </ol>
-          </div>
-        </section>
-
         {/* Get in Touch Section */}
         <section style={{
           textAlign: "center",
-          animation: "fadeUp 420ms ease both 300ms backwards"
+          animation: "fadeUp 420ms ease both 200ms backwards"
         }}>
           <h2 style={{
             fontSize: "32px",
