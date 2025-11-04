@@ -50,6 +50,11 @@ function toMember(p: any): Member {
   
   // Hall of Fame text is displayed only if member is alumni
   const hallOfFameText = isAlumni ? getPlainRichText(props["Hall of Fame"]?.rich_text ?? []) : undefined;
+  
+  // Debug
+  if (isAlumni && name) {
+    console.log(`Alumni: ${name}, Hall of Fame text: ${hallOfFameText}`);
+  }
 
   return {
     id: p.id,
@@ -194,6 +199,17 @@ export async function GET() {
     });
 
     console.log(`Found ${response.results.length} pages in database`);
+
+    // Debug: log property names from first result
+    if (response.results.length > 0) {
+      console.log("=== First Member Properties ===");
+      const props = response.results[0].properties || {};
+      Object.keys(props).forEach(key => {
+        console.log(`  "${key}"`);
+      });
+      console.log("Hall of Fame value:", JSON.stringify(props["Hall of Fame"], null, 2));
+      console.log("=============================");
+    }
 
     // Explicitly type the array so `m` in filters is not `any`
     const members: Member[] = (response.results as any[]).map(toMember);
