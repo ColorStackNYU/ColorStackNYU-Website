@@ -1,24 +1,109 @@
 @import "tailwindcss";
 
-:root[data-theme="dark"] {
-  --background: #1e1a2d;
-  --foreground: #f8fafc;
+/* Design tokens (tight palette) */
+:root {
+  --bg-deep: #0E0A1F; /* page background */
+  --surface: #16122A; /* cards / nav */
+  --primary: #7C3AED; /* primary purple */
+  --primary-hover: #6D28D9;
+  --accent: #D946EF; /* fuchsia */
+  --text-high: #F5F3FF;
+  --text-mid: #C7C3E6;
+  --text-low: #9A95BE;
+  --border: #2A2445;
+  --brand-grad: linear-gradient(135deg, #7C3AED 0%, #9333EA 50%, #D946EF 100%);
+
+  /* layout tokens */
+  --container-max: 1200px;
+  --gutter: 24px; /* grid gutters */
+  --section-vertical: 80px;
+  --section-gap: 24px; /* internal gap */
+  --side-pad-desktop: 24px;
+  --side-pad-mobile: 16px;
 }
 
-:root[data-theme="light"] {
-  --background: #f8fafc;
-  --foreground: #1e1a2d;
-}
+/* Theme-aware fallbacks (keeps previous data-theme attribute working) */
+/* If you use data-theme toggles, keep them in sync with the variables above. */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Base page styles */
+html,body,#root {
+  height: 100%;
 }
-
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-deep);
+  color: var(--text-high);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Page container that all sections snap to */
+.site-container {
+  max-width: var(--container-max);
+  padding-left: var(--side-pad-desktop);
+  padding-right: var(--side-pad-desktop);
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 640px) {
+  .site-container { padding-left: var(--side-pad-mobile); padding-right: var(--side-pad-mobile); }
+}
+
+/* 12-column grid helpers */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+  row-gap: var(--section-gap);
+}
+
+/* Section spacing */
+.section {
+  padding-top: var(--section-vertical);
+  padding-bottom: var(--section-vertical);
+}
+
+/* small utility: center and limit inner content gaps */
+.section-inner { display: grid; gap: var(--section-gap); }
+
+/* Align left edge helper — ensures left rails line up */
+.rail-left { grid-column: 1 / -1; }
+
+/* Column-span helpers we will use in markup */
+.col-span-6 { grid-column: span 6 / span 6; }
+.col-span-7 { grid-column: span 7 / span 7; }
+.col-span-5 { grid-column: span 5 / span 5; }
+.col-span-12 { grid-column: 1 / -1; }
+
+/* Logo / hero helpers */
+.logo-block { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.site-tagline { line-height: 1.7; color: var(--text-mid); }
+
+/* CTA styles — solid primary; hero-specific gradient only when inside .hero */
+.cta-primary {
+  background: var(--primary);
+  color: var(--text-high);
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.hero .cta-primary { background-image: var(--brand-grad); }
+.cta-primary:hover { background: var(--primary-hover); }
+.cta-secondary {
+  background: transparent;
+  color: var(--text-mid);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+/* Surfaces */
+.surface-card { background: var(--surface); color: var(--text-high); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+
+/* Event bullet dot (uses accent at 70% on a low-opacity background) */
+.bullet-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(217,70,239,0.7); display:inline-block; margin-right:8px; }
+
+/* Accessibility: ensure links that open new tabs show non-neon colors */
+a { color: var(--primary); }
+
+/* No unknown at-rules retained to avoid tooling errors. */

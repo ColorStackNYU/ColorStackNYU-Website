@@ -38,33 +38,33 @@ export default function Navigation({ className = "" }: NavigationProps) {
   };
 
   return (
-    <nav className={`fixed top-0 w-full bg-black/20 backdrop-blur-lg z-50 border-b border-white/10 ${className}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
+    <nav className={`fixed top-0 w-full z-50 border-b`} style={{background:'rgba(22,18,42,0.6)', borderColor:'var(--border)'}}>
+      <div className="site-container py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-[#43048a] to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{backgroundImage:'var(--brand-grad)'}}>
               <Link href="/" onClick={closeMenu}>
                 <img src="/Colorstack_Logo.png" alt="Logo" className="w-10 h-10 rounded-md drop-shadow-[0_0_2px_rgba(255,255,255,0.7)]" />
               </Link>
             </div>
-            <h1 className="text-2xl font-bold text-white">ColorStackNYU</h1>
+            <h1 className="text-2xl font-bold" style={{color:'var(--text-high)'}}>ColorStackNYU</h1>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-white/80 hover:text-white transition-colors">
+            <Link href="/" className="transition-colors" style={{color:'var(--text-mid)'}}>
               Home
             </Link>
-            <Link href="/events" className="text-white/80 hover:text-white transition-colors">
+            <Link href="/events" className="transition-colors" style={{color:'var(--text-mid)'}}>
               Events
             </Link>
-            <Link href="/resources" className="text-white/80 hover:text-white transition-colors">
+            <Link href="/resources" className="transition-colors" style={{color:'var(--text-mid)'}}>
               Resources
             </Link>
-            <Link href="/meet-the-team" className="text-white/80 hover:text-white transition-colors">
+            <Link href="/meet-the-team" className="transition-colors" style={{color:'var(--text-mid)'}}>
               Meet the Team
             </Link>
-            <Link href="/sponsorship" className="text-white/80 hover:text-white transition-colors">
+            <Link href="/sponsorship" className="transition-colors" style={{color:'var(--text-mid)'}}>
               Sponsorship
             </Link>
             {/* Need to make more overall changes for this light to dark mode to actually work well */}
@@ -85,7 +85,8 @@ export default function Navigation({ className = "" }: NavigationProps) {
             </button> */}
             <button
               onClick={handleGetConnected}
-              className="bg-gradient-to-r from-[#43048a] to-purple-600 text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105"
+              className="cta-primary"
+              style={{padding:'0.5rem 1.25rem'}}
             >
               Get Connected
             </button>
@@ -117,11 +118,12 @@ export default function Navigation({ className = "" }: NavigationProps) {
         {/* Mobile Menu */}
         <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
           }`}>
-          <div className="py-4 space-y-2 border-t border-white/10 mt-4">
+          <div className="py-4 space-y-2" style={{borderTop:'1px solid var(--border)', marginTop:'1rem'}}>
             <Link
               href="/"
-              className="block text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              className="block px-4 py-3 rounded-lg transition-all"
               onClick={closeMenu}
+              style={{color:'var(--text-mid)'}}
             >
               Home
             </Link>
@@ -155,14 +157,16 @@ export default function Navigation({ className = "" }: NavigationProps) {
             </Link>
             <button
               onClick={toggleTheme}
-              className="block w-full text-left text-white/80 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg transition-all"
+              className="block w-full text-left px-4 py-3 rounded-lg transition-all"
+              style={{color:'var(--text-mid)'}}
             >
               {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             </button>
             <div className="pt-2">
               <button
                 onClick={handleGetConnected}
-                className="w-full bg-gradient-to-r from-[#43048a] to-purple-600 text-white px-6 py-3 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105"
+                className="w-full cta-primary"
+                style={{padding:'0.75rem'}}
               >
                 Get Connected
               </button>
