@@ -1,0 +1,33 @@
+{
+  "resources": [
+    {
+      "id": "1",
+      "title": "Codesignal Prep Checklist",
+      "description": "Problems pulled from Codesignal OA's [closest to the second half questions of the CodeSignal GCA (Q3 and Q4.)].",
+      "link": "https://shadowed-chips-fc9.notion.site/Codesignal-Prep-Checklist-248ea1c6225980fc88f4d1017267cb07?pvs=74",
+      "category": "Interview Prep",
+      "tags": ["leetcode"],
+      "dateAdded": "2025-11-04",
+      "contributedBy": "Sebastian Cappellan"
+    },
+    {
+      "id": "2",
+      "title": "Algorithm Lecture Notes",
+      "description": "When your professor lecture notes don't make sense for your algorithms class",
+      "link": "https://research.engineering.nyu.edu/~greg/algorithms/2413/resources.html#bigO",
+      "category": "Classes",
+      "tags": ["algorithms"],
+      "dateAdded": "2025-11-04"
+    },
+    {
+      "id": "3",
+      "title": "Stanford Algorithms Course",
+      "description": "Lecture notes for alogorithms",
+      "link": "https://cs161-stanford.github.io/lectures/",
+      "category": "Classes",
+      "tags": ["algorithms"],
+      "dateAdded": "2025-11-04",
+      "contributedBy": "Faith Winford"
+    }
+  ]
+}
