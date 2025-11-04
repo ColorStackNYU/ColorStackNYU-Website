@@ -18,11 +18,21 @@ export default function MeetTheTeamPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
     (async () => {
       try {
-        const res = await fetch("/api/team", { cache: "no-store" });
+        const res = await fetch("/api/team", { 
+          cache: "no-store",
+          signal: controller.signal 
+        });
+        
         if (!res.ok) throw new Error("Failed to fetch team");
         const data = await res.json();
+
+        // Only update state if component is still mounted
+        if (!isMounted) return;
 
         const toCard = (m: any): Member => ({
           id: m.id,
@@ -45,12 +55,24 @@ export default function MeetTheTeamPage() {
         });
 
         setMembers(allMembers);
-      } catch (e) {
-        console.error(e);
+      } catch (e: any) {
+        // Ignore abort errors
+        if (e.name === 'AbortError') return;
+        if (isMounted) {
+          console.error(e);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     })();
+
+    // Cleanup function
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   return (
@@ -58,7 +80,7 @@ export default function MeetTheTeamPage() {
       <Navigation />
       <main id="main-content" className="page-main">
         <ContentContainer>
-        <section className="page-heading max-w-3xl mx-auto">
+        <section className="page-heading">
           <h1 className="wordmark">Meet the Team</h1>
           <p>The students powering ColorStack @ NYU</p>
         </section>

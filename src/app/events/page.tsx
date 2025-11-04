@@ -2,58 +2,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
 
 type EventItem = {
   id: string;
   title: string;
-  description?: string;
   start: string;
   end?: string;
-  location?: string;
-  link?: string;
   tags?: string[];
   status?: string;
   url: string;
-  graphic?: string;
-  flyer?: string;
-  instagramPostURL?: string;
-  engageURL?: string;
+  instagramUrl?: string;
 };
 
 type GroupedEvents = {
   [monthYear: string]: EventItem[];
 };
 
-// Helper function to format date/time like "Monday, Sept 22 · 6:30–8:00 PM ET"
-function formatEventDateTime(start: string, end?: string): string {
+// Helper function to format date like "Monday, Nov 10"
+function formatEventDate(start: string): string {
   const startDate = new Date(start);
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     month: "short",
     day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "America/New_York",
-    timeZoneName: "short",
   };
   
-  let formatted = startDate.toLocaleString("en-US", options);
-  
-  if (end) {
-    const endDate = new Date(end);
-    const endTime = endDate.toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "America/New_York",
-    });
-    // Remove timezone from start, add time range
-    formatted = formatted.replace(/ [A-Z]{2,3}$/, "") + `–${endTime}`;
-  }
-  
-  return formatted.replace(",", " ·");
+  return startDate.toLocaleString("en-US", options);
 }
 
 // Helper to group events by month
@@ -73,12 +49,6 @@ function groupByMonth(events: EventItem[]): GroupedEvents {
   return grouped;
 }
 
-// Helper to truncate description to ~2 lines
-function truncateDescription(text: string, maxLength: number = 150): string {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength).trim() + "...";
-}
-
 export default function EventsPage() {
   const [upcomingEvents, setUpcomingEvents] = useState<EventItem[]>([]);
   const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
@@ -86,13 +56,26 @@ export default function EventsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
     (async () => {
       try {
-        const res = await fetch("/api/events", { cache: "no-store" });
-        if (!res.ok) throw new Error(`Failed to fetch events (${res.status})`);
-        const data = await res.json();
-        const allEvents = data.events ?? [];
+        const res = await fetch("/api/events", { 
+          cache: "no-store",
+          signal: controller.signal 
+        });
         
+        if (!res.ok) {
+          throw new Error(`Failed to fetch events (${res.status})`);
+        }
+        
+        const data = await res.json();
+        
+        // Only update state if component is still mounted
+        if (!isMounted) return;
+        
+        const allEvents = data.events ?? [];
         const now = new Date();
         
         // Separate upcoming and past events
@@ -125,14 +108,26 @@ export default function EventsPage() {
         setUpcomingEvents(upcoming);
         setPastEvents(past);
       } catch (e: any) {
-        setError(e.message ?? "Unknown error");
+        // Ignore abort errors
+        if (e.name === 'AbortError') return;
+        if (isMounted) {
+          setError(e.message ?? "Unknown error");
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     })();
+
+    // Cleanup function
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
-  // Group upcoming events by month
+  // Group upcoming events by month/semester
   const groupedUpcoming = groupByMonth(upcomingEvents);
 
   return (
@@ -140,19 +135,30 @@ export default function EventsPage() {
       <Navigation />
       <main id="main-content" className="page-main">
         <ContentContainer>
-          <section className="page-heading max-w-3xl mx-auto">
+          <section className="page-heading">
             <h1 className="wordmark">Events</h1>
-            <p>Join us for workshops, socials, and career development opportunities</p>
+            <p>
+              For full details, photos, and RSVPs: {" "}
+              <a
+                href="https://www.instagram.com/colorstacknyu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand underline hover:text-brand-hover"
+              >
+                @colorstacknyu
+              </a>
+              {" "} • NYU Engage (coming soon)
+            </p>
           </section>
 
           {loading && <p className="text-center text-white/70">Loading…</p>}
           {error && <p className="text-center text-red-300">Error: {error}</p>}
 
           {!loading && !error && (
-            <>
-              {/* Upcoming Events Section */}
-              <section className="mb-16">
-                <h2 className="text-2xl font-bold mb-8" style={{ color: "var(--text-high)" }}>
+            <div>
+                {/* Upcoming Events Section */}
+                <section className="mb-12">
+                <h2 className="text-xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
                   Upcoming Events
                 </h2>
 
@@ -163,10 +169,10 @@ export default function EventsPage() {
                 ) : (
                   Object.entries(groupedUpcoming).map(([monthYear, events]) => (
                     <div key={monthYear} className="mb-12">
-                      <h3 className="text-xl font-semibold mb-6" style={{ color: "var(--brand)" }}>
+                      <h3 className="text-lg font-semibold mb-4" style={{ color: "var(--text-high)" }}>
                         {monthYear}
                       </h3>
-                      <div className="space-y-6">
+                      <div className="card-grid">
                         {events.map((event) => (
                           <EventCard key={event.id} event={event} />
                         ))}
@@ -178,19 +184,19 @@ export default function EventsPage() {
 
               {/* Past Events Section - Only show if there are past events */}
               {pastEvents.length > 0 && (
-                <section className="mb-16">
-                  <h2 className="text-2xl font-bold mb-8" style={{ color: "var(--text-high)" }}>
+                <section className="mb-12">
+                  <h2 className="text-xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
                     Past Events
                   </h2>
-                  <div className="space-y-6">
+                  <div className="card-grid">
                     {pastEvents.map((event) => (
                       <EventCard key={event.id} event={event} isPast />
                     ))}
                   </div>
                 </section>
               )}
-            </>
-          )}
+              </div>
+            )}
         </ContentContainer>
       </main>
     </>
@@ -203,122 +209,96 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
     <article
       className="card"
       style={{
-        display: "grid",
-        gridTemplateColumns: event.graphic ? "300px 1fr" : "1fr",
-        gap: "1.5rem",
         opacity: isPast ? 0.8 : 1,
+        cursor: "default",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        position: "relative",
       }}
     >
-      {/* Media Section */}
-      {event.graphic && (
-        <div style={{ position: "relative", width: "100%", height: "200px", borderRadius: "8px", overflow: "hidden" }}>
-          <Image
-            src={event.graphic}
-            alt={`${event.title} graphic`}
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="300px"
-          />
-        </div>
+      {/* Instagram Icon - Top Right */}
+      {event.instagramUrl && (
+        <a
+          href={event.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${event.title} on Instagram`}
+          style={{
+            position: "absolute",
+            top: "16px",
+            right: "16px",
+            width: "20px",
+            height: "20px",
+            color: "var(--brand-1)",
+            transition: "color 200ms ease, transform 200ms ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "var(--text-high)";
+            e.currentTarget.style.transform = "scale(1.1)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "var(--brand-1)";
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
       )}
 
-      {/* Content Section */}
-      <div>
-        <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-high)" }}>
-          {event.title}
-        </h3>
+      {/* Title - Dominant */}
+      <h3 
+        style={{ 
+          fontSize: "20px", 
+          fontWeight: 700, 
+          color: "var(--text-high)", 
+          marginBottom: "12px",
+          lineHeight: "1.3",
+          paddingRight: event.instagramUrl ? "32px" : "0", // Add padding when icon is present
+        }}
+      >
+        {event.title}
+      </h3>
 
-        {/* Date/Time */}
-        <p className="mb-2" style={{ color: "var(--text-mid)", fontSize: "0.95rem" }}>
-          <time dateTime={event.start}>
-            {formatEventDateTime(event.start, event.end)}
-          </time>
-        </p>
+      {/* Date - Secondary */}
+      <p style={{ 
+        fontSize: "14px", 
+        fontWeight: 400,
+        color: "var(--text-mid)", 
+        marginBottom: "16px",
+        opacity: 0.9,
+      }}>
+        <time dateTime={event.start}>
+          {formatEventDate(event.start)}
+        </time>
+      </p>
 
-        {/* Location */}
-        {event.location && (
-          <p className="mb-3" style={{ color: "var(--text-mid)", fontSize: "0.9rem" }}>
-            📍 {event.location}
-          </p>
-        )}
-
-        {/* Tags */}
-        {event.tags && event.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-3">
-            {event.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 text-sm rounded-full"
-                style={{
-                  backgroundColor: "var(--surface)",
-                  color: "var(--brand)",
-                  border: "1px solid var(--brand)",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Description */}
-        {event.description && (
-          <p className="mb-4" style={{ color: "var(--text-mid)", lineHeight: "1.6" }}>
-            {truncateDescription(event.description)}
-          </p>
-        )}
-
-        {/* Media Links - Priority: Graphic (already shown) → Flyer → Instagram → Engage */}
-        <div className="flex flex-wrap gap-3 items-center">
-          {!event.graphic && event.flyer && (
-            <a
-              href={event.flyer}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand underline hover:text-brand-hover"
-              aria-label={`View flyer for ${event.title} (opens in new tab)`}
+      {/* Tags - Footer */}
+      {event.tags && event.tags.length > 0 && (
+        <div style={{ 
+          display: "flex", 
+          flexWrap: "wrap", 
+          gap: "8px",
+          marginTop: "auto",
+          paddingTop: "12px",
+          borderTop: "1px solid rgba(171, 130, 197, 0.15)",
+        }}>
+          {event.tags.map((tag) => (
+            <span
+              key={tag}
+              style={{
+                fontSize: "11px",
+                color: "var(--brand-1)",
+                opacity: 0.9,
+              }}
             >
-              📄 View Flyer (PDF)
-            </a>
-          )}
-
-          {!event.graphic && !event.flyer && event.instagramPostURL && (
-            <a
-              href={event.instagramPostURL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand underline hover:text-brand-hover"
-              aria-label={`View Instagram post for ${event.title} (opens in new tab)`}
-            >
-              📸 View on Instagram
-            </a>
-          )}
-
-          {event.engageURL && (
-            <a
-              href={event.engageURL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-              aria-label={`RSVP for ${event.title} on NYU Engage (opens in new tab)`}
-            >
-              RSVP on Engage
-            </a>
-          )}
-
-          {event.link && (
-            <a
-              href={event.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-brand underline hover:text-brand-hover"
-              aria-label={`More information about ${event.title} (opens in new tab)`}
-            >
-              More Info
-            </a>
-          )}
+              #{tag}
+            </span>
+          ))}
         </div>
-      </div>
+      )}
     </article>
   );
 }

@@ -11,18 +11,12 @@ const notion = new Client({ auth: NOTION_EVENTS_TOKEN });
 type EventItem = {
   id: string;
   title: string;
-  description?: string;
   start: string;
   end?: string;
-  location?: string;
-  link?: string;
   tags?: string[];
   status?: string;
   url: string;
-  graphic?: string; // Image URL
-  flyer?: string; // PDF URL
-  instagramPostURL?: string;
-  engageURL?: string;
+  instagramUrl?: string;
 };
 
 function getPlainRichText(rich: any[]): string | undefined {
@@ -43,33 +37,19 @@ function toEventItem(p: any): EventItem {
   const start = dateProperty?.start || "";
   const end = dateProperty?.end || undefined;
 
-  const description = getPlainRichText(props["Description"]?.rich_text ?? []);
-  const location = getPlainRichText(props["Location"]?.rich_text ?? []);
-  const link = props["Link"]?.url || undefined;
   const tags = getTagsFromMultiSelect(props["Tags"]?.multi_select ?? []);
   const status = props["Status"]?.select?.name || "Scheduled";
-  
-  // Media fields
-  const graphic = props["Graphic"]?.files?.[0]?.file?.url || props["Graphic"]?.files?.[0]?.external?.url || undefined;
-  const flyer = props["Flyer"]?.files?.[0]?.file?.url || props["Flyer"]?.files?.[0]?.external?.url || undefined;
-  const instagramPostURL = props["InstagramPostURL"]?.url || undefined;
-  const engageURL = props["EngageURL"]?.url || undefined;
+  const instagramUrl = props["Instagram"]?.url || undefined;
 
   return {
     id: p.id,
     title,
-    description,
     start,
     end,
-    location,
-    link,
     tags,
     status,
     url: p.url,
-    graphic,
-    flyer,
-    instagramPostURL,
-    engageURL,
+    instagramUrl,
   };
 }
 
@@ -79,76 +59,63 @@ const MOCK_EVENTS: EventItem[] = [
   {
     id: "mock-1",
     title: "ColorStack General Body Meeting",
-    description: "Join us for our weekly meeting to discuss upcoming events and initiatives. All members welcome! We'll be discussing internship opportunities and planning our spring events.",
     start: "2025-11-10T18:00:00",
     end: "2025-11-10T19:30:00",
-    location: "NYU Kimmel Center, Room 406",
-    tags: ["General Meeting", "Weekly"],
+    tags: ["general body meeting"],
     status: "Scheduled",
     url: "https://notion.so/mock-event-1",
-    graphic: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800",
-    engageURL: "https://engage.nyu.edu/colorstack",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
   },
   {
     id: "mock-2",
     title: "Technical Interview Workshop",
-    description: "Practice coding interviews with peers and get feedback from industry professionals. Topics include: data structures, algorithms, system design, and behavioral questions.",
     start: "2025-11-15T17:00:00",
     end: "2025-11-15T19:00:00",
-    location: "NYU Tandon School of Engineering",
-    link: "https://example.com/workshop",
     tags: ["Workshop", "Career Development"],
     status: "Scheduled",
     url: "https://notion.so/mock-event-2",
-    flyer: "https://example.com/flyer.pdf",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
   },
   {
     id: "mock-3",
     title: "Resume Review Sessions",
-    description: "Get your resume reviewed by upperclassmen and career advisors. Bring printed copies or come ready to share your screen!",
     start: "2025-12-05T16:00:00",
     end: "2025-12-05T18:00:00",
-    location: "Zoom (Link provided to registered members)",
-    tags: ["Career Development", "One-on-One"],
+    tags: ["Career Development"],
     status: "Scheduled",
     url: "https://notion.so/mock-event-3",
-    instagramPostURL: "https://www.instagram.com/p/example/",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
   },
   // Past events
   {
     id: "mock-4",
     title: "Fall Kickoff Social",
-    description: "Welcome back event with food, games, and networking. Meet the e-board and connect with fellow members!",
     start: "2025-09-15T17:00:00",
     end: "2025-09-15T19:00:00",
-    location: "NYU Kimmel Center",
     tags: ["Social", "Networking"],
     status: "Completed",
     url: "https://notion.so/mock-event-4",
-    graphic: "https://images.unsplash.com/photo-1528605105345-5344ea20e269?w=800",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
   },
   {
     id: "mock-5",
     title: "Google Office Visit",
-    description: "Exclusive tour of Google's NYC office followed by a Q&A with software engineers.",
     start: "2025-10-20T14:00:00",
     end: "2025-10-20T17:00:00",
-    location: "Google NYC, 111 8th Ave",
     tags: ["Office Visit", "Networking"],
     status: "Completed",
     url: "https://notion.so/mock-event-5",
-    graphic: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
   },
   {
     id: "mock-6",
     title: "Hackathon Prep Workshop",
-    description: "Learn how to prepare for hackathons, form teams, and build winning projects.",
     start: "2025-10-01T18:00:00",
     end: "2025-10-01T20:00:00",
-    location: "NYU Tandon",
     tags: ["Workshop", "Hackathon"],
     status: "Completed",
     url: "https://notion.so/mock-event-6",
+    instagramUrl: "https://www.instagram.com/p/DOYxiXkjVEx/",
   },
 ];
 

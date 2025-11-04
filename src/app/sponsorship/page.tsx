@@ -9,7 +9,7 @@ export default function SponsorshipPage() {
       <Navigation />
       <main id="main-content" className="page-main">
         <ContentContainer>
-          <section className="page-heading max-w-3xl mx-auto" style={{ 
+          <section className="page-heading" style={{ 
             animation: "fadeUp 420ms ease both",
             marginBottom: "var(--spacing-2xl)"
           }}>

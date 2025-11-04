@@ -42,13 +42,13 @@ export default function Navigation({ className = "" }: NavigationProps) {
           <div className="nav-left">
             <Link href="/" onClick={closeMenu} aria-label="Home">
               <div className="logo-wrap">
-                <Image src="/Colorstack_Logo.png" alt="ColorStackNYU logo" width={40} height={40} className="rounded-md" />
+                <Image src="/Colorstack_Logo.png" alt="ColorStackNYU logo" width={40} height={40} />
               </div>
             </Link>
           </div>
 
           {/* Center nav */}
-          <div className="nav-center hidden md:flex">
+          <div className="nav-center">
             <Link href="/" className="nav-link" aria-current={pathname === '/' ? 'page' : undefined}>Home</Link>
             <Link href="/events" className="nav-link">Events</Link>
             <Link href="/resources" className="nav-link">Resources</Link>
@@ -57,18 +57,18 @@ export default function Navigation({ className = "" }: NavigationProps) {
           </div>
 
           {/* Right cluster: theme toggle (desktop) */}
-          <div className="nav-right hidden md:flex">
+          <div className="nav-right">
             <ThemeToggle />
           </div>
 
-          <div className="md:hidden">
+          <div className="mobile-menu-toggle-wrapper">
             <button
               onClick={toggleMenu}
               className="mobile-menu-toggle"
               aria-label="Toggle menu"
             >
               <svg
-                className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
+                className={`hamburger-icon ${isOpen ? 'open' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -84,47 +84,24 @@ export default function Navigation({ className = "" }: NavigationProps) {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-          <div className="py-4 space-y-2" style={{borderTop:'1px solid var(--border)', marginTop:'1rem'}}>
-            <Link
-              href="/"
-              className="mobile-nav-link"
-              onClick={closeMenu}
-            >
+        <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
+          <div className="mobile-menu-content">
+            <Link href="/" className="mobile-nav-link" onClick={closeMenu}>
               Home
             </Link>
-            <Link
-              href="/events"
-              className="mobile-nav-link"
-              onClick={closeMenu}
-            >
+            <Link href="/events" className="mobile-nav-link" onClick={closeMenu}>
               Events
             </Link>
-            <Link
-              href="/resources"
-              className="mobile-nav-link"
-              onClick={closeMenu}
-            >
+            <Link href="/resources" className="mobile-nav-link" onClick={closeMenu}>
               Resources
             </Link>
-            <Link
-              href="/meet-the-team"
-              className="mobile-nav-link"
-              onClick={closeMenu}
-            >
+            <Link href="/meet-the-team" className="mobile-nav-link" onClick={closeMenu}>
               Meet the Team
             </Link>
-            <Link
-              href="/sponsorship"
-              className="mobile-nav-link"
-              onClick={closeMenu}
-            >
+            <Link href="/sponsorship" className="mobile-nav-link" onClick={closeMenu}>
               Sponsorship
             </Link>
-            <button
-              onClick={toggleTheme}
-              className="mobile-nav-link w-full text-left"
-            >
+            <button onClick={toggleTheme} className="mobile-nav-link mobile-theme-toggle">
               {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             </button>
           </div>

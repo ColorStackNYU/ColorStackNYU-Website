@@ -175,7 +175,7 @@ export default function ResourcesPage() {
       <Navigation />
       <main id="main-content" className="page-main">
         <ContentContainer>
-        <section className="page-heading max-w-3xl mx-auto">
+        <section className="page-heading">
           <div style={{ marginBottom: "var(--spacing-lg)" }}>
             <h1 className="wordmark">Resources</h1>
           </div>
@@ -189,7 +189,7 @@ export default function ResourcesPage() {
               rel="noopener noreferrer"
               className="text-link"
             >
-              How to contribute →
+              How to contribute
             </a>
           </p>
 
