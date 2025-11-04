@@ -9,16 +9,6 @@ export type Resource = {
   contributedBy?: string; // Optional: name of contributor for points tracking
 };
 
-export const RESOURCE_CATEGORIES = [
-  "Interview Prep",
-  "Coursework",
-  "Career Growth",
-  "Web Development",
-  "Mobile Development",
-  "Data Science",
-  "System Design",
-] as const;
-
 export async function fetchResources(): Promise<Resource[]> {
   try {
     const response = await fetch("/resources.json", { cache: "no-store" });

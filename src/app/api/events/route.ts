@@ -19,11 +19,6 @@ type EventItem = {
   instagramUrl?: string;
 };
 
-function getPlainRichText(rich: any[]): string | undefined {
-  if (!Array.isArray(rich) || rich.length === 0) return undefined;
-  return rich.map((r) => r.plain_text).join("").trim() || undefined;
-}
-
 function getTagsFromMultiSelect(multiSelect: any[]): string[] {
   if (!Array.isArray(multiSelect)) return [];
   return multiSelect.map((tag) => tag.name).filter(Boolean);

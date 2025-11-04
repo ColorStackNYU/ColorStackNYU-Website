@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
+import { useApiData } from "../../hooks/useApiData";
 
 type EventItem = {
   id: string;
@@ -52,80 +53,43 @@ function groupByMonth(events: EventItem[]): GroupedEvents {
 export default function EventsPage() {
   const [upcomingEvents, setUpcomingEvents] = useState<EventItem[]>([]);
   const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  
+  // Fetch events data using shared hook
+  const { data, loading, error } = useApiData<{events: EventItem[]}>("/api/events");
 
+  // Process events: separate into upcoming/past and sort
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
-    (async () => {
-      try {
-        const res = await fetch("/api/events", { 
-          cache: "no-store",
-          signal: controller.signal 
-        });
-        
-        if (!res.ok) {
-          throw new Error(`Failed to fetch events (${res.status})`);
-        }
-        
-        const data = await res.json();
-        
-        // Only update state if component is still mounted
-        if (!isMounted) return;
-        
-        const allEvents = data.events ?? [];
-        const now = new Date();
-        
-        // Separate upcoming and past events
-        const upcoming: EventItem[] = [];
-        const past: EventItem[] = [];
-        
-        allEvents.forEach((event: EventItem) => {
-          const eventStart = new Date(event.start);
-          const isScheduled = event.status === "Scheduled";
-          const isCompleted = event.status === "Completed";
-          const isCanceled = event.status === "Canceled";
-          const isPastDate = eventStart < now;
-          
-          // Upcoming: Status == "Scheduled" AND Start >= now
-          if (isScheduled && !isPastDate) {
-            upcoming.push(event);
-          }
-          // Past: Status == "Completed" OR (Start < now AND not Canceled)
-          else if (isCompleted || (isPastDate && !isCanceled)) {
-            past.push(event);
-          }
-        });
-        
-        // Sort upcoming ascending by start date
-        upcoming.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
-        
-        // Sort past descending by start date
-        past.sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime());
-        
-        setUpcomingEvents(upcoming);
-        setPastEvents(past);
-      } catch (e: any) {
-        // Ignore abort errors
-        if (e.name === 'AbortError') return;
-        if (isMounted) {
-          setError(e.message ?? "Unknown error");
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+    const allEvents = data?.events ?? [];
+    const now = new Date();
+    const upcoming: EventItem[] = [];
+    const past: EventItem[] = [];
+    
+    allEvents.forEach((event: EventItem) => {
+      const eventStart = new Date(event.start);
+      const isScheduled = event.status === "Scheduled";
+      const isCompleted = event.status === "Completed";
+      const isCanceled = event.status === "Canceled";
+      const isPastDate = eventStart < now;
+      
+      // Upcoming: Status == "Scheduled" AND Start >= now
+      if (isScheduled && !isPastDate) {
+        upcoming.push(event);
       }
-    })();
-
-    // Cleanup function
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, []);
+      // Past: Status == "Completed" OR (Start < now AND not Canceled)
+      else if (isCompleted || (isPastDate && !isCanceled)) {
+        past.push(event);
+      }
+    });
+    
+    // Sort upcoming descending by start date (newest first: Dec 1 before Nov)
+    upcoming.sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime());
+    
+    // Sort past descending by start date (newest first)
+    past.sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime());
+    
+    setUpcomingEvents(upcoming);
+    setPastEvents(past);
+  }, [data]);
 
   // Group upcoming events by month/semester
   const groupedUpcoming = groupByMonth(upcomingEvents);
@@ -138,7 +102,7 @@ export default function EventsPage() {
           <section className="page-heading">
             <h1 className="wordmark">Events</h1>
             <p>
-              For full details, photos, and RSVPs: {" "}
+              Follow{" "}
               <a
                 href="https://www.instagram.com/colorstacknyu/"
                 target="_blank"
@@ -147,7 +111,7 @@ export default function EventsPage() {
               >
                 @colorstacknyu
               </a>
-              {" "} • NYU Engage (coming soon)
+              {" "}for event details, photos, and updates
             </p>
           </section>
 
@@ -205,12 +169,16 @@ export default function EventsPage() {
 
 // EventCard Component
 function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boolean }) {
+  const cardUrl = event.instagramUrl || event.url;
+  
   return (
-    <article
+    <a
+      href={cardUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className="card"
       style={{
         opacity: isPast ? 0.8 : 1,
-        cursor: "default",
         display: "flex",
         flexDirection: "column",
         height: "100%",
@@ -219,33 +187,28 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
     >
       {/* Instagram Icon - Top Right */}
       {event.instagramUrl && (
-        <a
-          href={event.instagramUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`View ${event.title} on Instagram`}
+        <div
+          className="event-instagram-icon"
+          title="View on Instagram"
           style={{
             position: "absolute",
-            top: "16px",
-            right: "16px",
-            width: "20px",
-            height: "20px",
+            top: "20px",
+            right: "20px",
+            width: "24px",
+            height: "24px",
             color: "var(--brand-1)",
             transition: "color 200ms ease, transform 200ms ease",
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "var(--text-high)";
-            e.currentTarget.style.transform = "scale(1.1)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "var(--brand-1)";
-            e.currentTarget.style.transform = "scale(1)";
-          }}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <svg 
+            viewBox="0 0 24 24" 
+            fill="currentColor" 
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ width: "100%", height: "100%" }}
+          >
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
           </svg>
-        </a>
+        </div>
       )}
 
       {/* Title - Dominant */}
@@ -299,6 +262,6 @@ function EventCard({ event, isPast = false }: { event: EventItem; isPast?: boole
           ))}
         </div>
       )}
-    </article>
+    </a>
   );
 }

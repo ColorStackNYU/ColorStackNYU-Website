@@ -313,40 +313,37 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
 }
 .site-header .nav-center {
-  display: none; /* Hidden on mobile */
+  display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px; /* horizontal spacing between nav items */
   flex: 1;
   justify-content: center;
 }
 .site-header .nav-right {
-  display: none; /* Hidden on mobile */
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-/* Mobile menu toggle wrapper */
-.mobile-menu-toggle-wrapper {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  gap: 10px;
 }
 
-/* Show desktop nav on medium screens and up */
-@media (min-width: 768px) {
+/* Mobile: hide desktop nav, show hamburger */
+@media (max-width: 768px) {
   .site-header .nav-center {
-    display: flex;
-  }
-  .site-header .nav-right {
-    display: flex;
-  }
-  .mobile-menu-toggle-wrapper {
     display: none;
+  }
+  .theme-toggle {
+    display: none; /* Hide desktop theme toggle on mobile */
+  }
+}
+
+/* Desktop: hide mobile menu toggle */
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+  .mobile-menu {
+    display: none !important;
   }
 }
 
@@ -361,28 +358,33 @@ html {
   background-image: var(--brand-grad);
 }
 
-/* Navigation layout - full width within site-container */
+/* Navigation layout - constrain nav content width like page content */
 .nav-layout {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  max-width: 900px; /* slightly smaller than full container for tighter layout */
+  margin: 0 auto;
   width: 100%;
 }
 
-/* Nav link styling - CONSOLIDATED (was split into 2 definitions) */
+/* Nav link styling - modern pill design */
 .nav-link {
   color: var(--text-mid);
   font-weight: 500;
   font-size: var(--fs-small);
   text-decoration: none;
-  padding: 6px 8px; /* improves hit area on desktop/tablet */
-  border-radius: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
   transition: color 160ms ease, background 160ms ease, transform 120ms ease, box-shadow 120ms ease;
   position: relative;
 }
 .nav-link:hover {
   color: var(--text-high);
-  background: rgba(255,255,255,0.03);
-  transform: translateY(-1px);
+  background: rgba(255,255,255,0.06);
+}
+[data-theme="light"] .nav-link:hover {
+  background: rgba(0,0,0,0.04);
 }
 .nav-link:focus {
   outline: none;
@@ -390,16 +392,11 @@ html {
 }
 .nav-link[aria-current="page"] {
   color: var(--text-high);
+  background: rgba(124, 58, 237, 0.15);
+  font-weight: 600;
 }
-.nav-link[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 2px;
-  background: var(--brand);
-  border-radius: 2px;
+[data-theme="light"] .nav-link[aria-current="page"] {
+  background: rgba(124, 58, 237, 0.1);
 }
 
 /* Header CTA button - CONSOLIDATED (was split into 2 definitions) */
@@ -1130,17 +1127,14 @@ main,
 .page-main {
   position: relative;
   min-height: 100vh;
-  padding-top: calc(var(--header-h) + 16px);
+  padding-top: calc(var(--header-h) + 32px);
   padding-bottom: var(--space-medium); /* tighter bottom padding */
 }
 
 /* Page section heading - consistent style */
 .page-heading {
-  margin-bottom: var(--space-small);
+  margin-bottom: var(--space-medium);
   text-align: center;
-  max-width: 768px; /* Standard heading width across all pages */
-  margin-left: auto;
-  margin-right: auto;
 }
 .page-heading h1 {
   font-size: clamp(32px, 6vw, 60px);
@@ -1196,6 +1190,14 @@ main,
 .card:hover::before {
   opacity: 1;
 }
+.card:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15), 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.card:focus::before {
+  opacity: 1;
+}
 .card h3 {
   font-size: 18px;
   font-weight: 600;
@@ -1214,23 +1216,33 @@ main,
 /* Card grid - 3-column responsive layout */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 24px;
   margin-top: var(--space-medium);
+  justify-content: center;
+  align-items: stretch;
 }
-/* When there's only 1 card, constrain it to 2-column width */
-.card-grid > *:only-child {
-  max-width: calc(2 * 300px + 24px); /* Width of 2 cards + 1 gap */
-  margin: 0 auto;
-  grid-column: 1 / -1;
+.card-grid > * {
+  max-width: 420px;
+  min-height: 100%;
 }
 @media (max-width: 768px) {
   .card-grid {
     grid-template-columns: 1fr;
   }
-  .card-grid > *:only-child {
+  .card-grid > * {
     max-width: 100%;
   }
+}
+
+/* Event Instagram Icon (no circle, just icon) */
+.event-instagram-icon {
+  opacity: 0.8;
+}
+.card:hover .event-instagram-icon {
+  color: var(--text-high) !important;
+  transform: scale(1.15);
+  opacity: 1;
 }
 
 /* Section with background - optional container */
@@ -1458,7 +1470,8 @@ main,
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
-.resource-card:hover .external-link-icon {
+.resource-card:hover .external-link-icon,
+.card:hover .external-link-icon {
   background-color: rgba(124, 58, 237, 0.2);
 }
 .external-link-icon-arrow {
@@ -1466,7 +1479,8 @@ main,
   font-size: 18px;
   transition: all 0.2s ease;
 }
-.resource-card:hover .external-link-icon-arrow {
+.resource-card:hover .external-link-icon-arrow,
+.card:hover .external-link-icon-arrow {
   color: var(--brand);
   transform: scale(1.15);
 }

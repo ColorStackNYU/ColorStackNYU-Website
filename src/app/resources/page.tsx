@@ -3,7 +3,8 @@
 import { useEffect, useState, useMemo } from "react";
 import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
-import { fetchResources, RESOURCE_CATEGORIES, type Resource } from "../../lib/fetchResources";
+import { fetchResources, type Resource } from "../../lib/fetchResources";
+import { RESOURCE_CATEGORIES } from "../../lib/constants";
 
 function ResourceCard({ r, onTagClick, setSelectedCategory }: { r: Resource; onTagClick: (tag: string) => void; setSelectedCategory: (category: string | null) => void }) {
   return (

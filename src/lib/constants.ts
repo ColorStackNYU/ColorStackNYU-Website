@@ -1,6 +1,6 @@
 export const RESOURCE_CATEGORIES = [
   "Interview Prep",
-  "Classes",
+  "Coursework",
   "Career Growth",
   "Web Development",
   "Mobile Development",
@@ -8,5 +8,3 @@ export const RESOURCE_CATEGORIES = [
   "System Design",
   "Leadership",
 ] as const;
-
-export type ResourceCategory = (typeof RESOURCE_CATEGORIES)[number];

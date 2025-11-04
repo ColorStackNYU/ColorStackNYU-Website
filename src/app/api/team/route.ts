@@ -19,6 +19,9 @@ type Member = {
   phone?: string;
   icon?: { type: "emoji" | "url"; value: string };
   url: string; // Notion page url
+  linkedinUrl?: string;
+  hallOfFame?: boolean;
+  quote?: string;
 };
 
 function getPlainRichText(rich: any[]): string | undefined {
@@ -50,6 +53,9 @@ function toMember(p: any): Member {
     phone: props["Phone"]?.phone_number ?? undefined,
     icon: pickIcon(p.icon),
     url: p.url,
+    linkedinUrl: props["LinkedIn"]?.url ?? undefined,
+    hallOfFame: props["Hall of Fame"]?.checkbox ?? false,
+    quote: getPlainRichText(props["Quote"]?.rich_text ?? []),
   };
 }
 
@@ -65,6 +71,7 @@ const MOCK_TEAM_DATA = {
       email: "president@colorstack.nyu.edu",
       icon: { type: "emoji" as const, value: "👩‍💻" },
       url: "https://notion.so/mock-lead-1",
+      linkedinUrl: "https://linkedin.com/in/sarahjohnson",
     },
     {
       id: "mock-lead-2",
@@ -106,6 +113,33 @@ const MOCK_TEAM_DATA = {
       major: "Integrated Digital Media",
       icon: { type: "emoji" as const, value: "🎉" },
       url: "https://notion.so/mock-core-2",
+      linkedinUrl: "https://linkedin.com/in/emilyzhang",
+    },
+  ],
+  hallOfFame: [
+    {
+      id: "mock-hof-1",
+      name: "David Martinez",
+      role: "President",
+      year: "Alumni",
+      major: "Computer Science",
+      icon: { type: "emoji" as const, value: "🎓" },
+      url: "https://notion.so/mock-hof-1",
+      linkedinUrl: "https://linkedin.com/in/davidmartinez",
+      hallOfFame: true,
+      quote: "ColorStack @ NYU helped me land my dream job at Google. The community support was invaluable!",
+    },
+    {
+      id: "mock-hof-2",
+      name: "Jessica Liu",
+      role: "Vice President",
+      year: "Alumni",
+      major: "Computer Science & Mathematics",
+      icon: { type: "emoji" as const, value: "🌟" },
+      url: "https://notion.so/mock-hof-2",
+      linkedinUrl: "https://linkedin.com/in/jessicaliu",
+      hallOfFame: true,
+      quote: "Being part of this community shaped my career path and connected me with amazing people.",
     },
   ],
 };
@@ -162,12 +196,13 @@ export async function GET() {
       "Faculty Advisor",
     ]);
 
-    const leadership: Member[] = members.filter((m) => leadershipSet.has(m.role));
-    const core: Member[] = members.filter((m) => !leadershipSet.has(m.role));
+    const leadership: Member[] = members.filter((m) => leadershipSet.has(m.role) && !m.hallOfFame);
+    const core: Member[] = members.filter((m) => !leadershipSet.has(m.role) && !m.hallOfFame);
+    const hallOfFame: Member[] = members.filter((m) => m.hallOfFame);
 
-    console.log(`Returning ${leadership.length} leadership and ${core.length} core members`);
+    console.log(`Returning ${leadership.length} leadership, ${core.length} core members, and ${hallOfFame.length} Hall of Fame`);
 
-    return NextResponse.json({ leadership, core }, { status: 200 });
+    return NextResponse.json({ leadership, core, hallOfFame }, { status: 200 });
   } catch (error: any) {
     console.error("Notion API Error:", error);
     console.error("Error details:", {

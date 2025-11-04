@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -16,12 +16,8 @@ export default function Navigation({ className = "" }: NavigationProps) {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   // Lock body scroll when mobile menu is open
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof document === 'undefined') return;
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -50,28 +46,29 @@ export default function Navigation({ className = "" }: NavigationProps) {
           {/* Center nav */}
           <div className="nav-center">
             <Link href="/" className="nav-link" aria-current={pathname === '/' ? 'page' : undefined}>Home</Link>
-            <Link href="/events" className="nav-link">Events</Link>
-            <Link href="/resources" className="nav-link">Resources</Link>
-            <Link href="/meet-the-team" className="nav-link">Meet the Team</Link>
-            <Link href="/sponsorship" className="nav-link">Sponsorship</Link>
+            <Link href="/events" className="nav-link" aria-current={pathname?.startsWith('/events') ? 'page' : undefined}>Events</Link>
+            <Link href="/resources" className="nav-link" aria-current={pathname?.startsWith('/resources') ? 'page' : undefined}>Resources</Link>
+            <Link href="/meet-the-team" className="nav-link" aria-current={pathname?.startsWith('/meet-the-team') ? 'page' : undefined}>Meet the Team</Link>
+            <Link href="/sponsorship" className="nav-link" aria-current={pathname?.startsWith('/sponsorship') ? 'page' : undefined}>Sponsorship</Link>
           </div>
 
-          {/* Right cluster: theme toggle (desktop) */}
+          {/* Right cluster: theme toggle + mobile menu button */}
           <div className="nav-right">
             <ThemeToggle />
-          </div>
-
-          <div className="mobile-menu-toggle-wrapper">
             <button
-              onClick={toggleMenu}
+              onClick={() => setIsOpen(!isOpen)}
               className="mobile-menu-toggle"
-              aria-label="Toggle menu"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               <svg
                 className={`hamburger-icon ${isOpen ? 'open' : ''}`}
+                width="24"
+                height="24"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 {isOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

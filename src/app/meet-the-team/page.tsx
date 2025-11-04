@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Navigation from "../../components/navigation";
 import ContentContainer from "../../components/ContentContainer";
+import { useApiData } from "../../hooks/useApiData";
 
 type Member = {
   id: string;
@@ -11,69 +12,51 @@ type Member = {
   role: string;
   bio?: string;
   icon?: { type: "emoji" | "url"; value: string };
+  linkedinUrl?: string;
+  hallOfFame?: boolean;
+  quote?: string;
 };
 
 export default function MeetTheTeamPage() {
   const [members, setMembers] = useState<Member[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [hallOfFame, setHallOfFame] = useState<Member[]>([]);
+  
+  // Fetch team data using shared hook
+  const { data, loading } = useApiData<{leadership: Member[], core: Member[], hallOfFame: Member[]}>("/api/team");
 
+  // Process team data: transform and sort members
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    if (!data) return;
+    
+    const toCard = (m: any): Member => ({
+      id: m.id,
+      name: m.name,
+      role: m.role,
+      bio: [m.year, m.major, m.minor].filter(Boolean).join(" · "),
+      icon: m.icon,
+      linkedinUrl: m.linkedinUrl,
+      hallOfFame: m.hallOfFame,
+      quote: m.quote,
+    });
 
-    (async () => {
-      try {
-        const res = await fetch("/api/team", { 
-          cache: "no-store",
-          signal: controller.signal 
-        });
-        
-        if (!res.ok) throw new Error("Failed to fetch team");
-        const data = await res.json();
+    // Combine all current members into one array
+    const allMembers = [...(data.leadership ?? []).map(toCard), ...(data.core ?? []).map(toCard)];
+    const alumni = (data.hallOfFame ?? []).map(toCard);
+    
+    // Sort members by role priority, then alphabetically
+    const roleOrder = ["President", "Vice President", "Treasurer"];
+    allMembers.sort((a, b) => {
+      const ai = roleOrder.indexOf(a.role);
+      const bi = roleOrder.indexOf(b.role);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return a.name.localeCompare(b.name);
+    });
 
-        // Only update state if component is still mounted
-        if (!isMounted) return;
-
-        const toCard = (m: any): Member => ({
-          id: m.id,
-          name: m.name,
-          role: m.role,
-          bio: [m.year, m.major, m.minor].filter(Boolean).join(" · "),
-          icon: m.icon,
-        });
-
-        // Combine all members into one array
-        const allMembers = [...(data.leadership ?? []).map(toCard), ...(data.core ?? []).map(toCard)];
-        const roleOrder = ["President", "Vice President", "Treasurer"];
-        allMembers.sort((a, b) => {
-          const ai = roleOrder.indexOf(a.role);
-          const bi = roleOrder.indexOf(b.role);
-          if (ai !== -1 && bi !== -1) return ai - bi;
-          if (ai !== -1) return -1;
-          if (bi !== -1) return 1;
-          return a.name.localeCompare(b.name);
-        });
-
-        setMembers(allMembers);
-      } catch (e: any) {
-        // Ignore abort errors
-        if (e.name === 'AbortError') return;
-        if (isMounted) {
-          console.error(e);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    })();
-
-    // Cleanup function
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, []);
+    setMembers(allMembers);
+    setHallOfFame(alumni);
+  }, [data]);
 
   return (
     <>
@@ -88,14 +71,35 @@ export default function MeetTheTeamPage() {
         {loading ? (
           <p className="text-center text-white/70">Loading…</p>
         ) : (
-          <section className="mb-12">
-            <div className="card-grid">
-              {members.map((m) => (
-                <Card key={m.id} m={m} />
-              ))}
-            </div>
-            {members.length === 0 && <p className="text-center text-white/60 text-sm">No members yet.</p>}
-          </section>
+          <>
+            <section className="mb-8">
+              <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--text-high)" }}>
+                Current E-Board
+              </h2>
+              <div className="card-grid">
+                {members.map((m) => (
+                  <Card key={m.id} m={m} />
+                ))}
+              </div>
+              {members.length === 0 && <p className="text-center text-white/60 text-sm">No members yet.</p>}
+            </section>
+
+            {hallOfFame.length > 0 && (
+              <section className="mb-12">
+                <h2 className="text-2xl font-bold mb-6" style={{ color: "var(--text-high)" }}>
+                  Hall of Fame
+                </h2>
+                <p className="text-center mb-8" style={{ color: "var(--text-mid)" }}>
+                  Celebrating our alumni who helped build ColorStack @ NYU
+                </p>
+                <div className="card-grid">
+                  {hallOfFame.map((m) => (
+                    <Card key={m.id} m={m} isAlumni />
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
         )}
         </ContentContainer>
       </main>
@@ -103,9 +107,41 @@ export default function MeetTheTeamPage() {
   );
 }
 
-function Card({ m }: { m: Member }) {
+function Card({ m, isAlumni = false }: { m: Member; isAlumni?: boolean }) {
+  const CardWrapper = m.linkedinUrl ? "a" : "article";
+  const cardProps = m.linkedinUrl
+    ? {
+        href: m.linkedinUrl,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        "aria-label": `View ${m.name}'s LinkedIn profile`,
+      }
+    : {};
+
   return (
-    <article className="card">
+    <CardWrapper className="card" style={{ position: "relative" }} {...cardProps as any}>
+      {/* LinkedIn Icon - Top Right */}
+      {m.linkedinUrl && (
+        <div
+          className="external-link-icon"
+          style={{
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            width: "24px",
+            height: "24px",
+            color: "var(--brand-1)",
+            transition: "color 200ms ease, transform 200ms ease",
+            pointerEvents: "none",
+          }}
+          aria-hidden="true"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </div>
+      )}
+      
       <div className="flex items-start gap-3">
         {m.icon?.type === "url" ? (
           <Image
@@ -120,12 +156,19 @@ function Card({ m }: { m: Member }) {
             <span className="text-white font-semibold text-xl">{m.name.charAt(0)}</span>
           </div>
         )}
-        <div className="min-w-0">
-          <h3 className="truncate text-lg font-semibold" style={{ color: "var(--text-high)" }}>{m.name}</h3>
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-lg font-semibold" style={{ color: "var(--text-high)", paddingRight: m.linkedinUrl ? "32px" : "0" }}>{m.name}</h3>
           <p className="text-sm" style={{ color: "var(--text-mid)" }}>{m.role}</p>
         </div>
       </div>
       {m.bio && <p className="mt-3 text-sm leading-relaxed" style={{ color: "var(--text-mid)" }}>{m.bio}</p>}
-    </article>
+      {isAlumni && m.quote && (
+        <div className="mt-4 pt-3 border-t" style={{ borderColor: "rgba(171, 130, 197, 0.2)" }}>
+          <p className="text-sm leading-relaxed italic" style={{ color: "var(--text-mid)", opacity: 0.9 }}>
+            &ldquo;{m.quote}&rdquo;
+          </p>
+        </div>
+      )}
+    </CardWrapper>
   );
 }
