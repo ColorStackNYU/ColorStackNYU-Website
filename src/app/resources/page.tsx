@@ -14,32 +14,27 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "12px",
+        gap: "0",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
-        <div style={{ flex: 1 }}>
-          <h3 style={{ marginBottom: "4px" }}>{r.title}</h3>
-          {r.category && (
-            <p className="text-xs" style={{ color: "var(--text-mid)" }}>
-              {r.category}
-            </p>
-          )}
-          {r.contributedBy && (
-            <p className="text-xs" style={{ color: "var(--brand-1)", marginTop: "4px" }}>
-              Contributed by {r.contributedBy}
-            </p>
-          )}
-        </div>
-        <span style={{ color: "var(--brand-1)", fontSize: "18px", flexShrink: 0, marginTop: "2px" }}>
+      {/* Title + Link Icon (dominant) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", marginBottom: "12px" }}>
+        <h3 style={{ margin: "0", fontSize: "18px", fontWeight: 700, color: "var(--text-high)", lineHeight: "1.3" }}>
+          {r.title}
+        </h3>
+        <span style={{ color: "var(--brand-1)", fontSize: "16px", flexShrink: 0, marginTop: "2px" }}>
           ↗
         </span>
       </div>
 
-      <p style={{ flex: 1 }}>{r.description}</p>
+      {/* Description (secondary) */}
+      <p style={{ flex: 1, margin: "0 0 16px 0", fontSize: "14px", fontWeight: 400, color: "var(--text-high)", lineHeight: "1.6" }}>
+        {r.description}
+      </p>
 
+      {/* Tags (tertiary) */}
       {r.tags && r.tags.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "4px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "12px" }}>
           {r.tags.map((tag) => (
             <button
               key={tag}
@@ -50,21 +45,21 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
               className="resource-tag"
               style={{
                 display: "inline-block",
-                padding: "4px 10px",
-                backgroundColor: "rgba(171, 130, 197, 0.15)",
+                padding: "3px 8px",
+                backgroundColor: "rgba(171, 130, 197, 0.12)",
                 color: "var(--brand-1)",
-                borderRadius: "6px",
-                fontSize: "12px",
+                borderRadius: "5px",
+                fontSize: "11px",
                 fontWeight: 500,
-                border: "1px solid rgba(171, 130, 197, 0.3)",
+                border: "1px solid rgba(171, 130, 197, 0.25)",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.3)";
+                e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.25)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.15)";
+                e.currentTarget.style.backgroundColor = "rgba(171, 130, 197, 0.12)";
               }}
             >
               {tag}
@@ -72,6 +67,24 @@ function ResourceCard({ r, onTagClick }: { r: Resource; onTagClick: (tag: string
           ))}
         </div>
       )}
+
+      {/* Metadata footer: Category + Contributor (de-emphasized) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "12px", paddingTop: "8px", borderTop: "1px solid rgba(171, 130, 197, 0.15)" }}>
+        <div>
+          {r.category && (
+            <p style={{ margin: "0", fontSize: "11px", color: "var(--text-mid)", opacity: 0.8 }}>
+              {r.category}
+            </p>
+          )}
+        </div>
+        <div>
+          {r.contributedBy && (
+            <p style={{ margin: "0", fontSize: "10px", color: "var(--text-mid)", opacity: 0.7, textAlign: "right" }}>
+              Contributed by {r.contributedBy}
+            </p>
+          )}
+        </div>
+      </div>
     </a>
   );
 }
@@ -183,7 +196,7 @@ export default function ResourcesPage() {
             </a>
           </div>
           <p>
-            Helpful links, guides, and tools—curated by our community. {" "}
+            Helpful links, guides, and tools. For the community, by the community.{" "}
             <button
               onClick={scrollToContribute}
               style={{
