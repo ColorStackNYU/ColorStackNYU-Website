@@ -2,9 +2,6 @@
 
 import Navigation from "../../components/navigation";
 
-// replace this with your actual form URL
-const SponsorshipFormURL = "#";
-
 export default function SponsorshipPage() {
   return (
     <>
@@ -39,7 +36,7 @@ export default function SponsorshipPage() {
           <h2 className="text-2xl font-bold text-white mb-6">How it Works</h2>
           <div className="content-section">
             <ol>
-              <li>Reach out through our sponsorship form</li>
+              <li>Email us to learn about sponsorship opportunities</li>
               <li>Schedule a meeting with our partnership team</li>
               <li>Choose your sponsorship package and customize engagement opportunities</li>
             </ol>
@@ -53,32 +50,12 @@ export default function SponsorshipPage() {
             Ready to make an impact? Join us in building a more diverse and inclusive tech industry.
           </p>
           <a
-            href={SponsorshipFormURL}
+            href="mailto:sponsorship@colorstacknyu.org"
             className="btn btn-primary"
-            target="_blank"
-            rel="noreferrer"
           >
-            Become a Sponsor
+            Contact Us by Email
           </a>
         </section>
-
-        {/* Sponsorship Package PDF Section - Hidden by default */}
-        {false && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-6">Sponsorship Packages</h2>
-            <div className="content-section">
-              <p>Download our sponsorship package to learn more about available opportunities.</p>
-              <a
-                href="#"
-                className="btn btn-secondary"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Download PDF
-              </a>
-            </div>
-          </section>
-        )}
       </main>
     </>
   );
