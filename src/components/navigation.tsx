@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "../context/ThemeContext";
+import ContentContainer from "./ContentContainer";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavigationProps {
   className?: string;
@@ -51,7 +53,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
   return (
     <nav className={`site-header ${className}`}>
-      <div className="site-container">
+      <ContentContainer>
         <div className="flex items-center justify-between">
           <div className="nav-left">
             <Link href="/" onClick={closeMenu} aria-label="Home">
@@ -70,8 +72,9 @@ export default function Navigation({ className = "" }: NavigationProps) {
             <Link href="/sponsorship" className="nav-link">Sponsorship</Link>
           </div>
 
-          {/* Right: empty (removed Get Connected button) */}
+          {/* Right cluster: theme toggle (desktop) */}
           <div className="nav-right hidden md:flex">
+            <ThemeToggle />
           </div>
 
           <div className="md:hidden">
@@ -145,7 +148,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
             </button>
           </div>
         </div>
-      </div>
+      </ContentContainer>
     </nav>
   );
 }
